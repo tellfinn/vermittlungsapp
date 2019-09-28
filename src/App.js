@@ -1,7 +1,12 @@
 import React from 'react'
+import AppointmentList from './AppointmentList'
 
 function App() {
-  return <div className='App'>test</div>
+  return (
+    <React.Fragment>
+      <AppointmentList />
+    </React.Fragment>
+  )
 }
 
 export default App
