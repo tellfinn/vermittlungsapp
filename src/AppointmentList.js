@@ -33,9 +33,8 @@ export default function AppointmentList() {
   )
 }
 
-const AppointmentListStyled = styled.table`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 100vw;
+const AppointmentListStyled = styled.div`
+  display: grid;
+  grid-gap: 10px;
+  align-content: center;
 `

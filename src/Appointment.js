@@ -11,26 +11,24 @@ export default function Appointment({
   // let day = date.getDay()
   return (
     <AppointmentStyled>
-      <tr>
-        <td>{date}</td>
-        <td>{time}</td>
-        <td>{addressShortened}</td>
-      </tr>
-      <tr>
-        <td>{day}</td>
-        <td>ca. {duration} Std</td>
-      </tr>
+      <div>
+        {date} <br></br>
+        {day}
+      </div>
+      <div>
+        {time} <br></br>
+        ca. {duration} Std
+      </div>
+      <div>{addressShortened}</div>
     </AppointmentStyled>
   )
 }
 
-const AppointmentStyled = styled.tr`
-  width: 100%;
-  background-color: #f8f8f8;
+const AppointmentStyled = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #d9e0e7;
   padding: 15px;
-  text-align: left;
-`
-
-const Separator = styled.div`
-  border-top: 1px solid hotpink;
+  text-align: justify;
 `
