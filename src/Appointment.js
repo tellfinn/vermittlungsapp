@@ -11,22 +11,22 @@ export default function Appointment({
   // let day = date.getDay()
   return (
     <AppointmentStyled>
-      <div>
-        {date} <br></br>
-        {day}
-      </div>
-      <div>
-        {time} <br></br>
-        ca. {duration} Std
-      </div>
+      <div>{date}</div>
+      <div>{time}</div>
       <div>{addressShortened}</div>
+      <div> {day} </div>
+      <div> ca. {duration} Std</div>
     </AppointmentStyled>
   )
 }
 
-const AppointmentStyled = styled.div`
+const AppointmentStyled = styled.li`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  div {
+    flex: 1 0 30%;
+  }
   justify-content: space-between;
   background-color: #d9e0e7;
   padding: 15px;

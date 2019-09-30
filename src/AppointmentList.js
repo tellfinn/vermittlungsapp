@@ -33,7 +33,8 @@ export default function AppointmentList() {
   )
 }
 
-const AppointmentListStyled = styled.div`
+const AppointmentListStyled = styled.ul`
+  list-style: none;
   display: grid;
   grid-gap: 10px;
   align-content: center;
