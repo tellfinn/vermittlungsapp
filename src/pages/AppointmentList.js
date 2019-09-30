@@ -57,7 +57,7 @@ const AppointmentStyled = styled.li`
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 2;
   padding: 10px;
-  height: 55px;
+  height: 60px;
   align-items: space-around;
   text-align: justify;
   background-color: var(--greyish);

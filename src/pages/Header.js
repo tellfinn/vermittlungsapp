@@ -24,7 +24,7 @@ const HeaderStyled = styled.header`
   align-items: center;
   justify-content: space-between;
   background-color: var(--slate-grey);
-  font-size: 23px;
+  font-size: 22px;
   font-weight: bold;
   color: white;
 `

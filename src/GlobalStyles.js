@@ -15,5 +15,6 @@ export default createGlobalStyle`
   body {
 display: grid; 
 margin: 0;
+font-family: 'Lato', sans-serif;
   }
 `
