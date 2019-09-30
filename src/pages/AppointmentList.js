@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import Appointment from './Appointment'
 
 export default function AppointmentList() {
   return (
@@ -34,8 +33,32 @@ export default function AppointmentList() {
 }
 
 const AppointmentListStyled = styled.ul`
-  list-style: none;
+  margin-left: -40px;
   display: grid;
-  grid-gap: 10px;
+  grid-row-gap: 10px;
   align-content: center;
+`
+
+function Appointment({ date, time, day, duration, addressShortened }) {
+  // let day = date.getDay()
+  return (
+    <AppointmentStyled>
+      <div>{date}</div>
+      <div>{time}</div>
+      <div>{addressShortened}</div>
+      <div> {day} </div>
+      <div> ca. {duration} Std</div>
+    </AppointmentStyled>
+  )
+}
+
+const AppointmentStyled = styled.li`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 2;
+  padding: 10px;
+  height: 55px;
+  align-items: space-around;
+  text-align: justify;
+  background-color: var(--greyish);
 `

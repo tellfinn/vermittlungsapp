@@ -1,10 +1,14 @@
 import React from 'react'
-import AppointmentList from './AppointmentList'
+import GlobalStyles from './GlobalStyles'
+import Header from './pages/Header'
+import Page from './pages/Page'
 
 function App() {
   return (
     <React.Fragment>
-      <AppointmentList />
+      <GlobalStyles></GlobalStyles>
+      <Header></Header>
+      <Page></Page>
     </React.Fragment>
   )
 }

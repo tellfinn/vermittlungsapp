@@ -21,14 +21,10 @@ export default function Appointment({
 }
 
 const AppointmentStyled = styled.li`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  div {
-    flex: 1 0 30%;
-  }
-  justify-content: space-between;
-  background-color: #d9e0e7;
-  padding: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 2;
+  padding: 20px;
+  background-color: var(--slate-grey);
   text-align: justify;
 `

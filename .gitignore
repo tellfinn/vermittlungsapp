@@ -2,6 +2,7 @@
 
 ./server
 /server.js
+./sicherung
 
 # dependencies
 /node_modules
