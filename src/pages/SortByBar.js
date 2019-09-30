@@ -35,10 +35,11 @@ const SortBtnStyled = styled.button`
   background-color: var(--slate-grey);
   border: none;
   font-size: 16px;
-  vertical-align: middle;
+  line-height: 2em;
 `
 
 const ArrowStyled = styled(Arrow)`
   width: 20px;
-  height: 16px;
+  height: 20px;
+  padding-top: 10px;
 `
