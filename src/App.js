@@ -1,12 +1,7 @@
 import React from 'react'
-import AppointmentList from './AppointmentList'
 
 function App() {
-  return (
-    <React.Fragment>
-      <AppointmentList />
-    </React.Fragment>
-  )
+  return <React.Fragment></React.Fragment>
 }
 
 export default App
