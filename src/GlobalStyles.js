@@ -16,5 +16,6 @@ export default createGlobalStyle`
 display: grid; 
 margin: 0;
 font-family: 'Lato', sans-serif;
+overflow: hidden
   }
 `

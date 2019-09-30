@@ -28,6 +28,78 @@ export default function AppointmentList() {
         language='arabisch'
         addressShortened='UKE O10'
       />
+      <Appointment
+        date='01.10.2019'
+        day='Dienstag'
+        time='10:00-11:00'
+        duration='1'
+        language='arabisch'
+        addressShortened='UKE O10'
+      />
+      <Appointment
+        date='01.10.2019'
+        day='Dienstag'
+        time='10:00-11:00'
+        duration='1'
+        language='arabisch'
+        addressShortened='UKE O10'
+      />
+      <Appointment
+        date='01.10.2019'
+        day='Dienstag'
+        time='10:00-11:00'
+        duration='1'
+        language='arabisch'
+        addressShortened='UKE O10'
+      />
+      <Appointment
+        date='01.10.2019'
+        day='Dienstag'
+        time='10:00-11:00'
+        duration='1'
+        language='arabisch'
+        addressShortened='UKE O10'
+      />
+      <Appointment
+        date='01.10.2019'
+        day='Dienstag'
+        time='10:00-11:00'
+        duration='1'
+        language='arabisch'
+        addressShortened='UKE O10'
+      />
+      <Appointment
+        date='01.10.2019'
+        day='Dienstag'
+        time='10:00-11:00'
+        duration='1'
+        language='arabisch'
+        addressShortened='UKE O10'
+      />
+      <Appointment
+        date='01.10.2019'
+        day='Dienstag'
+        time='10:00-11:00'
+        duration='1'
+        language='arabisch'
+        addressShortened='UKE O10'
+      />
+      <Appointment
+        date='01.10.2019'
+        day='Dienstag'
+        time='10:00-11:00'
+        duration='1'
+        language='arabisch'
+        addressShortened='UKE O10'
+      />
+      <Appointment
+        date='01.10.2019'
+        day='Dienstag'
+        time='10:00-11:00'
+        duration='1'
+        language='arabisch'
+        addressShortened='UKE O10'
+      />
     </AppointmentListStyled>
   )
 }
