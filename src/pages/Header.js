@@ -12,14 +12,16 @@ export default function Header() {
       Titel
       <NewsBtnStyled>
         10
-        <Arrow></Arrow>
+        <ArrowStyled />
       </NewsBtnStyled>
     </HeaderStyled>
   )
 }
 
 const HeaderStyled = styled.header`
-  height: 60px;
+  height: 50px;
+  width: 100%;
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -32,16 +34,22 @@ const HeaderStyled = styled.header`
 const HeaderBtnStyled = styled.button`
   display: grid;
   justify-content: center;
-  height: 60px;
-  width: 60px;
+  padding-top: 0;
+  height: 50px;
+  width: 50px;
   background-color: var(--greyish);
   border: 0;
 `
 
 const NewsBtnStyled = styled(HeaderBtnStyled)`
   grid-auto-rows: 2;
-  padding: 10px;
+  padding: 8px;
   color: red;
   font-weight: bold;
   font-size: 18px;
+`
+
+const ArrowStyled = styled(Arrow)`
+  height: 22px;
+  width: 50px;
 `

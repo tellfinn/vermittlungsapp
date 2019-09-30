@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components/macro'
 
 export default createGlobalStyle`
-
+scrollbar-width: none;
   * {
     box-sizing: border-box;
   }
@@ -16,6 +16,6 @@ export default createGlobalStyle`
 display: grid; 
 margin: 0;
 font-family: 'Lato', sans-serif;
-overflow: hidden
+
   }
 `
