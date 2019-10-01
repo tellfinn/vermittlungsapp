@@ -1,8 +1,8 @@
 {
-  "name": "flashcards-react-jerry",
+  "name": "dolmetscher-vermittlungs-app",
   "author": {
-    "name": "Jeremias Erbs",
-    "email": "jerry@badabam.de"
+    "name": "Tobias-Finn El Lebeidy",
+    "email": "t.ellebeidy@gmx.de"
   },
   "version": "0.1.0",
   "proxy": "http://localhost:3333",
