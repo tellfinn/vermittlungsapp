@@ -1,25 +1,25 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { ReactComponent as MenuBars } from '../icons/menu.svg'
+import { ReactComponent as MenuIcon } from '../icons/menu.svg'
 import { ReactComponent as Arrow } from '../icons/arrow-down.svg'
 
 export default function Header() {
   return (
     <HeaderStyled>
       <HeaderBtnStyled>
-        <MenuBars />
+        <MenuIconStyled />
       </HeaderBtnStyled>
       Titel
-      <NewsBtnStyled>
+      <NotificationsBtnStyled>
         10
         <ArrowStyled />
-      </NewsBtnStyled>
+      </NotificationsBtnStyled>
     </HeaderStyled>
   )
 }
 
 const HeaderStyled = styled.header`
-  height: 50px;
+  height: 40px;
   width: 100%;
   position: fixed;
   display: flex;
@@ -33,23 +33,28 @@ const HeaderStyled = styled.header`
 
 const HeaderBtnStyled = styled.button`
   display: grid;
-  justify-content: center;
+  text-align: center;
   padding-top: 0;
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
   background-color: var(--greyish);
   border: 0;
 `
 
-const NewsBtnStyled = styled(HeaderBtnStyled)`
+const NotificationsBtnStyled = styled(HeaderBtnStyled)`
   grid-auto-rows: 2;
-  padding: 8px;
   color: red;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px;
 `
 
 const ArrowStyled = styled(Arrow)`
-  height: 22px;
-  width: 50px;
+  height: 18px;
+  width: 30px;
+`
+
+const MenuIconStyled = styled(MenuIcon)`
+  height: 30px;
+  width: 30px;
+  margin: auto;
 `

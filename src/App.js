@@ -1,8 +1,7 @@
 import React from 'react'
 import GlobalStyles from './GlobalStyles'
-import Header from './pages/Header'
-import Page from './pages/Page'
-import Footer from './pages/Footer'
+import Header from './common/Header'
+import Page from './common/Page'
 
 function App() {
   return (
@@ -10,7 +9,6 @@ function App() {
       <GlobalStyles></GlobalStyles>
       <Header />
       <Page />
-      <Footer />
     </React.Fragment>
   )
 }

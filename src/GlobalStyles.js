@@ -14,8 +14,8 @@ scrollbar-width: none;
   
   body {
 display: grid; 
+grid-template-rows: 50px auto;
 margin: 0;
 font-family: 'Lato', sans-serif;
-
   }
 `
