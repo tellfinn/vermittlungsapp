@@ -1,0 +1,29 @@
+[
+  {
+    "date": "01.10.2019",
+    "time": "10:00",
+    "language": "arabisch",
+    "writtenTranslations": false,
+    "swornIn": false,
+    "clinic": "UKE",
+    "house": "O10"
+  },
+  {
+    "date": "02.10.2019",
+    "time": "10:00",
+    "language": "englisch",
+    "writtenTranslations": false,
+    "swornIn": false,
+    "clinic": "UKE",
+    "house": "W37"
+  },
+  {
+    "date": "20.10.2019",
+    "time": "10:00",
+    "language": "englisch",
+    "writtenTranslations": false,
+    "swornIn": false,
+    "clinic": "AKK",
+    "house": "I3"
+  }
+]

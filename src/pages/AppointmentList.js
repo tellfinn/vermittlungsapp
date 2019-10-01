@@ -1,126 +1,33 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import { ReactComponent as CalendarIcon } from '../icons/calendar.svg'
-
+import appointmentArray from '../server/data/appointments.json'
 export default function AppointmentList() {
   return (
     <AppointmentPage>
       <AppointmentListStyled>
-        <Appointment
-          date='01.10.2019'
-          day='Dienstag'
-          time='10:00-11:00'
-          duration='1'
-          language='arabisch'
-          addressShortened='UKE O10'
-        />
-        <Appointment
-          date='01.10.2019'
-          day='Dienstag'
-          time='10:00-11:00'
-          duration='1'
-          language='arabisch'
-          addressShortened='UKE O10'
-        />
-        <Appointment
-          date='01.10.2019'
-          day='Dienstag'
-          time='10:00-11:00'
-          duration='1'
-          language='arabisch'
-          addressShortened='UKE O10'
-        />
-        <Appointment
-          date='01.10.2019'
-          day='Dienstag'
-          time='10:00-11:00'
-          duration='1'
-          language='arabisch'
-          addressShortened='UKE O10'
-        />
-        <Appointment
-          date='01.10.2019'
-          day='Dienstag'
-          time='10:00-11:00'
-          duration='1'
-          language='arabisch'
-          addressShortened='UKE O10'
-        />
-        <Appointment
-          date='01.10.2019'
-          day='Dienstag'
-          time='10:00-11:00'
-          duration='1'
-          language='arabisch'
-          addressShortened='UKE O10'
-        />
-        <Appointment
-          date='01.10.2019'
-          day='Dienstag'
-          time='10:00-11:00'
-          duration='1'
-          language='arabisch'
-          addressShortened='UKE O10'
-        />
-        <Appointment
-          date='01.10.2019'
-          day='Dienstag'
-          time='10:00-11:00'
-          duration='1'
-          language='arabisch'
-          addressShortened='UKE O10'
-        />
-        <Appointment
-          date='01.10.2019'
-          day='Dienstag'
-          time='10:00-11:00'
-          duration='1'
-          language='arabisch'
-          addressShortened='UKE O10'
-        />
-        <Appointment
-          date='01.10.2019'
-          day='Dienstag'
-          time='10:00-11:00'
-          duration='1'
-          language='arabisch'
-          addressShortened='UKE O10'
-        />
-        <Appointment
-          date='01.10.2019'
-          day='Dienstag'
-          time='10:00-11:00'
-          duration='1'
-          language='arabisch'
-          addressShortened='UKE O10'
-        />
-        <Appointment
-          date='01.10.2019'
-          day='Dienstag'
-          time='10:00-11:00'
-          duration='1'
-          language='arabisch'
-          addressShortened='UKE O10'
-        />
+        {appointmentArray.map(appointment => (
+          <Appointment key={appointment._id} {...appointment} />
+        ))}
       </AppointmentListStyled>
-      <ExportBar></ExportBar>
     </AppointmentPage>
   )
 }
 
-function Appointment({ date, time, day, duration, addressShortened }) {
+function Appointment({ date, time, day, duration, clinic, house }) {
   return (
     <AppointmentStyled>
       <div>{date}</div>
       <div>{time}</div>
-      <div>{addressShortened}</div>
+      <div>{clinic}</div>
       <div> {day} </div>
       <div> ca. {duration} Std</div>
+      <div> {house} </div>
     </AppointmentStyled>
   )
 }
 
-function ExportBar() {
+/* function ExportBar() {
   return (
     <ExportBarStyled>
       <CalendarBtnStyled>
@@ -129,7 +36,7 @@ function ExportBar() {
       </CalendarBtnStyled>
     </ExportBarStyled>
   )
-}
+} */
 
 const AppointmentPage = styled.div``
 
@@ -152,7 +59,7 @@ const AppointmentStyled = styled.li`
   background-color: var(--greyish);
 `
 
-const ExportBarStyled = styled.footer`
+/* const ExportBarStyled = styled.footer`
   position: fixed;
   bottom: 0;
   display: flex;
@@ -190,3 +97,5 @@ const CalendarIconStyled = styled(CalendarIcon)`
   height: 30px;
   width: 30px;
 `
+
+*/
