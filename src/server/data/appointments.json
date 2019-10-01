@@ -18,6 +18,15 @@
     "house": "W37"
   },
   {
+    "date": "02.12.2019",
+    "time": "10:00",
+    "language": "englisch",
+    "writtenTranslations": false,
+    "swornIn": false,
+    "clinic": "AKK",
+    "house": "I1"
+  },
+  {
     "date": "20.10.2019",
     "time": "10:00",
     "language": "englisch",
