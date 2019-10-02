@@ -1,15 +1,8 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import AppointmentList from '../pages/AppointmentList'
-import SortByBar from '../pages/SortByBar'
 
-export default function Page() {
-  return (
-    <PageStyled>
-      <SortByBar />
-      <AppointmentList></AppointmentList>
-    </PageStyled>
-  )
+export default function Page({ children }) {
+  return <PageStyled>{children}</PageStyled>
 }
 
 const PageStyled = styled.main`

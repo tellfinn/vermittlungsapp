@@ -1,50 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ReactComponent as Arrow } from '../icons/arrow-down.svg'
-import appointmentArray from '../server/data/appointments.json'
 
 export default function SortByBar() {
   return (
     <SortByBarStyled>
-      <SortBtnStyled onClick={sortByDate}>
+      <SortBtnStyled>
         Datum
         <ArrowStyled />
       </SortBtnStyled>
 
-      <SortBtnStyled onClick={sortByTime}>
+      <SortBtnStyled>
         Uhrzeit
         <ArrowStyled />
       </SortBtnStyled>
 
-      <SortBtnStyled onClick={sortByClinic}>
+      <SortBtnStyled>
         Ort
         <ArrowStyled />
       </SortBtnStyled>
     </SortByBarStyled>
-  )
-}
-
-function sortByDate() {
-  console.log(
-    appointmentArray.slice().sort((a, b) => {
-      return new Date(b.date) - new Date(a.date)
-    })
-  )
-}
-
-function sortByTime() {
-  console.log(
-    appointmentArray.slice().sort((a, b) => {
-      return a.time > b.time
-    })
-  )
-}
-
-function sortByClinic() {
-  console.log(
-    appointmentArray.slice().sort((a, b) => {
-      return a.clinic > b.clinic
-    })
   )
 }
 
