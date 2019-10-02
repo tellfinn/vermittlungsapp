@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import GlobalStyles from './GlobalStyles'
 import Header from './common/Header'
 import Page from './common/Page'

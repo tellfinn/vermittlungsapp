@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components/macro'
+import { getAppointments, patchAppointment, postAppointment } from './services'
 import { ReactComponent as CalendarIcon } from '../icons/calendar.svg'
-import appointmentArray from '../server/data/appointments.json'
 
 export default function AppointmentList() {
-  const appointments = appointmentArray
+  const [appointments, setAppointments] = useState([])
+
+  useEffect(() => {
+    getAppointments().then(setAppointments)
+  }, [])
 
   return (
     <AppointmentPage>
