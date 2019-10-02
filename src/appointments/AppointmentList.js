@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
 import Appointment from './Appointment'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { getAppointments, patchAppointment, postAppointment } from './services'
+import { getAppointments } from './services'
 
 export default function AppointmentList() {
   const [appointments, setAppointments] = useState([])
@@ -11,13 +10,34 @@ export default function AppointmentList() {
     getAppointments().then(setAppointments)
   }, [])
 
-  return (
-    <AppointmentListStyled>
-      {appointments.map(appointment => (
-        <Appointment key={appointment._id} {...appointment} />
-      ))}
-    </AppointmentListStyled>
-  )
+  return <AppointmentListStyled>{sortByDate()}</AppointmentListStyled>
+
+  function sortByDate() {
+    const sortedAppointments = appointments.slice().sort((a, b) => {
+      return new Date(a.date) - new Date(b.date)
+    })
+    return sortedAppointments.map(appointment => (
+      <Appointment key={appointment._id} {...appointment} />
+    ))
+  }
+
+  function sortByTime() {
+    const sortedAppointments = appointments.slice().sort((a, b) => {
+      return new Date(a.date).getHours() - new Date(b.date).getHours()
+    })
+    return sortedAppointments.map(appointment => (
+      <Appointment key={appointment._id} {...appointment} />
+    ))
+  }
+
+  function sortByClinic() {
+    const sortedAppointments = appointments.slice().sort((a, b) => {
+      return a.clinic > b.clinic
+    })
+    return sortedAppointments.map(appointment => (
+      <Appointment key={appointment._id} {...appointment} />
+    ))
+  }
 }
 
 const AppointmentListStyled = styled.ul`
