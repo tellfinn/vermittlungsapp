@@ -1,7 +1,8 @@
 [
   {
-    "date": "01.10.2019",
+    "date": "2019-10-01",
     "time": "10:00",
+    "duration": 1,
     "language": "arabisch",
     "writtenTranslations": false,
     "swornIn": false,
@@ -9,8 +10,9 @@
     "house": "O10"
   },
   {
-    "date": "02.10.2019",
-    "time": "10:00",
+    "date": "2019-10-02",
+    "time": "11:00",
+    "duration": 1,
     "language": "englisch",
     "writtenTranslations": false,
     "swornIn": false,
@@ -18,8 +20,9 @@
     "house": "W37"
   },
   {
-    "date": "02.12.2019",
-    "time": "10:00",
+    "date": "2019-12-02",
+    "time": "15:00",
+    "duration": 1,
     "language": "englisch",
     "writtenTranslations": false,
     "swornIn": false,
@@ -27,8 +30,9 @@
     "house": "I1"
   },
   {
-    "date": "20.10.2019",
+    "date": "2019-10-20",
     "time": "10:00",
+    "duration": 1,
     "language": "englisch",
     "writtenTranslations": false,
     "swornIn": false,

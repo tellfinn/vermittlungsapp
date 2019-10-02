@@ -2,12 +2,19 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import { ReactComponent as CalendarIcon } from '../icons/calendar.svg'
 import appointmentArray from '../server/data/appointments.json'
+
 export default function AppointmentList() {
+  const appointments = appointmentArray
+
   return (
     <AppointmentPage>
       <AppointmentListStyled>
-        {appointmentArray.map(appointment => (
-          <Appointment key={appointment._id} {...appointment} />
+        {appointments.map(appointment => (
+          <Appointment
+            key={appointment._id}
+            date={new Date(appointment.date).toString()}
+            {...appointment}
+          />
         ))}
       </AppointmentListStyled>
     </AppointmentPage>
@@ -26,6 +33,18 @@ function Appointment({ date, time, day, duration, clinic, house }) {
     </AppointmentStyled>
   )
 }
+
+/*
+  const aptDate = new Date(Date(date))
+  console.log(Date().toString())
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric'
+  }
+
+  console.log(aptDate.toLocaleDateString('de-DE', options))*/
 
 /* function ExportBar() {
   return (
