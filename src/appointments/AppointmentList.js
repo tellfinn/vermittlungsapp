@@ -14,11 +14,7 @@ export default function AppointmentList() {
   return (
     <AppointmentListStyled>
       {appointments.map(appointment => (
-        <Appointment
-          key={appointment._id}
-          date={new Date(appointment.date).toString()}
-          {...appointment}
-        />
+        <Appointment key={appointment._id} {...appointment} />
       ))}
     </AppointmentListStyled>
   )

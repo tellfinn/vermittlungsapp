@@ -1,24 +1,34 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 
-export default function Appointment({
-  date,
-  time,
-  day,
-  duration,
-  clinic,
-  house
-}) {
+export default function Appointment({ date, time, duration, clinic, house }) {
   return (
     <AppointmentStyled>
-      <div>{date}</div>
+      <div>{stringifyDate(date)}</div>
       <div>{time}</div>
       <div>{clinic}</div>
-      <div> {day} </div>
+      <div> {stringifyDay(date)} </div>
       <div> ca. {duration} Std</div>
       <div> {house} </div>
     </AppointmentStyled>
   )
+
+  function stringifyDate(date) {
+    const newdate = new Date(date).toLocaleDateString('de-DE', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    })
+    return newdate
+  }
+
+  function stringifyDay(date) {
+    const weekdayName = new Date(date).toLocaleString('de-DE', {
+      weekday: 'long'
+    })
+
+    return weekdayName
+  }
 }
 
 const AppointmentStyled = styled.li`
