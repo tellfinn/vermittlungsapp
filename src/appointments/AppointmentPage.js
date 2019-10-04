@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { getAppointments } from './services'
 import Page from '../common/Page'
 import AppointmentList from './AppointmentList'
@@ -33,11 +32,6 @@ export default function AppointmentPage() {
       {renderAppointmentList()}
     </Page>
   )
-
-  function handleSortBtnClick(sortBy) {
-    console.log('bin da')
-    return <AppointmentList>{renderAppointments(sortBy)}</AppointmentList>
-  }
 
   function renderAppointments(sortByProp = 'date') {
     let sortedAppointments
