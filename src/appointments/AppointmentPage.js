@@ -7,16 +7,30 @@ import Appointment from './Appointment'
 import SortByBar from './SortByBar'
 
 export default function AppointmentPage() {
+  const [activeIndex, setActiveIndex] = useState(0)
   let [appointments, setAppointments] = useState([])
 
   useEffect(() => {
     getAppointments().then(setAppointments)
   }, [])
 
+  function renderAppointmentList() {
+    const appointmentList = {
+      0: <AppointmentList>{renderAppointments('date')}</AppointmentList>,
+      1: <AppointmentList>{renderAppointments('time')}</AppointmentList>,
+      2: <AppointmentList>{renderAppointments('clinic')}</AppointmentList>
+    }
+
+    return appointmentList[activeIndex] || <section>404</section>
+  }
+
   return (
     <Page>
-      <SortByBar handleSortClick={handleSortBtnClick} />
-      <AppointmentList>{renderAppointments('date')}</AppointmentList>
+      <SortByBar
+        buttonTexts={['Datum', 'Uhrzeit', 'Ort']}
+        handleSortClick={setActiveIndex}
+      />
+      {renderAppointmentList()}
     </Page>
   )
 
