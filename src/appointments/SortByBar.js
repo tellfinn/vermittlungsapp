@@ -1,24 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ReactComponent as Arrow } from '../icons/arrow-down.svg'
+import SortBtn from './SortBtn'
 
-export default function SortByBar() {
+export default function SortByBar({ handleSortClick }) {
   return (
     <SortByBarStyled>
-      <SortBtnStyled>
-        Datum
-        <ArrowStyled />
-      </SortBtnStyled>
+      <SortBtn
+        handleClick={() => handleSortClick('date')}
+        value='date'
+        text='Datum'
+      />
 
-      <SortBtnStyled>
-        Uhrzeit
-        <ArrowStyled />
-      </SortBtnStyled>
+      <SortBtn
+        handleClick={() => handleSortClick('time')}
+        value='time'
+        text='Uhrzeit'
+      />
 
-      <SortBtnStyled>
-        Ort
-        <ArrowStyled />
-      </SortBtnStyled>
+      <SortBtn
+        handleClick={() => handleSortClick('clinic')}
+        value='clinic'
+        text='Ort'
+      />
     </SortByBarStyled>
   )
 }
@@ -27,19 +30,4 @@ const SortByBarStyled = styled.nav`
   display: flex;
   justify-content: space-between;
   width: 100%;
-`
-
-const SortBtnStyled = styled.button`
-  height: 40px;
-  width: 90px;
-  background-color: var(--slate-grey);
-  border: none;
-  font-size: 16px;
-  line-height: 2em;
-`
-
-const ArrowStyled = styled(Arrow)`
-  width: 20px;
-  height: 20px;
-  padding-top: 10px;
 `

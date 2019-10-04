@@ -15,12 +15,17 @@ export default function AppointmentPage() {
 
   return (
     <Page>
-      <SortByBar />
+      <SortByBar handleSortClick={handleSortBtnClick} />
       <AppointmentList>{renderAppointments('date')}</AppointmentList>
     </Page>
   )
 
-  function renderAppointments(sortByProp) {
+  function handleSortBtnClick(sortBy) {
+    console.log('bin da')
+    return <AppointmentList>{renderAppointments(sortBy)}</AppointmentList>
+  }
+
+  function renderAppointments(sortByProp = 'date') {
     let sortedAppointments
     if (sortByProp === 'date') {
       sortedAppointments = appointments.slice().sort((a, b) => {
