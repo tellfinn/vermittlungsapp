@@ -25,7 +25,7 @@ const HeaderStyled = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--slate-grey);
+  background-color: var(--blueish);
   font-size: 22px;
   font-weight: bold;
   color: white;

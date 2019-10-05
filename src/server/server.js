@@ -14,3 +14,4 @@ server.use(cors())
 server.set('json spaces', 2)
 
 server.use('/appointments', require('./routes/appointments'))
+server.use('/languages', require('./routes/languages'))

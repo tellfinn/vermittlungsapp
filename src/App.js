@@ -1,14 +1,15 @@
 import React from 'react'
 import GlobalStyles from './GlobalStyles'
 import Header from './common/Header'
-import AppointmentPage from './appointments/AppointmentPage'
+import AppointmentInputForm from './appointmentinput/AppointmentInputForm'
+//import AppointmentPage from './appointments/AppointmentPage'
 
 function App() {
   return (
     <React.Fragment>
       <GlobalStyles></GlobalStyles>
       <Header />
-      <AppointmentPage />
+      <AppointmentInputForm />
     </React.Fragment>
   )
 }

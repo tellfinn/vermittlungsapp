@@ -7,7 +7,7 @@ scrollbar-width: none;
   }
 
   :root {
-  --slate-grey: #6c8aa5;
+  --blueish: #216ba5;
   --greyish: #d9e0e7;
 }
 

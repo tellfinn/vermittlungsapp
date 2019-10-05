@@ -24,7 +24,7 @@ const SortByBarStyled = styled.nav`
 const SortBtnStyled = styled.button`
   height: 40px;
   width: 90px;
-  background-color: var(--slate-grey);
+  background-color: var(--blueish);
   border: none;
   font-size: 16px;
   line-height: 2em;
