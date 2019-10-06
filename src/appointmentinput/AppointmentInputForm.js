@@ -6,7 +6,7 @@ import MyDatepicker from './Datepicker'
 import SubmitButton from './SubmitButton'
 
 export default function AppointmentInputForm() {
-  const { checkboxValue, setCheckboxValue } = useState('UKE')
+  const [checkboxValue, setCheckboxValue] = useState('UKE')
 
   function handleRadioChange(event) {
     setCheckboxValue(event.target.value)
@@ -70,7 +70,7 @@ export default function AppointmentInputForm() {
               name='clinic'
               value='UKE'
               checked={checkboxValue === 'UKE'}
-              onChange={event => handleRadioChange}
+              onChange={handleRadioChange}
             />
             UKE
           </label>
@@ -80,7 +80,7 @@ export default function AppointmentInputForm() {
               name='clinic'
               value='AKK'
               checked={checkboxValue === 'AKK'}
-              onChange={event => handleRadioChange}
+              onChange={handleRadioChange}
             />
             AKK
           </label>
@@ -90,7 +90,7 @@ export default function AppointmentInputForm() {
               name='clinic'
               value='PNZ'
               checked={checkboxValue === 'PNZ'}
-              onChange={event => handleRadioChange}
+              onChange={handleRadioChange}
             />
             PNZ
           </label>
