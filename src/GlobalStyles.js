@@ -9,6 +9,8 @@ scrollbar-width: none;
   :root {
   --blueish: #216ba5;
   --greyish: #d9e0e7;
+  --green: #237726;
+  --red: #963D3D;
 }
 
   

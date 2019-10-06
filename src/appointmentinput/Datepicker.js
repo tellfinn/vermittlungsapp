@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker'
+import DatePicker, { registerLocale } from 'react-datepicker'
 import de from 'date-fns/locale/de'
 import 'react-datepicker/dist/react-datepicker.css'
 registerLocale('de', de)
 
 export default function MyDatepicker() {
-  const [startDate, setStartDate] = useState(new Date())
+  const [startDate, setStartDate] = useState(Date.now())
   return (
-    <DatePicker
+    <DatePickerStyled
       selected={startDate}
       onChange={date => setStartDate(date)}
       locale='de'
@@ -22,3 +22,7 @@ export default function MyDatepicker() {
     />
   )
 }
+
+const DatePickerStyled = styled(DatePicker)`
+  font-size: inherit;
+`

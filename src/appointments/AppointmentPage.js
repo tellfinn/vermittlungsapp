@@ -20,7 +20,7 @@ export default function AppointmentPage() {
       2: <AppointmentList>{renderAppointments('clinic')}</AppointmentList>
     }
 
-    return appointmentList[activeIndex] || <section>404</section>
+    return appointmentList[activeIndex] || <section>keine Termine</section>
   }
 
   return (

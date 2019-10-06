@@ -3,7 +3,7 @@ import Select from 'react-select'
 import styled from 'styled-components/macro'
 import { getLanguages } from './services'
 
-export default function LanguageOptions({ title }) {
+export default function LanguageOptions({ name }) {
   let [languages, setLanguages] = useState([])
   useEffect(() => {
     getLanguages().then(setLanguages)
@@ -15,10 +15,18 @@ export default function LanguageOptions({ title }) {
       return a.name > b.name
     })
 
+  function handleLanguageChange(event) {
+    setLanguages(event.target.value)
+  }
+
   return (
     <LanguageOptionsStyled>
-      {title}
-      <Select placeholder='Sprache' isMulti options={options}></Select>
+      {name}
+      <Select
+        placeholder='Sprache'
+        isMulti
+        options={options}
+        onChange={() => handleLanguageChange}></Select>
     </LanguageOptionsStyled>
   )
 }
