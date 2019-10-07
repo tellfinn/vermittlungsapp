@@ -1,13 +1,15 @@
 const mongoose = require('mongoose')
 
 const Appointment = mongoose.model('Appointment', {
-  date: Date,
-  language: String,
+  appointmentDate: Date,
+  appLanguage: String,
+  alternativeAppLanguage: String,
   duration: Number,
   clinic: String,
-  house: String,
+  station: String,
+  favorites: Boolean,
   swornIn: Boolean,
-  writtenTranslations: Boolean,
+  writtenTranslation: Boolean,
   message: String
 })
 

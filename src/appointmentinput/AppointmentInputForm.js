@@ -3,14 +3,21 @@ import styled from 'styled-components/macro'
 import Page from '../common/Page'
 import LanguageOptions from './LanguageOptions'
 import MyDatepicker from './Datepicker'
+import { postAppointment } from '../appointments/services'
 import SubmitButton from './SubmitButton'
 import { getLanguages } from './services'
 
 export default function AppointmentInputForm() {
   const [languages, setLanguages] = useState([])
-  const [selectedLanguage, setSelectedLanguage] = useState({})
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    'no language selected'
+  )
+  const [
+    selectedAlternativeLanguage,
+    setSelectedAlternativeLanguage
+  ] = useState('no language selected')
   const [checkboxValue, setCheckboxValue] = useState('UKE')
-  const [appointmentDate, setAppointmentDate] = useState(Date.now())
+  const [date, setDate] = useState(Date.now())
 
   useEffect(() => {
     getLanguages().then(setLanguages)
@@ -18,12 +25,14 @@ export default function AppointmentInputForm() {
 
   function handleLanguageChange(event) {
     setSelectedLanguage(event)
-    console.log(selectedLanguage)
+  }
+
+  function handleAlternativeLanguageChange(event) {
+    setSelectedAlternativeLanguage(event)
   }
 
   function handleDateChange(value) {
-    setAppointmentDate(value)
-    console.log(appointmentDate)
+    setDate(value)
   }
 
   function handleRadioChange(event) {
@@ -34,9 +43,18 @@ export default function AppointmentInputForm() {
     event.preventDefault()
     const form = event.target
     const formData = new FormData(form)
+    const appLanguage = selectedLanguage[0].value
+    const alternativeAppLanguage = selectedAlternativeLanguage[0].value
+    let appointmentDate = new Date(date)
     let data = Object.fromEntries(formData)
-    data = { ...data, appointmentDate, selectedLanguage }
+    data = {
+      ...data,
+      appointmentDate,
+      appLanguage,
+      alternativeAppLanguage
+    }
     console.log(data)
+    postAppointment(data)
     form.reset()
   }
 
@@ -52,11 +70,7 @@ export default function AppointmentInputForm() {
       return a.name > b.name
     })
 
-  const alternativeLanguageOptions = languages
-    .map(language => ({ value: language.name, label: language.name }))
-    .sort((a, b) => {
-      return a.name > b.name
-    })
+  const alternativeLanguageOptions = languageOptions
 
   return (
     <Page>
@@ -67,15 +81,23 @@ export default function AppointmentInputForm() {
           options={languageOptions}></LanguageOptions>
         <LanguageOptions
           name='Alternativsprache'
-          options={alternativeLanguageOptions}></LanguageOptions>
+          options={alternativeLanguageOptions}
+          handleChange={handleAlternativeLanguageChange}></LanguageOptions>
         <label>
           <input type='checkbox' name='favorites' />
           nur an Favoriten
         </label>
+        <label>
+          <input type='checkbox' name='writtenTranlation'></input> schriftliche
+          Übersetzung
+        </label>
+        <label>
+          <input type='checkbox' name='swornIn'></input> vereidigt
+        </label>
 
         <MyDatepicker
           name='date'
-          date={appointmentDate}
+          date={date}
           onChange={handleDateChange}></MyDatepicker>
 
         <LabelStyled>
@@ -134,7 +156,8 @@ export default function AppointmentInputForm() {
         <label>
           <MessageField
             type='textarea'
-            placeholder='weitere Informationen'></MessageField>
+            placeholder='weitere Informationen'
+            name='message'></MessageField>
         </label>
         <StyleArea>
           <SubmitButton text='abschicken' type='submit' />
