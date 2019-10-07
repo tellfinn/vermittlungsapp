@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
-import { ReactComponent as MenuIcon } from '../icons/menu.svg'
+import MyMenu from './Menu'
 import { ReactComponent as Arrow } from '../icons/arrow-down.svg'
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  function closeMenu() {
+    setIsMenuOpen({ isMenuOpen: 0 })
+  }
+
   return (
     <HeaderStyled>
-      <HeaderBtnStyled>
-        <MenuIconStyled />
-      </HeaderBtnStyled>
+      <BtnArea>
+        <MyMenu handleMenuItemClick={closeMenu} menuState={isMenuOpen}></MyMenu>
+      </BtnArea>
       Titel
       <NotificationsBtnStyled>
         10
@@ -32,7 +38,16 @@ const HeaderStyled = styled.header`
   color: white;
 `
 
-const HeaderBtnStyled = styled.button`
+const BtnArea = styled.div`
+  text-align: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  background-color: var(--greyish);
+  border: 0;
+`
+
+const NotificationsBtnStyled = styled(BtnArea)`
   display: grid;
   text-align: center;
   padding-top: 0;
@@ -40,9 +55,6 @@ const HeaderBtnStyled = styled.button`
   width: 40px;
   background-color: var(--greyish);
   border: 0;
-`
-
-const NotificationsBtnStyled = styled(HeaderBtnStyled)`
   grid-auto-rows: 2;
   color: red;
   font-weight: bold;
@@ -52,10 +64,4 @@ const NotificationsBtnStyled = styled(HeaderBtnStyled)`
 const ArrowStyled = styled(Arrow)`
   height: 18px;
   width: 30px;
-`
-
-const MenuIconStyled = styled(MenuIcon)`
-  height: 30px;
-  width: 30px;
-  margin: auto;
 `

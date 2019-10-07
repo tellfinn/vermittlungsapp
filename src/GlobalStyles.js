@@ -20,4 +20,19 @@ grid-template-rows: 50px auto;
 margin: 0;
 font-family: 'Lato', sans-serif;
   }
+
+ 
+  .bm-burger-button {
+  position: fixed;
+  width: 40px;
+  height: 30px;
+  left: 0;
+  top: 0;
+}
+
+.bm-burger-bars {
+  margin: 3px;
+  background: #000000;
+}
+
 `
