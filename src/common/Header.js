@@ -6,14 +6,12 @@ import { ReactComponent as Arrow } from '../icons/arrow-down.svg'
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  function closeMenu() {
-    setIsMenuOpen({ isMenuOpen: 0 })
-  }
-
   return (
     <HeaderStyled>
       <BtnArea>
-        <MyMenu handleMenuItemClick={closeMenu} menuState={isMenuOpen}></MyMenu>
+        <MyMenu
+          handleMenuItemClick={() => setIsMenuOpen({ isMenuOpen: false })}
+          menuState={isMenuOpen}></MyMenu>
       </BtnArea>
       Titel
       <NotificationsBtnStyled>
