@@ -14,7 +14,7 @@ export default function AppointmentInputForm() {
     selectedAlternativeLanguage,
     setSelectedAlternativeLanguage
   ] = useState('no language selected')
-  const [checkboxValue, setCheckboxValue] = useState('UKE')
+  const [radioBtnValue, setRadioBtnValue] = useState('UKE')
   const [date, setDate] = useState(Date.now())
 
   useEffect(() => {
@@ -38,7 +38,6 @@ export default function AppointmentInputForm() {
     console.log(data)
     postAppointment(data)
     form.reset()
-    clearLanguagefields()
   }
 
   function handleAbortClick(event) {
@@ -98,7 +97,7 @@ export default function AppointmentInputForm() {
               type='radio'
               name='clinic'
               value='UKE'
-              checked={checkboxValue === 'UKE'}
+              checked={radioBtnValue === 'UKE'}
               onChange={handleRadioChange}
             />
             UKE
@@ -108,7 +107,7 @@ export default function AppointmentInputForm() {
               type='radio'
               name='clinic'
               value='AKK'
-              checked={checkboxValue === 'AKK'}
+              checked={radioBtnValue === 'AKK'}
               onChange={handleRadioChange}
             />
             AKK
@@ -118,7 +117,7 @@ export default function AppointmentInputForm() {
               type='radio'
               name='clinic'
               value='PNZ'
-              checked={checkboxValue === 'PNZ'}
+              checked={radioBtnValue === 'PNZ'}
               onChange={handleRadioChange}
             />
             PNZ
@@ -150,11 +149,6 @@ export default function AppointmentInputForm() {
     </Page>
   )
 
-  function clearLanguagefields() {
-    setSelectedLanguage('')
-    setSelectedAlternativeLanguage('')
-  }
-
   function handleLanguageChange(event) {
     setSelectedLanguage(event)
   }
@@ -168,7 +162,7 @@ export default function AppointmentInputForm() {
   }
 
   function handleRadioChange(event) {
-    setCheckboxValue(event.target.value)
+    setRadioBtnValue(event.target.value)
   }
 }
 
