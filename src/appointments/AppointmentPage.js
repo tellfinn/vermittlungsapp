@@ -5,13 +5,18 @@ import AppointmentList from './AppointmentList'
 import Appointment from './Appointment'
 import SortByBar from './SortByBar'
 
-export default function AppointmentPage() {
+export default function AppointmentPage({ requestAccepted }) {
   const [activeIndex, setActiveIndex] = useState(0)
-  let [appointments, setAppointments] = useState([])
+  const [appointments, setAppointments] = useState([])
 
   useEffect(() => {
     getAppointments().then(setAppointments)
   }, [])
+
+  let sortedAppointments = appointments.filter(
+    appointment => appointment.accepted === requestAccepted
+  )
+  console.log(requestAccepted)
 
   function renderAppointmentList() {
     const appointmentList = {
@@ -33,10 +38,7 @@ export default function AppointmentPage() {
     </Page>
   )
 
-  function sortAppointments({ sortByProp = 'date', requestAccepted = false }) {
-    let sortedAppointments = appointments.filter(
-      appointment => appointment.accepted === requestAccepted
-    )
+  function sortAppointments({ sortByProp = 'date' }) {
     if (sortByProp === 'date') {
       sortedAppointments = sortedAppointments.slice().sort((a, b) => {
         return new Date(a.appointmentDate) - new Date(b.appointmentDate)

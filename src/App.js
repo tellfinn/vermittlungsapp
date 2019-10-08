@@ -12,12 +12,13 @@ function App() {
       <Header />
       <Switch>
         <Route
-          path='/appointments'
-          render={() => <AppointmentPage title='Terminübersicht' />}
+          exact
+          path='/'
+          render={() => <AppointmentPage requestAccepted={false} />}
         />
         <Route
           path='/appointments'
-          render={() => <AppointmentPage title='Terminübersicht' />}
+          render={() => <AppointmentPage requestAccepted={true} />}
         />
         <Route
           path='/newAppointment'
