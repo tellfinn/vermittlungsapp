@@ -24,10 +24,11 @@ font-family: 'Lato', sans-serif;
  
   .bm-burger-button {
   position: fixed;
-  width: 40px;
-  height: 30px;
   left: 0;
   top: 0;
+  width: 40px;
+  height: 30px;
+
 }
 
 .bm-burger-bars {
