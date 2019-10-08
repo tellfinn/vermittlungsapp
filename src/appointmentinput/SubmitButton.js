@@ -18,23 +18,23 @@ export default function SubmitButton({ text, handleClick }) {
 
 const SubmitBtnStyled = styled.button`
   display: flex;
+  padding: 15px;
   justify-content: center;
   border-radius: 5px;
-  padding: 15px;
   color: white;
   font-size: inherit;
 `
 
 const AcceptIconStyled = styled(AcceptIcon)`
-  margin-right: 5px;
-  fill: white;
   width: 20px;
   height: 20px;
+  margin-right: 5px;
+  fill: white;
 `
 
 const AbortIconStyled = styled(AbortIcon)`
-  fill: white;
   width: 20px;
   height: 20px;
   margin-right: 5px;
+  fill: white;
 `

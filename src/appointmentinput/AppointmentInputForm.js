@@ -36,7 +36,6 @@ export default function AppointmentInputForm() {
       alternativeAppLanguage,
       accepted: false
     }
-    console.log(data)
     postAppointment(data)
     form.reset()
   }

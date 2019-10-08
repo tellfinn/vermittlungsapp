@@ -16,7 +16,6 @@ export default function AppointmentPage({ requestAccepted }) {
   let sortedAppointments = appointments.filter(
     appointment => appointment.accepted === requestAccepted
   )
-  console.log(requestAccepted)
 
   function renderAppointmentList() {
     const appointmentList = {

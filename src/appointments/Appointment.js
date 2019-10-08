@@ -55,9 +55,9 @@ const AppointmentStyled = styled.li`
   grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 30px;
   grid-template-rows: 2;
-  padding: 10px;
   height: 60px;
+  padding: 10px;
+  background-color: var(--greyish);
   align-items: space-between;
   text-align: justify;
-  background-color: var(--greyish);
 `

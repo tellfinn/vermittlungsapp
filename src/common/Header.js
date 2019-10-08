@@ -23,37 +23,37 @@ export default function Header() {
 }
 
 const HeaderStyled = styled.header`
-  height: 40px;
-  width: 100%;
   position: fixed;
-  z-index: 99;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 40px;
+  width: 100%;
   background-color: var(--blueish);
   font-size: 22px;
   font-weight: bold;
   color: white;
+  z-index: 99;
 `
 
 const BtnArea = styled.div`
-  text-align: center;
-  justify-content: center;
   height: 40px;
   width: 40px;
+  justify-content: center;
   background-color: var(--greyish);
   border: 0;
+  text-align: center;
 `
 
 const NotificationsBtnStyled = styled(BtnArea)`
   display: grid;
-  text-align: center;
-  padding-top: 0;
+  grid-auto-rows: 2;
   height: 40px;
   width: 40px;
+  padding-top: 0;
   background-color: var(--greyish);
   border: 0;
-  grid-auto-rows: 2;
+  text-align: center;
   color: red;
   font-weight: bold;
   font-size: 16px;

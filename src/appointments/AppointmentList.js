@@ -6,9 +6,9 @@ export default function AppointmentList({ children }) {
 }
 
 const AppointmentListStyled = styled.ul`
-  margin-left: -40px;
   display: grid;
   grid-row-gap: 10px;
-  align-content: center;
+  margin-left: -40px;
   margin-bottom: 55px;
+  align-content: center;
 `
