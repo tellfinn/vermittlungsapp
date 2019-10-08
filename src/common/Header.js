@@ -8,10 +8,10 @@ export default function Header() {
 
   return (
     <HeaderStyled>
-      <BtnArea>
+      <BtnArea onClick={() => setIsMenuOpen(!isMenuOpen)} isOpen={isMenuOpen}>
         <MyMenu
           handleMenuItemClick={() => setIsMenuOpen(!isMenuOpen)}
-          menuState={isMenuOpen}></MyMenu>
+          isOpen={isMenuOpen}></MyMenu>
       </BtnArea>
       Titel
       <NotificationsBtnStyled>

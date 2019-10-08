@@ -16,6 +16,10 @@ function App() {
           render={() => <AppointmentPage title='Terminübersicht' />}
         />
         <Route
+          path='/appointments'
+          render={() => <AppointmentPage title='Terminübersicht' />}
+        />
+        <Route
           path='/newAppointment'
           render={() => (
             <AppointmentInputForm title='Terminanfrage erstellen' />

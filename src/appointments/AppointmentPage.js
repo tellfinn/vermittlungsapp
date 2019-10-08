@@ -15,9 +15,9 @@ export default function AppointmentPage() {
 
   function renderAppointmentList() {
     const appointmentList = {
-      0: <AppointmentList>{renderAppointments('date')}</AppointmentList>,
-      1: <AppointmentList>{renderAppointments('time')}</AppointmentList>,
-      2: <AppointmentList>{renderAppointments('clinic')}</AppointmentList>
+      0: <AppointmentList>{sortAppointments('date')}</AppointmentList>,
+      1: <AppointmentList>{sortAppointments('time')}</AppointmentList>,
+      2: <AppointmentList>{sortAppointments('clinic')}</AppointmentList>
     }
 
     return appointmentList[activeIndex] || <section>keine Termine</section>
@@ -33,21 +33,23 @@ export default function AppointmentPage() {
     </Page>
   )
 
-  function renderAppointments(sortByProp = 'date') {
-    let sortedAppointments
+  function sortAppointments({ sortByProp = 'date', requestAccepted = false }) {
+    let sortedAppointments = appointments.filter(
+      appointment => appointment.accepted === requestAccepted
+    )
     if (sortByProp === 'date') {
-      sortedAppointments = appointments.slice().sort((a, b) => {
+      sortedAppointments = sortedAppointments.slice().sort((a, b) => {
         return new Date(a.appointmentDate) - new Date(b.appointmentDate)
       })
     } else if (sortByProp === 'time') {
-      sortedAppointments = appointments.slice().sort((a, b) => {
+      sortedAppointments = sortedAppointments.slice().sort((a, b) => {
         return (
           new Date(a.appointmentDate).getHours() -
           new Date(b.appointmentDate).getHours()
         )
       })
     } else if (sortByProp === 'clinic') {
-      sortedAppointments = appointments.slice().sort((a, b) => {
+      sortedAppointments = sortedAppointments.slice().sort((a, b) => {
         return a.clinic > b.clinic
       })
     }

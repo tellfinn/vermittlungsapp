@@ -3,9 +3,12 @@ import styled from 'styled-components/macro'
 import { slide as Menu } from 'react-burger-menu'
 import { NavLink } from 'react-router-dom'
 
-export default function MyMenu({ handleMenuItemClick, menuState }) {
+export default function MyMenu({ handleMenuItemClick, isOpen }) {
   return (
-    <StyledMenu isOpen={menuState}>
+    <StyledMenu isOpen={isOpen}>
+      <LinkStyled exact to='/' onClick={handleMenuItemClick}>
+        neue Terminanfragen
+      </LinkStyled>
       <LinkStyled to='/appointments' onClick={handleMenuItemClick}>
         Terminübersicht
       </LinkStyled>

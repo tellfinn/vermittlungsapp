@@ -33,7 +33,8 @@ export default function AppointmentInputForm() {
       ...data,
       appointmentDate,
       appLanguage,
-      alternativeAppLanguage
+      alternativeAppLanguage,
+      accepted: false
     }
     console.log(data)
     postAppointment(data)
