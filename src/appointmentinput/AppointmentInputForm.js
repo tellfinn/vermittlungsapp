@@ -9,9 +9,7 @@ import { getLanguages } from './services'
 
 export default function AppointmentInputForm() {
   const [languages, setLanguages] = useState([])
-  const [selectedLanguage, setSelectedLanguage] = useState(
-    'no language selected'
-  )
+  const [selectedLanguage, setSelectedLanguage] = useState('')
   const [
     selectedAlternativeLanguage,
     setSelectedAlternativeLanguage
@@ -22,22 +20,6 @@ export default function AppointmentInputForm() {
   useEffect(() => {
     getLanguages().then(setLanguages)
   }, [])
-
-  function handleLanguageChange(event) {
-    setSelectedLanguage(event)
-  }
-
-  function handleAlternativeLanguageChange(event) {
-    setSelectedAlternativeLanguage(event)
-  }
-
-  function handleDateChange(value) {
-    setDate(value)
-  }
-
-  function handleRadioChange(event) {
-    setCheckboxValue(event.target.value)
-  }
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -53,9 +35,10 @@ export default function AppointmentInputForm() {
       appLanguage,
       alternativeAppLanguage
     }
-
+    console.log(data)
     postAppointment(data)
     form.reset()
+    clearLanguagefields()
   }
 
   function handleAbortClick(event) {
@@ -166,6 +149,27 @@ export default function AppointmentInputForm() {
       </AppointmentInputFormStyled>
     </Page>
   )
+
+  function clearLanguagefields() {
+    setSelectedLanguage('')
+    setSelectedAlternativeLanguage('')
+  }
+
+  function handleLanguageChange(event) {
+    setSelectedLanguage(event)
+  }
+
+  function handleAlternativeLanguageChange(event) {
+    setSelectedAlternativeLanguage(event)
+  }
+
+  function handleDateChange(value) {
+    setDate(value)
+  }
+
+  function handleRadioChange(event) {
+    setCheckboxValue(event.target.value)
+  }
 }
 
 const AppointmentInputFormStyled = styled.form`

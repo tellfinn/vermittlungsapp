@@ -37,11 +37,14 @@ export default function AppointmentPage() {
     let sortedAppointments
     if (sortByProp === 'date') {
       sortedAppointments = appointments.slice().sort((a, b) => {
-        return new Date(a.date) - new Date(b.date)
+        return new Date(a.appointmentDate) - new Date(b.appointmentDate)
       })
     } else if (sortByProp === 'time') {
       sortedAppointments = appointments.slice().sort((a, b) => {
-        return new Date(a.date).getHours() - new Date(b.date).getHours()
+        return (
+          new Date(a.appointmentDate).getHours() -
+          new Date(b.appointmentDate).getHours()
+        )
       })
     } else if (sortByProp === 'clinic') {
       sortedAppointments = appointments.slice().sort((a, b) => {

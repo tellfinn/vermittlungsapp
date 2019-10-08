@@ -4,13 +4,13 @@ import MyMenu from './Menu'
 import { ReactComponent as Arrow } from '../icons/arrow-down.svg'
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  let [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
     <HeaderStyled>
       <BtnArea>
         <MyMenu
-          handleMenuItemClick={() => setIsMenuOpen({ isMenuOpen: false })}
+          handleMenuItemClick={() => setIsMenuOpen(!isMenuOpen)}
           menuState={isMenuOpen}></MyMenu>
       </BtnArea>
       Titel

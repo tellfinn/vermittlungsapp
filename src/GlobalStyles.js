@@ -32,7 +32,9 @@ font-family: 'Lato', sans-serif;
 
 .bm-burger-bars {
   margin: 3px;
+  margin-top: 5px;
   background: #000000;
+  border-radius: 3px
 }
 
 `

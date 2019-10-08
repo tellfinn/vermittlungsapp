@@ -2,29 +2,29 @@ import React from 'react'
 import styled from 'styled-components/macro'
 
 export default function Appointment({
-  date,
+  appointmentDate,
   time,
   day,
   duration,
   clinic,
-  house
+  station
 }) {
-  time = renderableTime(date)
-  day = renderableDay(date)
+  time = renderableTime(appointmentDate)
+  day = renderableDay(appointmentDate)
 
   return (
     <AppointmentStyled>
-      <div>{renderableDate(date)}</div>
+      <div>{renderableDate(appointmentDate)}</div>
       <div>{time}</div>
       <div>{clinic}</div>
       <div> {day} </div>
       <div> ca. {duration} Std</div>
-      <div> {house} </div>
+      <div> {station} </div>
     </AppointmentStyled>
   )
 
-  function renderableDate(date) {
-    const newdate = new Date(date).toLocaleDateString('de-DE', {
+  function renderableDate(appointmentDate) {
+    const newdate = new Date(appointmentDate).toLocaleDateString('de-DE', {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit'
@@ -32,16 +32,16 @@ export default function Appointment({
     return newdate
   }
 
-  function renderableDay(date) {
-    const weekdayName = new Date(date).toLocaleString('de-DE', {
+  function renderableDay(appointmentDate) {
+    const weekdayName = new Date(appointmentDate).toLocaleString('de-DE', {
       weekday: 'long'
     })
 
     return weekdayName
   }
 
-  function renderableTime(date) {
-    const timeString = new Date(date).toLocaleString('de-DE', {
+  function renderableTime(appointmentDate) {
+    const timeString = new Date(appointmentDate).toLocaleString('de-DE', {
       hour: '2-digit',
       minute: '2-digit'
     })
@@ -53,10 +53,11 @@ export default function Appointment({
 const AppointmentStyled = styled.li`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 30px;
   grid-template-rows: 2;
   padding: 10px;
   height: 60px;
-  align-items: space-around;
+  align-items: space-between;
   text-align: justify;
   background-color: var(--greyish);
 `
