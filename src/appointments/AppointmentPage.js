@@ -31,7 +31,7 @@ export default function AppointmentPage({ requestAccepted }) {
     <Page>
       <SortByBar
         buttonTexts={['Datum', 'Uhrzeit', 'Ort']}
-        handleSortClick={setActiveIndex}
+        handleClick={setActiveIndex}
       />
       {renderAppointmentList()}
     </Page>

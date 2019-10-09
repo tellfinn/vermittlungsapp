@@ -5,7 +5,7 @@ import { ReactComponent as AbortIcon } from '../icons/cancel.svg'
 
 export default function SubmitButton({ text, handleClick }) {
   const btnColor =
-    text === 'abschicken'
+    text === ('abschicken' || 'annehmen')
       ? { backgroundColor: 'var(--green)' }
       : { backgroundColor: 'var(--red)' }
   const Icon = text === 'abschicken' ? AcceptIconStyled : AbortIconStyled

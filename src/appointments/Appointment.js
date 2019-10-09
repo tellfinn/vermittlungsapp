@@ -8,7 +8,10 @@ export default function Appointment({
   duration,
   clinic,
   station,
-  appointmentDetails
+  appLanguage,
+  extension,
+  message,
+  contact
 }) {
   const [showDetails, setShowDetails] = useState(false)
 
@@ -26,24 +29,32 @@ export default function Appointment({
         <div> {station} </div>
       </AppointmentStyled>
       {showDetails && (
-        <AppointmentDetails appLanguage contact extension station message />
+        <AppointmentDetails
+          appointmentDate={appointmentDate}
+          time={time}
+          duration={duration}
+          language={appLanguage}
+          extension={extension}
+          message={message}
+          contact={contact}
+        />
       )}
     </>
   )
 
   function AppointmentDetails({
-    appLanguage,
     contact,
     extension,
-    station,
+    place,
+    language,
     message
   }) {
     return (
       <AppointmentDetailsStyled onClick={hideAppointmentDetails}>
-        <div>Sprache: {appLanguage}</div>
+        <div>Sprache: {language}</div>
         <div>Ansprechpartner: {contact} </div>
         <div>Durchwahl: {extension} </div>
-        <div>Ort: {station} </div>
+        <div>Ort: {place} </div>
         <div>Nachricht: {message} </div>
       </AppointmentDetailsStyled>
     )
@@ -95,21 +106,12 @@ const AppointmentStyled = styled.li`
   text-align: justify;
 `
 
-const Container = styled.div`
-  position: relative;
-  perspective: 1000px;
-  z-index: 1;
-`
 const AppointmentDetailsStyled = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 5;
   grid-gap: 10px;
   width: 100%;
   height: 100%;
   padding: 10px;
   background-color: var(--greyish);
-  transform-style: preserve-3d;
-  transition: all 0.7s linear;
   z-index: 99;
 `

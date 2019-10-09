@@ -18,7 +18,10 @@ scrollbar-width: none;
 display: grid; 
 grid-template-rows: 50px auto;
 margin: 0;
-font-family: 'Lato', sans-serif;
+font-family: Helvetica, sans-serif; 
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.4em;
   }
 
  

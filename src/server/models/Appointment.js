@@ -7,13 +7,14 @@ const Appointment = mongoose.model('Appointment', {
   duration: Number,
   clinic: String,
   station: String,
+  place: String,
+  message: String,
+  extension: Number,
+  contact: String,
   favorites: Boolean,
   swornIn: Boolean,
   writtenTranslation: Boolean,
-  accepted: Boolean,
-  message: String,
-  extension: Number,
-  contact: String
+  accepted: Boolean
 })
 
 module.exports = Appointment

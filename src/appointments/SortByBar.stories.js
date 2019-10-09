@@ -5,4 +5,4 @@ export default {
   title: 'SortByBar'
 }
 
-export const sortByBar = () => <SortByBar />
+export const sortByBar = () => <SortByBar buttonTexts={['hello', 'world']} />

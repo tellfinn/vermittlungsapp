@@ -2,11 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { ReactComponent as Arrow } from '../icons/arrow-down.svg'
 
-export default function SortByBar({ buttonTexts, handleSortClick }) {
+export default function SortByBar({ buttonTexts, handleClick }) {
   return (
     <SortByBarStyled>
       {buttonTexts.map((text, index) => (
-        <SortBtnStyled onClick={() => handleSortClick(index)} key={index}>
+        <SortBtnStyled onClick={() => handleClick(index)} key={index}>
           {text}
           <ArrowStyled />
         </SortBtnStyled>

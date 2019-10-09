@@ -4,7 +4,7 @@ import Page from '../common/Page'
 import LanguageOptions from './LanguageOptions'
 import MyDatepicker from './Datepicker'
 import { postAppointment } from '../appointments/services'
-import SubmitButton from './SubmitButton'
+import SubmitButton from '../common/SubmitButton'
 import { getLanguages } from './services'
 
 export default function AppointmentInputForm() {
