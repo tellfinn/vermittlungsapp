@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
+import { ReactComponent as PhoneIcon } from '../icons/phone-fill.svg'
 
 export default function Appointment({
   appointmentDate,
@@ -37,6 +38,7 @@ export default function Appointment({
           extension={extension}
           message={message}
           contact={contact}
+          contactNumber={getPhoneNumber}
         />
       )}
     </>
@@ -47,13 +49,19 @@ export default function Appointment({
     extension,
     place,
     language,
-    message
+    message,
+    contactNumber
   }) {
     return (
       <AppointmentDetailsStyled onClick={hideAppointmentDetails}>
         <div>Sprache: {language}</div>
         <div>Ansprechpartner: {contact} </div>
-        <div>Durchwahl: {extension} </div>
+        <div>
+          Durchwahl: {extension}{' '}
+          <a href={'tel:' + contactNumber}>
+            <PhoneIconStyled />
+          </a>
+        </div>
         <div>Ort: {place} </div>
         <div>Nachricht: {message} </div>
       </AppointmentDetailsStyled>
@@ -66,6 +74,19 @@ export default function Appointment({
       day: '2-digit'
     })
     return newdate
+  }
+
+  function getPhoneNumber(extension) {
+    let phoneNumber
+    if (clinic === 'UKE') {
+      phoneNumber = '0407410'
+    } else if (clinic === 'AKK') {
+      phoneNumber = '04088908'
+    } else if (clinic === 'PNZ') {
+      phoneNumber = '0401818811'
+    }
+
+    return phoneNumber + extension
   }
 
   function renderableDay(appointmentDate) {
@@ -107,11 +128,22 @@ const AppointmentStyled = styled.li`
 `
 
 const AppointmentDetailsStyled = styled.div`
+  position: absolute;
+  top: 200px;
+  left: auto;
   display: grid;
-  grid-gap: 10px;
-  width: 100%;
-  height: 100%;
   padding: 10px;
+  height: 350px;
+  width: 95%;
   background-color: var(--greyish);
-  z-index: 99;
+  border: 1px solid var(--blueish);
+  transition: all 0.5 ease-in-out;
+  margin-top: -1.5em;
+  margin-bottom: 1.5em;
+  z-index: 90;
+`
+
+const PhoneIconStyled = styled(PhoneIcon)`
+  height: 20px;
+  width: 20px;
 `

@@ -66,8 +66,7 @@ export default function AppointmentInputForm() {
           options={alternativeLanguageOptions}
           handleChange={handleAlternativeLanguageChange}></LanguageOptions>
         <label>
-          <input type='checkbox' name='favorites' />
-          nur an Favoriten
+          <input type='checkbox' name='favorites' /> nur an Favoriten
         </label>
         <label>
           <input type='checkbox' name='writtenTranlation'></input> schriftliche
@@ -180,7 +179,7 @@ const StyleArea = styled.div`
 
 const LabelStyled = styled.label`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 60% auto;
 
   > input {
     width: 100%;
