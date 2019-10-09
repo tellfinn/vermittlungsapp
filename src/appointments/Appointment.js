@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
-import { ReactComponent as PhoneIcon } from '../icons/phone-fill.svg'
+import AppointmentDetails from './AppointmentDetails'
 
 export default function Appointment({
   appointmentDate,
@@ -16,57 +16,50 @@ export default function Appointment({
 }) {
   const [showDetails, setShowDetails] = useState(false)
 
+  const date = renderableDate(appointmentDate)
   time = renderableTime(appointmentDate)
   day = renderableDay(appointmentDate)
+  duration =
+    duration < 1
+      ? duration * 60 + ' Min'
+      : duration % 1 === 0
+      ? duration + ' Std'
+      : calculateDuration(duration)
+
+  function calculateDuration(duration) {
+    const rest = duration % 1
+    const minutes = rest * 60
+    const hours = Math.floor(duration)
+    return hours + ' Std ' + minutes + ' Min'
+  }
 
   return (
     <>
       <AppointmentStyled onClick={toggleAppointmentDetails}>
-        <div>{renderableDate(appointmentDate)}</div>
+        <div>{date}</div>
         <div>{time}</div>
         <div>{clinic}</div>
         <div> {day} </div>
-        <div> ca. {duration} Std</div>
+        <div>ca. {duration}</div>
         <div> {station} </div>
       </AppointmentStyled>
       {showDetails && (
         <AppointmentDetails
-          appointmentDate={appointmentDate}
+          date={date}
           time={time}
           duration={duration}
           language={appLanguage}
           extension={extension}
           message={message}
+          clinic={clinic}
           contact={contact}
-          contactNumber={getPhoneNumber}
+          station={station}
+          handleBodyClick={hideAppointmentDetails}
         />
       )}
     </>
   )
 
-  function AppointmentDetails({
-    contact,
-    extension,
-    place,
-    language,
-    message,
-    contactNumber
-  }) {
-    return (
-      <AppointmentDetailsStyled onClick={hideAppointmentDetails}>
-        <div>Sprache: {language}</div>
-        <div>Ansprechpartner: {contact} </div>
-        <div>
-          Durchwahl: {extension}{' '}
-          <a href={'tel:' + contactNumber}>
-            <PhoneIconStyled />
-          </a>
-        </div>
-        <div>Ort: {place} </div>
-        <div>Nachricht: {message} </div>
-      </AppointmentDetailsStyled>
-    )
-  }
   function renderableDate(appointmentDate) {
     const newdate = new Date(appointmentDate).toLocaleDateString('de-DE', {
       year: 'numeric',
@@ -74,19 +67,6 @@ export default function Appointment({
       day: '2-digit'
     })
     return newdate
-  }
-
-  function getPhoneNumber(extension) {
-    let phoneNumber
-    if (clinic === 'UKE') {
-      phoneNumber = '0407410'
-    } else if (clinic === 'AKK') {
-      phoneNumber = '04088908'
-    } else if (clinic === 'PNZ') {
-      phoneNumber = '0401818811'
-    }
-
-    return phoneNumber + extension
   }
 
   function renderableDay(appointmentDate) {
@@ -117,7 +97,7 @@ export default function Appointment({
 
 const AppointmentStyled = styled.li`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1.3fr 0.7fr;
   grid-template-rows: 2;
   grid-column-gap: 30px;
   height: 60px;
@@ -125,25 +105,4 @@ const AppointmentStyled = styled.li`
   background-color: var(--greyish);
   align-items: space-between;
   text-align: justify;
-`
-
-const AppointmentDetailsStyled = styled.div`
-  position: absolute;
-  top: 200px;
-  left: auto;
-  display: grid;
-  padding: 10px;
-  height: 350px;
-  width: 95%;
-  background-color: var(--greyish);
-  border: 1px solid var(--blueish);
-  transition: all 0.5 ease-in-out;
-  margin-top: -1.5em;
-  margin-bottom: 1.5em;
-  z-index: 90;
-`
-
-const PhoneIconStyled = styled(PhoneIcon)`
-  height: 20px;
-  width: 20px;
 `

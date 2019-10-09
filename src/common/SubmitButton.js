@@ -5,10 +5,17 @@ import { ReactComponent as AbortIcon } from '../icons/cancel.svg'
 
 export default function SubmitButton({ text, handleClick }) {
   const btnColor =
-    text === ('abschicken' || 'annehmen')
+    text === 'abschicken'
+      ? { backgroundColor: 'var(--green)' }
+      : text === 'annehmen'
       ? { backgroundColor: 'var(--green)' }
       : { backgroundColor: 'var(--red)' }
-  const Icon = text === 'abschicken' ? AcceptIconStyled : AbortIconStyled
+  const Icon =
+    text === 'abschicken'
+      ? AcceptIconStyled
+      : text === 'annehmen'
+      ? AcceptIconStyled
+      : AbortIconStyled
   return (
     <SubmitBtnStyled style={btnColor} onClick={handleClick}>
       <Icon /> {text}
@@ -21,6 +28,8 @@ const SubmitBtnStyled = styled.button`
   padding: 15px;
   justify-content: center;
   border-radius: 5px;
+  height: 54px;
+  width: 140px;
   color: white;
   font-size: inherit;
 `

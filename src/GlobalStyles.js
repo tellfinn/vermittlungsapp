@@ -17,6 +17,7 @@ scrollbar-width: none;
   body {
 display: grid; 
 grid-template-rows: 50px auto;
+height: 100vh;
 margin: 0;
 font-family: Helvetica, sans-serif; 
   font-weight: 300;

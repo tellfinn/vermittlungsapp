@@ -14,7 +14,7 @@ export default function AppointmentPage({ requestAccepted }) {
   }, [])
 
   let sortedAppointments = appointments.filter(
-    appointment => appointment.accepted === requestAccepted
+    appointment => appointment.acceptedByInterpreter === requestAccepted
   )
 
   function renderAppointmentList() {
@@ -59,4 +59,26 @@ export default function AppointmentPage({ requestAccepted }) {
       <Appointment key={appointment._id} {...appointment} />
     ))
   }
+
+  /*   function acceptAppointment(event, appointment) {
+    event.stopPropagation()
+    console.log(event.target.acceptedByInterpreter)
+    patchAppointment(appointment._id, { acceptedByInterpreter: true }).then(
+      updatedAppointment => {
+        const index = appointments.findIndex(
+          appointment => appointment._id === updatedAppointment._id
+        )
+        setAppointments([
+          ...appointment.slice(0, index),
+          {
+            ...appointment,
+            acceptedByInterpreter: updatedAppointment.acceptedByInterpreter
+          },
+          ...appointments.slice(index + 1)
+        ])
+
+        console.log(event.target.acceptedByInterpreter)
+      }
+    )
+  }*/
 }
