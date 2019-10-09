@@ -18,13 +18,13 @@ export default function AppointmentPage({ requestAccepted }) {
   )
 
   function renderAppointmentList() {
-    const appointmentList = {
-      0: <AppointmentList>{sortAppointments('date')}</AppointmentList>,
-      1: <AppointmentList>{sortAppointments('time')}</AppointmentList>,
-      2: <AppointmentList>{sortAppointments('clinic')}</AppointmentList>
-    }
+    const appointmentList = [
+      <AppointmentList>{sortAppointments('date')}</AppointmentList>,
+      <AppointmentList>{sortAppointments('time')}</AppointmentList>,
+      <AppointmentList>{sortAppointments('clinic')}</AppointmentList>
+    ]
 
-    return appointmentList[activeIndex] || <section>keine Termine</section>
+    return appointmentList[activeIndex]
   }
 
   return (
