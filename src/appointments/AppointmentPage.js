@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getAppointments } from './services'
+import { getAppointments, patchAppointment } from './services'
 import Page from '../common/Page'
 import AppointmentList from './AppointmentList'
 import Appointment from './Appointment'
@@ -66,7 +66,7 @@ export default function AppointmentPage({ requestAccepted }) {
   function acceptAppointment(event, appointment) {
     event.stopPropagation()
     console.log('bin da')
-    /* patchAppointment(appointment._id, {
+    patchAppointment(appointment._id, {
       acceptedByInterpreter: true,
       openAppointment: false
     }).then(updatedAppointment => {
@@ -83,6 +83,6 @@ export default function AppointmentPage({ requestAccepted }) {
       ])
 
       console.log(event.target.acceptedByInterpreter)
-    })*/
+    })
   }
 }

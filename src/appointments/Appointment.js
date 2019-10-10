@@ -55,7 +55,7 @@ export default function Appointment({
           clinic={clinic}
           contact={contact}
           station={station}
-          handleBodyClick={hideAppointmentDetails}
+          handleContainerClick={hideAppointmentDetails}
           handleAcceptClick={handleAcceptClick}
         />
       )}
@@ -67,6 +67,7 @@ export default function Appointment({
   }
 
   function hideAppointmentDetails() {
+    console.log('hide appts')
     setShowDetails(false)
   }
 

@@ -16,46 +16,63 @@ export default function AppointmentDetails({
   message,
   handleAcceptClick,
   handleDeclineClick,
-  handleBodyClick
+  handleContainerClick
 }) {
-  useEffect(() => {
-    document.body.addEventListener('click', handleBodyClick)
+  /* useEffect(() => {
+    document.body.addEventListener('click', event => {
+      event.target.text === 'annehmen'
+        ? console.log('acceptbtn')
+        : event.target.text === 'ablehnen'
+        ? console.log('declinebtn')
+        : handleBodyClick()
+    })
+
     return () => {
-      document.body.removeEventListener('click', handleBodyClick)
+      document.body.removeEventListener('click', event => {
+        event.target.text === 'annehmen'
+          ? console.log('acceptbtn')
+          : event.target.text === 'ablehnen'
+          ? console.log('declinebtn')
+          : handleBodyClick()
+      })
     }
-  })
+  })*/
 
   return (
-    <AppointmentDetailsStyled>
-      <AppointmentDataStyled>
-        <div>{date}</div>
-        <div>{time} Uhr</div>
-        <div>{clinic}</div>
-        <div>{language}</div>
-        <div style={{ letterSpacing: '-0.08em' }}> ca. {duration}</div>
-        <div> {station} </div>
-      </AppointmentDataStyled>
-      <MoreDetailsStyled>
-        <div>Ansprechpartner: </div>
-        <div> {contact} </div>
-        <div>Durchwahl: </div>
-        <div> {extension}</div>
-        <div>Details: </div>
-        <div> {message} </div>
-      </MoreDetailsStyled>
-      <IconAreaStyled>
-        <MailIconStyled />
-        <PhoneIconStyled />
-      </IconAreaStyled>
-      <ButtonAreaStyled>
-        <SubmitButton
-          text='annehmen'
-          handleClick={handleAcceptClick}></SubmitButton>
-        <SubmitButton
-          text='ablehnen'
-          handleClick={handleDeclineClick}></SubmitButton>
-      </ButtonAreaStyled>
-    </AppointmentDetailsStyled>
+    <ClickContainerStyled onClick={handleContainerClick}>
+      <AppointmentDetailsStyled>
+        <AppointmentDataStyled>
+          <div>{date}</div>
+          <div>{time} Uhr</div>
+          <div>{clinic}</div>
+          <div>{language}</div>
+          <div style={{ letterSpacing: '-0.08em' }}> ca. {duration}</div>
+          <div> {station} </div>
+        </AppointmentDataStyled>
+        <MoreDetailsStyled>
+          <div>Ansprechpartner: </div>
+          <div> {contact} </div>
+          <div>Durchwahl: </div>
+          <div> {extension}</div>
+          <div>Details: </div>
+          <div> {message} </div>
+        </MoreDetailsStyled>
+        <IconAreaStyled>
+          <MailIconStyled />
+          <PhoneIconStyled />
+        </IconAreaStyled>
+        <ButtonAreaStyled>
+          <SubmitButton
+            text='annehmen'
+            name='accept'
+            handleClick={handleAcceptClick}></SubmitButton>
+          <SubmitButton
+            text='ablehnen'
+            name='decline'
+            handleClick={handleDeclineClick}></SubmitButton>
+        </ButtonAreaStyled>
+      </AppointmentDetailsStyled>
+    </ClickContainerStyled>
   )
 }
 
@@ -76,6 +93,14 @@ const AppointmentDetailsStyled = styled.div`
 
   margin-bottom: 1.5em;
   z-index: 90;
+`
+const ClickContainerStyled = styled.div`
+  position: absolute;
+  top: 0;
+  left: 10px;
+  height: 100vh;
+  width: 100vw;
+  z-index: 80;
 `
 
 const AppointmentDataStyled = styled.div`
