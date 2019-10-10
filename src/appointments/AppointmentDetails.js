@@ -18,16 +18,14 @@ export default function AppointmentDetails({
   handleBodyClick
 }) {
   useEffect(() => {
-    console.log('mounted')
     document.body.addEventListener('click', handleBodyClick)
     return () => {
-      console.log('unmounted')
       document.body.removeEventListener('click', handleBodyClick)
     }
   })
 
   return (
-    <AppointmentDetailsStyled onClick={handleBodyClick}>
+    <AppointmentDetailsStyled>
       <AppointmentDataStyled>
         <div>{date}</div>
         <div>{time} Uhr</div>
@@ -56,7 +54,7 @@ export default function AppointmentDetails({
 
 const AppointmentDetailsStyled = styled.div`
   position: absolute;
-  top: 180px;
+  top: 150px;
   left: auto;
   display: grid;
   align-items: space-between;

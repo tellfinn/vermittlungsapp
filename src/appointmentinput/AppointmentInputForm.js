@@ -35,7 +35,7 @@ export default function AppointmentInputForm() {
       appLanguage,
       alternativeAppLanguage,
       acceptedByInterpreter: false,
-      acceptedByOtherInterpreter: false
+      openAppointment: true
     }
     postAppointment(data)
     form.reset()

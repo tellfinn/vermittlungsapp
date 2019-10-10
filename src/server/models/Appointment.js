@@ -15,7 +15,7 @@ const Appointment = mongoose.model('Appointment', {
   swornIn: Boolean,
   writtenTranslation: Boolean,
   acceptedByInterpreter: Boolean,
-  acceptedByOtherInterpreter: Boolean
+  openAppointment: Boolean
 })
 
 module.exports = Appointment

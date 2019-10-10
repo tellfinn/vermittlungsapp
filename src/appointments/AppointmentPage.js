@@ -13,18 +13,13 @@ export default function AppointmentPage({ requestAccepted }) {
     getAppointments().then(setAppointments)
   }, [])
 
-  let sortedAppointments = appointments.filter(
-    appointment => appointment.acceptedByInterpreter === requestAccepted
-  )
-
-  function renderAppointmentList() {
-    const appointmentList = [
-      <AppointmentList>{sortAppointments('date')}</AppointmentList>,
-      <AppointmentList>{sortAppointments('time')}</AppointmentList>,
-      <AppointmentList>{sortAppointments('clinic')}</AppointmentList>
-    ]
-
-    return appointmentList[activeIndex]
+  function renderAppointmentList(index) {
+    const appointmentList = {
+      0: <AppointmentList>{sortAppointments('date')}</AppointmentList>,
+      1: <AppointmentList>{sortAppointments('time')}</AppointmentList>,
+      2: <AppointmentList>{sortAppointments('clinic')}</AppointmentList>
+    }
+    return appointmentList[index]
   }
 
   return (
@@ -33,23 +28,27 @@ export default function AppointmentPage({ requestAccepted }) {
         buttonTexts={['Datum', 'Uhrzeit', 'Ort']}
         handleClick={setActiveIndex}
       />
-      {renderAppointmentList()}
+      {renderAppointmentList(activeIndex)}
     </Page>
   )
 
-  function sortAppointments({ sortByProp = 'date' }) {
-    if (sortByProp === 'date') {
+  function sortAppointments() {
+    let sortedAppointments = appointments.filter(
+      appointment => appointment.acceptedByInterpreter === requestAccepted
+    )
+
+    if (activeIndex === 0) {
       sortedAppointments = sortedAppointments.slice().sort((a, b) => {
         return new Date(a.appointmentDate) - new Date(b.appointmentDate)
       })
-    } else if (sortByProp === 'time') {
+    } else if (activeIndex === 1) {
       sortedAppointments = sortedAppointments.slice().sort((a, b) => {
         return (
           new Date(a.appointmentDate).getHours() -
           new Date(b.appointmentDate).getHours()
         )
       })
-    } else if (sortByProp === 'clinic') {
+    } else if (activeIndex === 2) {
       sortedAppointments = sortedAppointments.slice().sort((a, b) => {
         return a.clinic > b.clinic
       })
@@ -60,25 +59,27 @@ export default function AppointmentPage({ requestAccepted }) {
     ))
   }
 
-  /*   function acceptAppointment(event, appointment) {
+  /*function acceptAppointment(event) {
+
     event.stopPropagation()
     console.log(event.target.acceptedByInterpreter)
-    patchAppointment(appointment._id, { acceptedByInterpreter: true }).then(
-      updatedAppointment => {
-        const index = appointments.findIndex(
-          appointment => appointment._id === updatedAppointment._id
-        )
-        setAppointments([
-          ...appointment.slice(0, index),
-          {
-            ...appointment,
-            acceptedByInterpreter: updatedAppointment.acceptedByInterpreter
-          },
-          ...appointments.slice(index + 1)
-        ])
+     patchAppointment(appointment._id, {
+      acceptedByInterpreter: true,
+      openAppointment: false
+    }).then(updatedAppointment => {
+      const index = appointments.findIndex(
+        appointment => appointment._id === updatedAppointment._id
+      )
+      setAppointments([
+        ...appointment.slice(0, index),
+        {
+          ...appointment,
+          acceptedByInterpreter: updatedAppointment.acceptedByInterpreter
+        },
+        ...appointments.slice(index + 1)
+      ])
 
-        console.log(event.target.acceptedByInterpreter)
-      }
-    )
+      console.log(event.target.acceptedByInterpreter)
+    })
   }*/
 }

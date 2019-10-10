@@ -12,7 +12,8 @@ export default function Appointment({
   appLanguage,
   extension,
   message,
-  contact
+  contact,
+  handleAcceptClick
 }) {
   const [showDetails, setShowDetails] = useState(false)
 
@@ -55,6 +56,7 @@ export default function Appointment({
           contact={contact}
           station={station}
           handleBodyClick={hideAppointmentDetails}
+          handleAcceptClick={handleAcceptClick}
         />
       )}
     </>
