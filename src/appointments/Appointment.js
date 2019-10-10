@@ -41,7 +41,7 @@ export default function Appointment({
         <div>{time}</div>
         <div>{clinic}</div>
         <div> {day} </div>
-        <div>ca. {duration}</div>
+        <div style={{ letterSpacing: '-0.08em' }}>ca. {duration}</div>
         <div> {station} </div>
       </AppointmentStyled>
       {showDetails && (
@@ -61,6 +61,14 @@ export default function Appointment({
       )}
     </>
   )
+
+  function toggleAppointmentDetails() {
+    setShowDetails(!showDetails)
+  }
+
+  function hideAppointmentDetails() {
+    setShowDetails(false)
+  }
 
   function renderableDate(appointmentDate) {
     const newdate = new Date(appointmentDate).toLocaleDateString('de-DE', {
@@ -87,22 +95,14 @@ export default function Appointment({
 
     return timeString
   }
-
-  function toggleAppointmentDetails() {
-    setShowDetails(!showDetails)
-  }
-
-  function hideAppointmentDetails() {
-    setShowDetails(false)
-  }
 }
 
 const AppointmentStyled = styled.li`
   display: grid;
-  grid-template-columns: 1fr 1.3fr 0.7fr;
+  grid-template-columns: 1fr 1.2fr 0.8fr;
   grid-template-rows: 2;
-  grid-column-gap: 30px;
-  height: 60px;
+  grid-column-gap: 29px;
+  height: 70px;
   padding: 10px;
   background-color: var(--greyish);
   align-items: space-between;

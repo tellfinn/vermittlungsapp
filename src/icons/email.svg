@@ -1,13 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-     <title>email</title>
-    <defs>
-        <path d="M19,18 L5,18 C4.449,18 4,17.552 4,17 L4,7.25 L11.4,12.8 C11.578,12.934 11.789,13 12,13 C12.211,13 12.422,12.934 12.6,12.8 L20,7.25 L20,17 C20,17.552 19.551,18 19,18 L19,18 Z M18.333,6 L12,10.75 L5.667,6 L18.333,6 Z M19,4 L5,4 C3.346,4 2,5.346 2,7 L2,17 C2,18.654 3.346,20 5,20 L19,20 C20.654,20 22,18.654 22,17 L22,7 C22,5.346 20.654,4 19,4 L19,4 Z" id="path-1"></path>
-    </defs>
-    <g id="email" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <mask id="mask-2" fill="white">
-            <use xlink:href="#path-1"></use>
-        </mask>
-        <use id="🎨-Icon-Сolor" fill="#0D1C2E" fill-rule="nonzero" xlink:href="#path-1"></use>
-    </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Svg Vector Icons : http://www.onlinewebfonts.com/icon -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
+<metadata> Svg Vector Icons : http://www.onlinewebfonts.com/icon </metadata>
+<g><path d="M95.7,850.1c-47.2,0-85.7-40.3-85.7-89.9V239.9c0-49.6,38.4-90,85.7-90h808.6c47.2,0,85.7,40.4,85.7,90v520.2c0,49.6-38.4,89.9-85.7,89.9H95.7z M871.2,779.6L630.1,570l-38.5,35.4c-25.2,22.9-56,34.5-91.6,34.5c-35.7,0-66.5-11.6-91.5-34.5L370,570L128.9,779.6H871.2z M920.7,730.6V281.4L680,517.9L920.7,730.6z M79.3,730.6L320,517.9L79.3,281.4V730.6z M440.5,527.2c33.8,31.6,51,38.2,59.5,38.2c8.5,0,25.7-6.6,59.5-38.2l313.7-306.8H126.8L440.5,527.2z"/></g>
 </svg>

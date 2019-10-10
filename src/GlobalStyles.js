@@ -21,7 +21,7 @@ height: 100vh;
 margin: 0;
 font-family: Helvetica, sans-serif; 
   font-weight: 300;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.4em;
   }
 

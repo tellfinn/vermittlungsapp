@@ -55,15 +55,18 @@ export default function AppointmentPage({ requestAccepted }) {
     }
 
     return sortedAppointments.map(appointment => (
-      <Appointment key={appointment._id} {...appointment} />
+      <Appointment
+        handleAcceptClick={event => acceptAppointment(event)}
+        key={appointment._id}
+        {...appointment}
+      />
     ))
   }
 
-  /*function acceptAppointment(event) {
-
+  function acceptAppointment(event, appointment) {
     event.stopPropagation()
-    console.log(event.target.acceptedByInterpreter)
-     patchAppointment(appointment._id, {
+    console.log('bin da')
+    /* patchAppointment(appointment._id, {
       acceptedByInterpreter: true,
       openAppointment: false
     }).then(updatedAppointment => {
@@ -71,7 +74,7 @@ export default function AppointmentPage({ requestAccepted }) {
         appointment => appointment._id === updatedAppointment._id
       )
       setAppointments([
-        ...appointment.slice(0, index),
+        ...appointment(0, index),
         {
           ...appointment,
           acceptedByInterpreter: updatedAppointment.acceptedByInterpreter
@@ -80,6 +83,6 @@ export default function AppointmentPage({ requestAccepted }) {
       ])
 
       console.log(event.target.acceptedByInterpreter)
-    })
-  }*/
+    })*/
+  }
 }
