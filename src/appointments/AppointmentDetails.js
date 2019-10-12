@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
 import { ReactComponent as PhoneIcon } from '../icons/phone-fill.svg'
 import { ReactComponent as MailIcon } from '../icons/email.svg'
@@ -18,26 +18,6 @@ export default function AppointmentDetails({
   handleDeclineClick,
   handleContainerClick
 }) {
-  /* useEffect(() => {
-    document.body.addEventListener('click', event => {
-      event.target.text === 'annehmen'
-        ? console.log('acceptbtn')
-        : event.target.text === 'ablehnen'
-        ? console.log('declinebtn')
-        : handleBodyClick()
-    })
-
-    return () => {
-      document.body.removeEventListener('click', event => {
-        event.target.text === 'annehmen'
-          ? console.log('acceptbtn')
-          : event.target.text === 'ablehnen'
-          ? console.log('declinebtn')
-          : handleBodyClick()
-      })
-    }
-  })*/
-
   return (
     <ClickContainerStyled onClick={handleContainerClick}>
       <AppointmentDetailsStyled>
@@ -64,11 +44,9 @@ export default function AppointmentDetails({
         <ButtonAreaStyled>
           <SubmitButton
             text='annehmen'
-            name='accept'
             handleClick={handleAcceptClick}></SubmitButton>
           <SubmitButton
             text='ablehnen'
-            name='decline'
             handleClick={handleDeclineClick}></SubmitButton>
         </ButtonAreaStyled>
       </AppointmentDetailsStyled>

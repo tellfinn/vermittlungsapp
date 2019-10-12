@@ -13,7 +13,8 @@ export default function Appointment({
   extension,
   message,
   contact,
-  handleAcceptClick
+  handleAcceptClick,
+  handleDeclineClick
 }) {
   const [showDetails, setShowDetails] = useState(false)
 
@@ -27,16 +28,9 @@ export default function Appointment({
       ? duration + ' Std'
       : calculateDuration(duration)
 
-  function calculateDuration(duration) {
-    const rest = duration % 1
-    const minutes = rest * 60
-    const hours = Math.floor(duration)
-    return hours + ' Std ' + minutes + ' Min'
-  }
-
   return (
     <>
-      <AppointmentStyled onClick={toggleAppointmentDetails}>
+      <AppointmentStyled onClick={showAppointmentDetails}>
         <div>{date}</div>
         <div>{time}</div>
         <div>{clinic}</div>
@@ -57,17 +51,17 @@ export default function Appointment({
           station={station}
           handleContainerClick={hideAppointmentDetails}
           handleAcceptClick={handleAcceptClick}
+          handleDeclineClick={handleDeclineClick}
         />
       )}
     </>
   )
 
-  function toggleAppointmentDetails() {
-    setShowDetails(!showDetails)
+  function showAppointmentDetails() {
+    setShowDetails(true)
   }
 
   function hideAppointmentDetails() {
-    console.log('hide appts')
     setShowDetails(false)
   }
 
@@ -95,6 +89,13 @@ export default function Appointment({
     })
 
     return timeString
+  }
+
+  function calculateDuration(duration) {
+    const rest = duration % 1
+    const minutes = rest * 60
+    const hours = Math.floor(duration)
+    return hours + ' Std ' + minutes + ' Min'
   }
 }
 
