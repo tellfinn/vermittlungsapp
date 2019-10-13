@@ -5,15 +5,15 @@ import { ReactComponent as AbortIcon } from '../icons/cancel.svg'
 
 export default function SubmitButton({ text, handleClick }) {
   const btnColor =
-    text === 'abschicken'
+    text === 'absenden'
       ? { backgroundColor: 'var(--green)' }
-      : text === 'annehmen'
+      : text === 'zusagen'
       ? { backgroundColor: 'var(--green)' }
       : { backgroundColor: 'var(--red)' }
   const Icon =
-    text === 'abschicken'
+    text === 'absenden'
       ? AcceptIconStyled
-      : text === 'annehmen'
+      : text === 'zusagen'
       ? AcceptIconStyled
       : AbortIconStyled
   return (
@@ -24,14 +24,8 @@ export default function SubmitButton({ text, handleClick }) {
 }
 
 const SubmitBtnStyled = styled.button`
-  display: flex;
-  padding: 15px;
-  justify-content: center;
-  border-radius: 5px;
   height: 54px;
   width: 140px;
-  color: white;
-  font-size: inherit;
 `
 
 const AcceptIconStyled = styled(AcceptIcon)`

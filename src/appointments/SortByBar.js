@@ -16,15 +16,14 @@ export default function SortByBar({ buttonTexts, handleClick }) {
 }
 
 const SortByBarStyled = styled.nav`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 0.8fr;
+  grid-gap: 10px;
   width: 100%;
 `
 
 const SortBtnStyled = styled.button`
   height: 40px;
-  width: 90px;
-  background-color: var(--blueish);
   border: none;
   font-size: 16px;
   line-height: 2em;
@@ -36,6 +35,4 @@ const SortBtnStyled = styled.button`
 
 const ArrowStyled = styled(Arrow)`
   width: 20px;
-  height: 20px;
-  padding-top: 10px;
 `

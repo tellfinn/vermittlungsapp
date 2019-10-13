@@ -142,7 +142,7 @@ export default function AppointmentInputForm() {
             name='message'></MessageField>
         </label>
         <StyleArea>
-          <SubmitButton text='abschicken' type='submit' />
+          <SubmitButton text='absenden' type='submit' />
           <SubmitButton text='verwerfen' handleClick={handleAbortClick} />
         </StyleArea>
       </AppointmentInputFormStyled>

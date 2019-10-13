@@ -26,6 +26,17 @@ font-family: Helvetica, sans-serif;
   }
 
  
+button {
+  display: flex;
+  padding: 15px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background-color: var(--blueish);
+  color: white;
+  font-size: inherit;
+}
+
   .bm-burger-button {
   position: fixed;
   left: 0;

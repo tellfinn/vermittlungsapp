@@ -14,7 +14,10 @@ export default function Appointment({
   message,
   contact,
   handleAcceptClick,
-  handleDeclineClick
+  handleDeclineClick,
+  handleFollowUpClick,
+  handleEditClick,
+  acceptedByInterpreter
 }) {
   const [showDetails, setShowDetails] = useState(false)
 
@@ -52,6 +55,9 @@ export default function Appointment({
           handleContainerClick={hideAppointmentDetails}
           handleAcceptClick={handleAcceptClick}
           handleDeclineClick={handleDeclineClick}
+          acceptedByInterpreter={acceptedByInterpreter}
+          handleFollowUpClick={handleFollowUpClick}
+          handleEditClick={handleEditClick}
         />
       )}
     </>

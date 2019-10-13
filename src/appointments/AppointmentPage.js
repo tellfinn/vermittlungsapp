@@ -58,6 +58,8 @@ export default function AppointmentPage({ requestAccepted }) {
       <Appointment
         handleAcceptClick={() => acceptAppointment(appointment)}
         handleDeclineClick={() => declineAppointment(appointment)}
+        handleFollowUpClick={() => console.log('Folgetermin:')}
+        handleEditClick={() => console.log('edit')}
         key={appointment._id}
         {...appointment}
       />
