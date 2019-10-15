@@ -56,7 +56,6 @@ export default function Appointment({
           handleAcceptClick={handleAcceptClick}
           handleDeclineClick={handleDeclineClick}
           acceptedByInterpreter={acceptedByInterpreter}
-          handleFollowUpClick={handleFollowUpClick}
           handleEditClick={handleEditClick}
         />
       )}
@@ -67,7 +66,7 @@ export default function Appointment({
     setShowDetails(true)
   }
 
-  function hideAppointmentDetails() {
+  function hideAppointmentDetails(isFollowUpFormVisible) {
     setShowDetails(false)
   }
 
@@ -110,8 +109,10 @@ const AppointmentStyled = styled.li`
   grid-template-columns: 1fr 1.2fr 0.8fr;
   grid-template-rows: 2;
   grid-column-gap: 29px;
-  height: 70px;
+  min-height: 70px;
   padding: 10px;
+  border: 5px solid #f0f0f0;
+  box-shadow: 2px 2px 2px grey;
   background-color: var(--greyish);
   align-items: space-between;
   text-align: justify;

@@ -54,16 +54,20 @@ export default function AppointmentPage({ requestAccepted }) {
       })
     }
 
-    return sortedAppointments.map(appointment => (
-      <Appointment
-        handleAcceptClick={() => acceptAppointment(appointment)}
-        handleDeclineClick={() => declineAppointment(appointment)}
-        handleFollowUpClick={() => console.log('Folgetermin:')}
-        handleEditClick={() => console.log('edit')}
-        key={appointment._id}
-        {...appointment}
-      />
-    ))
+    if (sortedAppointments.length === 0) {
+      return <div>Keine Termine vorhanden</div>
+    } else {
+      return sortedAppointments.map(appointment => (
+        <Appointment
+          handleAcceptClick={() => acceptAppointment(appointment)}
+          handleDeclineClick={() => declineAppointment(appointment)}
+          handleFollowUpClick={() => console.log('folgetermin')}
+          handleEditClick={() => console.log('edit')}
+          key={appointment._id}
+          {...appointment}
+        />
+      ))
+    }
   }
 
   function acceptAppointment(appointment) {
@@ -79,6 +83,44 @@ export default function AppointmentPage({ requestAccepted }) {
         {
           ...appointment,
           acceptedByInterpreter: updatedAppointment.acceptedByInterpreter
+        },
+        ...appointments.slice(index + 1)
+      ])
+    })
+  }
+
+  function declineAppointment(appointment) {
+    patchAppointment(appointment._id, {
+      acceptedByInterpreter: false,
+      openAppointment: true
+    }).then(updatedAppointment => {
+      const index = appointments.findIndex(
+        appointment => appointment._id === updatedAppointment._id
+      )
+      setAppointments([
+        ...appointments.slice(0, index),
+        {
+          ...appointment,
+          acceptedByInterpreter: updatedAppointment.acceptedByInterpreter
+        },
+        ...appointments.slice(index + 1)
+      ])
+    })
+  }
+
+  function editAppointment(appointment, event, newAppointmentData) {
+    event.preventDefault()
+    patchAppointment(appointment._id, {
+      ...appointment,
+      newAppointmentData
+    }).then(updatedAppointment => {
+      const index = appointments.findIndex(
+        appointment => appointment._id === updatedAppointment._id
+      )
+      setAppointments([
+        ...appointments.slice(0, index),
+        {
+          ...appointment
         },
         ...appointments.slice(index + 1)
       ])

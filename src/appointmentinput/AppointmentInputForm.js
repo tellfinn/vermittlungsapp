@@ -13,7 +13,7 @@ export default function AppointmentInputForm() {
   const [
     selectedAlternativeLanguage,
     setSelectedAlternativeLanguage
-  ] = useState('no language selected')
+  ] = useState('')
   const [radioBtnValue, setRadioBtnValue] = useState('UKE')
   const [date, setDate] = useState(Date.now())
 
@@ -25,8 +25,8 @@ export default function AppointmentInputForm() {
     event.preventDefault()
     const form = event.target
     const formData = new FormData(form)
-    const appLanguage = selectedLanguage[0].value
-    const alternativeAppLanguage = selectedAlternativeLanguage[0].value
+    const appLanguage = selectedLanguage.value
+    const alternativeAppLanguage = selectedAlternativeLanguage.value
     let appointmentDate = new Date(date)
     let data = Object.fromEntries(formData)
     data = {
@@ -34,7 +34,7 @@ export default function AppointmentInputForm() {
       appointmentDate,
       appLanguage,
       alternativeAppLanguage,
-      acceptedByInterpreter: false,
+      acceptedByInterpreter: null,
       openAppointment: true
     }
     postAppointment(data)

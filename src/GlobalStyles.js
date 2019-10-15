@@ -8,7 +8,7 @@ scrollbar-width: none;
 
   :root {
   --blueish: #216ba5;
-  --greyish: #d9e0e7;
+  --greyish: #e8e8e8;
   --green: #237726;
   --red: #963D3D;
 }
@@ -35,6 +35,7 @@ button {
   background-color: var(--blueish);
   color: white;
   font-size: inherit;
+ 
 }
 
   .bm-burger-button {

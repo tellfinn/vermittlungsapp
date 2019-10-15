@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import { ReactComponent as PhoneIcon } from '../icons/phone-fill.svg'
 import { ReactComponent as MailIcon } from '../icons/email.svg'
 import SubmitButton from '../common/SubmitButton'
+import EditAppointmentForm from '../appointmentinput/FollowUpForm'
 
 export default function AppointmentDetails({
   date,
@@ -16,10 +17,15 @@ export default function AppointmentDetails({
   message,
   handleAcceptClick,
   handleDeclineClick,
-  handleContainerClick
+  handleContainerClick,
+  handleEditClick,
+  acceptedByInterpreter,
+  handleSubmit
 }) {
+  const [isFollowUpFormVisible, setIsFollowUpFormVisible] = useState(false)
+
   return (
-    <ClickContainerStyled onClick={handleContainerClick}>
+    <ClickContainerStyled onClick={event => handleContainerClick(event)}>
       <AppointmentDetailsStyled>
         <AppointmentDataStyled>
           <div>{date}</div>
@@ -41,44 +47,78 @@ export default function AppointmentDetails({
           <MailIconStyled />
           <PhoneIconStyled />
         </IconAreaStyled>
-        <ButtonAreaStyled>
-          <SubmitButton
-            text='annehmen'
-            handleClick={handleAcceptClick}></SubmitButton>
-          <SubmitButton
-            text='ablehnen'
-            handleClick={handleDeclineClick}></SubmitButton>
-        </ButtonAreaStyled>
+        {acceptedByInterpreter ? (
+          <ButtonAreaStyled>
+            <ButtonStyled onClick={event => showFollowUpForm(event)}>
+              Folgetermin mitteilen
+            </ButtonStyled>
+            <ButtonStyled onClick={handleEditClick}>
+              Termin bearbeiten
+            </ButtonStyled>
+          </ButtonAreaStyled>
+        ) : (
+          <ButtonAreaStyled>
+            <SubmitButton
+              text='zusagen'
+              handleClick={handleAcceptClick}></SubmitButton>
+            <SubmitButton
+              text='ablehnen'
+              handleClick={handleDeclineClick}></SubmitButton>
+          </ButtonAreaStyled>
+        )}
       </AppointmentDetailsStyled>
+
+      {isFollowUpFormVisible && (
+        <EditAppointmentForm
+          aptLanguage={language}
+          aptPlace={clinic}
+          newDate={Date.now()}
+          aptStation={station}
+          aptDuration={duration}
+          aptContact={contact}
+          aptExtension={extension}
+          handleAbortClick={() => hideFollowUpForm()}
+        />
+      )}
     </ClickContainerStyled>
   )
+
+  function showFollowUpForm(event) {
+    event.stopPropagation()
+    setIsFollowUpFormVisible(true)
+  }
+
+  function hideFollowUpForm() {
+    setIsFollowUpFormVisible(false)
+  }
 }
 
 const AppointmentDetailsStyled = styled.div`
   position: absolute;
   top: 150px;
   left: auto;
+  min-height: 350px;
+  width: 95%;
   display: grid;
+  margin-bottom: 1.5em;
+  padding: 10px;
+  border: 5px solid #f0f0f0;
+  outline: 2px solid white;
+  box-shadow: 3px 3px 2px grey;
+  background-color: var(--greyish);
   align-items: space-between;
   justify-content: center;
   text-align: justify;
-  padding: 10px;
-  min-height: 350px;
-  width: 95%;
-  background-color: var(--greyish);
-  border: 1px solid var(--blueish);
-  transition: all 0.5 ease-in-out;
-
-  margin-bottom: 1.5em;
-  z-index: 90;
+  overflow-y: scroll;
+  z-index: 10;
 `
 const ClickContainerStyled = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
-  left: 10px;
+  left: 8px;
   height: 100vh;
   width: 100vw;
-  z-index: 80;
+  z-index: 5;
 `
 
 const AppointmentDataStyled = styled.div`
@@ -101,6 +141,10 @@ const ButtonAreaStyled = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 30px;
   margin: auto;
+`
+
+const ButtonStyled = styled.button`
+  background-color: var(--blueish);
 `
 
 const IconAreaStyled = styled.div`
