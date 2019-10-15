@@ -43,29 +43,31 @@ export default function AppointmentDetails({
           <div>Details: </div>
           <div> {message} </div>
         </MoreDetailsStyled>
-        <IconAreaStyled>
-          <MailIconStyled />
-          <PhoneIconStyled />
-        </IconAreaStyled>
-        {acceptedByInterpreter ? (
-          <ButtonAreaStyled>
-            <ButtonStyled onClick={event => showFollowUpForm(event)}>
-              Folgetermin mitteilen
-            </ButtonStyled>
-            <ButtonStyled onClick={handleEditClick}>
-              Termin bearbeiten
-            </ButtonStyled>
-          </ButtonAreaStyled>
-        ) : (
-          <ButtonAreaStyled>
-            <SubmitButton
-              text='zusagen'
-              handleClick={handleAcceptClick}></SubmitButton>
-            <SubmitButton
-              text='ablehnen'
-              handleClick={handleDeclineClick}></SubmitButton>
-          </ButtonAreaStyled>
-        )}
+        <div name='unclickable'>
+          <IconAreaStyled>
+            <MailIconStyled />
+            <PhoneIconStyled />
+          </IconAreaStyled>
+          {acceptedByInterpreter ? (
+            <ButtonAreaStyled>
+              <ButtonStyled onClick={event => showFollowUpForm(event)}>
+                Folgetermin mitteilen
+              </ButtonStyled>
+              <ButtonStyled onClick={handleEditClick}>
+                Termin bearbeiten
+              </ButtonStyled>
+            </ButtonAreaStyled>
+          ) : (
+            <ButtonAreaStyled>
+              <SubmitButton
+                text='zusagen'
+                handleClick={handleAcceptClick}></SubmitButton>
+              <SubmitButton
+                text='ablehnen'
+                handleClick={handleDeclineClick}></SubmitButton>
+            </ButtonAreaStyled>
+          )}
+        </div>
       </AppointmentDetailsStyled>
 
       {isFollowUpFormVisible && (

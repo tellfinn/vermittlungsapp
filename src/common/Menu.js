@@ -12,6 +12,9 @@ export default function MyMenu({ handleMenuItemClick, isOpen }) {
       <LinkStyled to='/appointments' onClick={handleMenuItemClick}>
         Terminübersicht
       </LinkStyled>
+      <LinkStyled to='/pastappointments' onClick={handleMenuItemClick}>
+        vergangene Termine
+      </LinkStyled>
       <LinkStyled to='/newAppointment' onClick={handleMenuItemClick}>
         neuen Termin erstellen
       </LinkStyled>

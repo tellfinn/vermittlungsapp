@@ -5,7 +5,7 @@ import AppointmentList from './AppointmentList'
 import Appointment from './Appointment'
 import SortByBar from './SortByBar'
 
-export default function AppointmentPage({ requestAccepted }) {
+export default function AppointmentPage({ requestAccepted, period }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [appointments, setAppointments] = useState([])
 
@@ -21,6 +21,8 @@ export default function AppointmentPage({ requestAccepted }) {
     }
     return appointmentList[index]
   }
+
+  const timestamp = new Date().setHours(0, 0, 0, 0)
 
   return (
     <Page>
@@ -52,6 +54,18 @@ export default function AppointmentPage({ requestAccepted }) {
       sortedAppointments = sortedAppointments.slice().sort((a, b) => {
         return a.clinic > b.clinic
       })
+    }
+
+    if (period === 'present') {
+      sortedAppointments = sortedAppointments.filter(
+        appointment => new Date(appointment.appointmentDate) >= timestamp
+      )
+    } else if (period === 'past') {
+      sortedAppointments = sortedAppointments.filter(
+        appointment =>
+          new Date(appointment.appointmentDate) < timestamp &&
+          appointment.acceptedByInterpreter === true
+      )
     }
 
     if (sortedAppointments.length === 0) {

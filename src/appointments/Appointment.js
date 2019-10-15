@@ -66,17 +66,34 @@ export default function Appointment({
     setShowDetails(true)
   }
 
-  function hideAppointmentDetails(isFollowUpFormVisible) {
-    setShowDetails(false)
+  function hideAppointmentDetails(event) {
+    event.target.name !== 'unclickable' && setShowDetails(false)
   }
 
   function renderableDate(appointmentDate) {
-    const newdate = new Date(appointmentDate).toLocaleDateString('de-DE', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
-    })
-    return newdate
+    let newDate
+
+    if (
+      new Date(appointmentDate).setHours(0, 0, 0, 0) ===
+      new Date().setHours(0, 0, 0, 0)
+    ) {
+      newDate = 'heute'
+    } else {
+      newDate = new Date(appointmentDate).toLocaleDateString('de-DE', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      })
+    }
+    return newDate
+  }
+
+  function boldText(date) {
+    if (date === 'heute') {
+      const insertDate = <div style='fontWeight: bold'> {date} </div>
+    } else {
+      const insertDate = <div>{date}</div>
+    }
   }
 
   function renderableDay(appointmentDate) {

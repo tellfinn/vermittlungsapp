@@ -15,11 +15,21 @@ function App() {
         <Route
           exact
           path='/'
-          render={() => <AppointmentPage requestAccepted={null} />}
+          render={() => (
+            <AppointmentPage requestAccepted={null} period='present' />
+          )}
         />
         <Route
           path='/appointments'
-          render={() => <AppointmentPage requestAccepted={true} />}
+          render={() => (
+            <AppointmentPage requestAccepted={true} period='present' />
+          )}
+        />
+        <Route
+          path='/pastappointments'
+          render={() => (
+            <AppointmentPage requestAccepted={true} period='past' />
+          )}
         />
         <Route
           path='/newAppointment'
