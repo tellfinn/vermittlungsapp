@@ -21,7 +21,7 @@ export default function Appointment({
 }) {
   const [showDetails, setShowDetails] = useState(false)
 
-  const date = renderableDate(appointmentDate)
+  const date = boldText(renderableDate(appointmentDate))
   time = renderableTime(appointmentDate)
   day = renderableDay(appointmentDate)
   duration =
@@ -34,7 +34,7 @@ export default function Appointment({
   return (
     <>
       <AppointmentStyled onClick={showAppointmentDetails}>
-        <div>{date}</div>
+        {date}
         <div>{time}</div>
         <div>{clinic}</div>
         <div> {day} </div>
@@ -89,11 +89,17 @@ export default function Appointment({
   }
 
   function boldText(date) {
-    if (date === 'heute') {
-      const insertDate = <div style='fontWeight: bold'> {date} </div>
-    } else {
-      const insertDate = <div>{date}</div>
+    let insertDate
+    const boldStyle = {
+      fontWeight: 'bolder',
+      animation: 'blink-animation 1s infinite'
     }
+    if (date === 'heute') {
+      insertDate = <div style={boldStyle}> {date} </div>
+    } else {
+      insertDate = <div>{date}</div>
+    }
+    return insertDate
   }
 
   function renderableDay(appointmentDate) {

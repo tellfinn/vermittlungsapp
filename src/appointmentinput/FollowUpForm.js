@@ -8,48 +8,20 @@ import { getLanguages } from './services'
 
 export default function FollowUpForm({
   aptLanguage,
-  aptPlace,
-  newDate,
+  aptClinic,
   aptStation,
   aptDuration,
   aptContact,
   aptExtension,
-  handleAbortClick,
-  aptId
+  handleAbortClick
 }) {
   const [languages, setLanguages] = useState([])
-  const [selectedLanguage, setSelectedLanguage] = useState(aptLanguage)
-  const [radioBtnValue, setRadioBtnValue] = useState(aptPlace)
+  const [selectedLanguage, setSelectedLanguage] = useState('')
+  const [radioBtnValue, setRadioBtnValue] = useState(aptClinic)
   const [duration, setDuration] = useState(aptDuration)
   const [isInterpreterAvailable, setIsInterpreterAvailable] = useState(true)
-  const [samePlace, setSamePlace] = useState(true)
   let [textInput, setTextInput] = useState('')
   const [date, setDate] = useState(Date.now())
-  const [idCounter, setIdCounter] = useState(1)
-
-  useEffect(() => {
-    getLanguages().then(setLanguages)
-  }, [])
-
-  function handleSubmit(event) {
-    event.preventDefault()
-    setIdCounter(idCounter + 1)
-    const form = event.target
-    const formData = new FormData(form)
-    const appLanguage = selectedLanguage.value
-    let appointmentDate = new Date(date)
-    let data = Object.fromEntries(formData)
-    data = {
-      ...data,
-      appointmentDate,
-      appLanguage,
-      acceptedByInterpreter: isInterpreterAvailable,
-      openAppointment: !isInterpreterAvailable,
-      aptId: aptId + 'follow' + idCounter
-    }
-    postAppointment(data)
-    handleAbortClick()
-  }
 
   const languageOptions = languages
     .map(language => ({ value: language.name, label: language.name }))
@@ -57,19 +29,48 @@ export default function FollowUpForm({
       return a.name > b.name
     })
 
+  useEffect(() => {
+    getLanguages().then(setLanguages)
+  }, [])
+
+  const appointmentLanguage = languageOptions.find(language => {
+    return language.value === aptLanguage
+  })
+
+  function handleSubmit(event) {
+    event.preventDefault()
+    const form = event.target
+    const formData = new FormData(form)
+    const appLanguage =
+      selectedLanguage === ''
+        ? appointmentLanguage.value
+        : selectedLanguage.value
+    let appointmentDate = new Date(date)
+    let data = Object.fromEntries(formData)
+    data = {
+      ...data,
+      appointmentDate,
+      appLanguage,
+      acceptedByInterpreter: isInterpreterAvailable,
+      openAppointment: !isInterpreterAvailable
+    }
+    postAppointment(data)
+    handleAbortClick()
+  }
+
   return (
     <FollowUpFormFormStyled onSubmit={handleSubmit}>
       <LanguageOptions
         name='Sprache'
         handleChange={handleLanguageChange}
         options={languageOptions}
-        defaultValue={selectedLanguage}></LanguageOptions>
+        value={selectedLanguage}
+        defaultValue={appointmentLanguage}></LanguageOptions>
 
       <MyDatepicker
         name='date'
-        date={newDate}
-        onChange={handleDateChange}
-        value={selectedLanguage}></MyDatepicker>
+        date={date}
+        onChange={handleDateChange}></MyDatepicker>
 
       <label>
         <input
@@ -92,81 +93,67 @@ export default function FollowUpForm({
           defaultValue={duration}
           onChange={setDuration}></input>
       </LabelStyled>
+      <StyleArea>
+        <label>
+          <input
+            type='radio'
+            name='clinic'
+            value='UKE'
+            checked={radioBtnValue === 'UKE'}
+            onChange={handleRadioChange}
+          />
+          UKE
+        </label>
+        <label>
+          <input
+            type='radio'
+            name='clinic'
+            value='AKK'
+            checked={radioBtnValue === 'AKK'}
+            onChange={handleRadioChange}
+          />
+          AKK
+        </label>
+        <label>
+          <input
+            type='radio'
+            name='clinic'
+            value='PNZ'
+            checked={radioBtnValue === 'PNZ'}
+            onChange={handleRadioChange}
+          />
+          PNZ
+        </label>
+      </StyleArea>
 
-      <label>
+      <LabelStyled>
+        Station, Gebäude:
         <input
-          type='checkbox'
-          name='place'
-          checked={samePlace}
-          onChange={toggleSamePlace}
-        />{' '}
-        gleicher Ort
-      </label>
+          type='text'
+          name='station'
+          defaultValue={aptStation}
+          onChange={event => setTextInput(event.target.value)}
+        />
+      </LabelStyled>
+      <LabelStyled>
+        Ansprechpartner:
+        <input
+          type='text'
+          name='contact'
+          defaultValue={aptContact}
+          onChange={event => setTextInput(event.target.value)}
+        />
+      </LabelStyled>
+      <LabelStyled>
+        Durchwahl:
+        <input
+          type='number'
+          name='extension'
+          defaultValue={aptExtension}
+          onChange={event => setTextInput(event.target.value)}
+        />
+      </LabelStyled>
 
-      {!samePlace && (
-        <>
-          <StyleArea>
-            <label>
-              <input
-                type='radio'
-                name='clinic'
-                value='UKE'
-                checked={radioBtnValue === 'UKE'}
-                onChange={handleRadioChange}
-              />
-              UKE
-            </label>
-            <label>
-              <input
-                type='radio'
-                name='clinic'
-                value='AKK'
-                checked={radioBtnValue === 'AKK'}
-                onChange={handleRadioChange}
-              />
-              AKK
-            </label>
-            <label>
-              <input
-                type='radio'
-                name='clinic'
-                value='PNZ'
-                checked={radioBtnValue === 'PNZ'}
-                onChange={handleRadioChange}
-              />
-              PNZ
-            </label>
-          </StyleArea>
-
-          <LabelStyled>
-            Station, Gebäude:
-            <input
-              type='text'
-              name='station'
-              defaultValue={aptStation}
-              onChange={event => setTextInput(event.target.value)}
-            />
-          </LabelStyled>
-          <LabelStyled>
-            Ansprechpartner:
-            <input
-              type='text'
-              name='contact'
-              defaultValue={aptContact}
-              onChange={event => setTextInput(event.target.value)}
-            />
-          </LabelStyled>
-          <LabelStyled>
-            Durchwahl:
-            <input
-              type='number'
-              name='extension'
-              defaultValue={aptExtension}
-              onChange={event => setTextInput(event.target.value)}
-            />
-          </LabelStyled>
-        </>
-      )}
       <label>
         <MessageField
           type='textarea'
@@ -196,10 +183,6 @@ export default function FollowUpForm({
     event.stopPropagation()
     setIsInterpreterAvailable(!isInterpreterAvailable)
   }
-  function toggleSamePlace(event) {
-    event.stopPropagation()
-    setSamePlace(!samePlace)
-  }
 }
 
 const FollowUpFormFormStyled = styled.form`
@@ -208,7 +191,7 @@ const FollowUpFormFormStyled = styled.form`
   display: grid;
   grid-gap: 20px;
   min-height: 90vh;
-  max-width: 90vw;
+  max-width: 95%;
   padding: 10px;
   background-color: var(--greyish);
   z-index: 20;

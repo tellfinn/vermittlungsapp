@@ -122,8 +122,7 @@ export default function AppointmentPage({ requestAccepted, period }) {
     })
   }
 
-  function editAppointment(appointment, event, newAppointmentData) {
-    event.preventDefault()
+  function editAppointment(appointment, newAppointmentData) {
     patchAppointment(appointment._id, {
       ...appointment,
       newAppointmentData
@@ -135,25 +134,6 @@ export default function AppointmentPage({ requestAccepted, period }) {
         ...appointments.slice(0, index),
         {
           ...appointment
-        },
-        ...appointments.slice(index + 1)
-      ])
-    })
-  }
-
-  function declineAppointment(appointment) {
-    patchAppointment(appointment._id, {
-      acceptedByInterpreter: false,
-      openAppointment: true
-    }).then(updatedAppointment => {
-      const index = appointments.findIndex(
-        appointment => appointment._id === updatedAppointment._id
-      )
-      setAppointments([
-        ...appointments.slice(0, index),
-        {
-          ...appointment,
-          acceptedByInterpreter: updatedAppointment.acceptedByInterpreter
         },
         ...appointments.slice(index + 1)
       ])

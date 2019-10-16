@@ -25,11 +25,13 @@ const SortByBarStyled = styled.nav`
 const SortBtnStyled = styled.button`
   height: 40px;
   border: none;
+  box-shadow: 2px 2px 2px grey;
   font-size: 16px;
   line-height: 2em;
 
   &:active {
     background-color: red;
+    box-shadow: 0 0 0;
   }
 `
 

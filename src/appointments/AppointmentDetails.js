@@ -25,9 +25,9 @@ export default function AppointmentDetails({
   const [isFollowUpFormVisible, setIsFollowUpFormVisible] = useState(false)
 
   return (
-    <ClickContainerStyled onClick={event => handleContainerClick(event)}>
+    <ClickContainerStyled>
       <AppointmentDetailsStyled>
-        <AppointmentDataStyled>
+        <AppointmentDataStyled onClick={event => handleContainerClick(event)}>
           <div>{date}</div>
           <div>{time} Uhr</div>
           <div>{clinic}</div>
@@ -73,7 +73,7 @@ export default function AppointmentDetails({
       {isFollowUpFormVisible && (
         <EditAppointmentForm
           aptLanguage={language}
-          aptPlace={clinic}
+          aptClinic={clinic}
           newDate={Date.now()}
           aptStation={station}
           aptDuration={duration}
@@ -117,9 +117,9 @@ const AppointmentDetailsStyled = styled.div`
 const ClickContainerStyled = styled.div`
   position: fixed;
   top: 0;
-  left: 8px;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
+  background-color: rgba(179, 179, 179, 0.5);
   z-index: 5;
 `
 
