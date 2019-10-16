@@ -22,6 +22,7 @@ export default function FollowUpForm({
   const [isInterpreterAvailable, setIsInterpreterAvailable] = useState(true)
   let [textInput, setTextInput] = useState('')
   const [date, setDate] = useState(Date.now())
+  const [wrongLanguage, setWrongLanguage] = useState(false)
 
   const languageOptions = languages
     .map(language => ({ value: language.name, label: language.name }))
@@ -37,12 +38,16 @@ export default function FollowUpForm({
     return language.value === aptLanguage
   })
 
+  useEffect(() => {
+    setSelectedLanguage(appointmentLanguage)
+  }, [])
+
   function handleSubmit(event) {
     event.preventDefault()
     const form = event.target
     const formData = new FormData(form)
     const appLanguage =
-      selectedLanguage === ''
+      selectedLanguage === undefined
         ? appointmentLanguage.value
         : selectedLanguage.value
     let appointmentDate = new Date(date)
@@ -60,12 +65,24 @@ export default function FollowUpForm({
 
   return (
     <FollowUpFormFormStyled onSubmit={handleSubmit}>
-      <LanguageOptions
-        name='Sprache'
-        handleChange={handleLanguageChange}
-        options={languageOptions}
-        value={selectedLanguage}
-        defaultValue={appointmentLanguage}></LanguageOptions>
+      <label>
+        <input
+          type='checkbox'
+          name='availability'
+          checked={!wrongLanguage}
+          onChange={() => setWrongLanguage(!wrongLanguage)}
+        />{' '}
+        Sprache korrekt
+      </label>
+
+      {wrongLanguage && (
+        <LanguageOptions
+          name='Sprache'
+          handleChange={handleLanguageChange}
+          options={languageOptions}
+          value={selectedLanguage}
+          defaultValue={appointmentLanguage}></LanguageOptions>
+      )}
 
       <MyDatepicker
         name='date'

@@ -5,11 +5,13 @@ export default function LanguageOptions({
   options,
   handleChange,
   name,
+  value,
   defaultValue
 }) {
   return (
     <Select
-      value={defaultValue}
+      defaultValue={defaultValue}
+      value={value}
       placeholder={name}
       options={options}
       onChange={handleChange}></Select>
