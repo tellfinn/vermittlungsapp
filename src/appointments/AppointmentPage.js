@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { getAppointments, patchAppointment } from './services'
+import {
+  getAppointments,
+  patchAppointment,
+  deleteAppointment
+} from './services'
 import Page from '../common/Page'
 import AppointmentList from './AppointmentList'
 import Appointment from './Appointment'
@@ -11,7 +15,7 @@ export default function AppointmentPage({ requestAccepted, period }) {
 
   useEffect(() => {
     getAppointments().then(setAppointments)
-  }, [])
+  }, [appointments])
 
   function renderAppointmentList(index) {
     const appointmentList = {
@@ -75,6 +79,7 @@ export default function AppointmentPage({ requestAccepted, period }) {
         <Appointment
           handleAcceptClick={() => acceptAppointment(appointment)}
           handleDeclineClick={() => declineAppointment(appointment)}
+          handleDeleteClick={() => removeAppointment(appointment)}
           handleEditClick={() => console.log('edit')}
           key={appointment._id}
           {...appointment}
@@ -119,6 +124,11 @@ export default function AppointmentPage({ requestAccepted, period }) {
         ...appointments.slice(index + 1)
       ])
     })
+  }
+
+  function removeAppointment(appointment) {
+    deleteAppointment(appointment._id)
+    setAppointments([...appointments])
   }
 
   function editAppointment(appointment, newAppointmentData) {

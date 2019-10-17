@@ -17,8 +17,9 @@ export default function AppointmentDetails({
   message,
   handleAcceptClick,
   handleDeclineClick,
-  handleContainerClick,
+  handleCloseClick,
   handleEditClick,
+  handleDeleteClick,
   acceptedByInterpreter
 }) {
   const [isFollowUpFormVisible, setIsFollowUpFormVisible] = useState(false)
@@ -26,7 +27,7 @@ export default function AppointmentDetails({
   return (
     <ClickContainerStyled>
       <AppointmentDetailsStyled>
-        <AppointmentDataStyled onClick={event => handleContainerClick(event)}>
+        <AppointmentDataStyled onClick={event => handleCloseClick(event)}>
           <div>{date}</div>
           <div>{time} Uhr</div>
           <div>{clinic}</div>
@@ -42,34 +43,33 @@ export default function AppointmentDetails({
           <div>Details: </div>
           <div> {message} </div>
         </MoreDetailsStyled>
-        <div name='unclickable'>
-          <IconAreaStyled>
-            <MailIconStyled />
-            <PhoneIconStyled />
-          </IconAreaStyled>
-          {acceptedByInterpreter ? (
-            <ThreeButtonsAreaStyled>
-              <ButtonStyled onClick={event => showFollowUpForm(event)}>
-                Folgetermin mitteilen
-              </ButtonStyled>
-              <ButtonStyled onClick={handleEditClick}>
-                Termin bearbeiten
-              </ButtonStyled>
-              <DeclineButtonStyled onClick={handleDeclineClick}>
-                Termin absagen
-              </DeclineButtonStyled>
-            </ThreeButtonsAreaStyled>
-          ) : (
-            <ButtonAreaStyled>
-              <SubmitButton
-                text='zusagen'
-                handleClick={handleAcceptClick}></SubmitButton>
-              <SubmitButton
-                text='ablehnen'
-                handleClick={handleDeclineClick}></SubmitButton>
-            </ButtonAreaStyled>
-          )}
-        </div>
+
+        <IconAreaStyled>
+          <MailIconStyled />
+          <PhoneIconStyled />
+        </IconAreaStyled>
+        {acceptedByInterpreter ? (
+          <ThreeButtonsAreaStyled>
+            <ButtonStyled onClick={event => showFollowUpForm(event)}>
+              Folgetermin mitteilen
+            </ButtonStyled>
+            <ButtonStyled onClick={handleDeclineClick}>
+              Termin absagen
+            </ButtonStyled>
+            <DeleteButtonStyled onClick={handleDeleteClick}>
+              Termin löschen
+            </DeleteButtonStyled>
+          </ThreeButtonsAreaStyled>
+        ) : (
+          <ButtonAreaStyled>
+            <SubmitButton
+              text='zusagen'
+              handleClick={handleAcceptClick}></SubmitButton>
+            <SubmitButton
+              text='ablehnen'
+              handleClick={handleDeclineClick}></SubmitButton>
+          </ButtonAreaStyled>
+        )}
       </AppointmentDetailsStyled>
 
       {isFollowUpFormVisible && (
@@ -99,7 +99,7 @@ export default function AppointmentDetails({
 
 const AppointmentDetailsStyled = styled.div`
   position: absolute;
-  top: 80px;
+  top: 45px;
   left: auto;
   min-height: 350px;
   width: 95%;
@@ -151,7 +151,7 @@ const ThreeButtonsAreaStyled = styled(ButtonAreaStyled)`
   grid-template-rows: 2;
 `
 
-const DeclineButtonStyled = styled.button`
+const DeleteButtonStyled = styled.button`
   background-color: var(--red);
   grid-column-start: 1;
   grid-column-end: 3;

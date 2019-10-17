@@ -15,6 +15,7 @@ export default function Appointment({
   contact,
   handleAcceptClick,
   handleDeclineClick,
+  handleDeleteClick,
   handleEditClick,
   acceptedByInterpreter
 }) {
@@ -51,11 +52,12 @@ export default function Appointment({
           clinic={clinic}
           contact={contact}
           station={station}
-          handleContainerClick={hideAppointmentDetails}
+          handleCloseClick={hideAppointmentDetails}
           handleAcceptClick={handleAcceptClick}
           handleDeclineClick={handleDeclineClick}
           acceptedByInterpreter={acceptedByInterpreter}
           handleEditClick={handleEditClick}
+          handleDeleteClick={handleDeleteClick}
         />
       )}
     </>
@@ -65,8 +67,8 @@ export default function Appointment({
     setShowDetails(true)
   }
 
-  function hideAppointmentDetails(event) {
-    event.target.name !== 'unclickable' && setShowDetails(false)
+  function hideAppointmentDetails() {
+    setShowDetails(false)
   }
 
   function renderableDate(appointmentDate) {
