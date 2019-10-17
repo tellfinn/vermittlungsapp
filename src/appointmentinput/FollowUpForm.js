@@ -69,10 +69,10 @@ export default function FollowUpForm({
         <input
           type='checkbox'
           name='availability'
-          checked={!wrongLanguage}
+          checked={wrongLanguage}
           onChange={() => setWrongLanguage(!wrongLanguage)}
         />{' '}
-        Sprache korrekt
+        Sprache ändern
       </label>
 
       {wrongLanguage && (
