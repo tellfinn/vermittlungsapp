@@ -15,7 +15,6 @@ export default function Appointment({
   contact,
   handleAcceptClick,
   handleDeclineClick,
-  handleFollowUpClick,
   handleEditClick,
   acceptedByInterpreter
 }) {

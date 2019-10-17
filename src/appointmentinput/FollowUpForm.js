@@ -64,7 +64,7 @@ export default function FollowUpForm({
   }
 
   return (
-    <FollowUpFormFormStyled onSubmit={handleSubmit}>
+    <FollowUpFormStyled onSubmit={handleSubmit}>
       <label>
         <input
           type='checkbox'
@@ -181,7 +181,7 @@ export default function FollowUpForm({
         <SubmitButton text='absenden' type='submit' />
         <SubmitButton text='verwerfen' handleClick={handleAbortClick} />
       </StyleArea>
-    </FollowUpFormFormStyled>
+    </FollowUpFormStyled>
   )
 
   function handleLanguageChange(event) {
@@ -202,12 +202,13 @@ export default function FollowUpForm({
   }
 }
 
-const FollowUpFormFormStyled = styled.form`
+const FollowUpFormStyled = styled.form`
   position: absolute;
   top: 50px;
   display: grid;
   grid-gap: 20px;
-  min-height: 90vh;
+  margin-top: 10px;
+  margin-bottom: 10px;
   max-width: 95%;
   padding: 10px;
   background-color: var(--greyish);
@@ -234,5 +235,3 @@ const MessageField = styled.input`
   width: 100%;
   font-size: 1em;
 `
-
-//event.setHours(01,20) - event2.setTime(event1.getTime())
