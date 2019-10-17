@@ -15,10 +15,10 @@ scrollbar-width: none;
 
   
   body {
-display: grid; 
-grid-template-rows: 50px auto;
+display: flex; 
 height: 100vh;
 margin: 0;
+background-color: #faf9fb;
 font-family: Helvetica, sans-serif; 
   font-weight: 300;
   font-size: 18px;

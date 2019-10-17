@@ -18,8 +18,8 @@ export default function MyMenu({ handleMenuItemClick, isOpen }) {
       <LinkStyled to='/newAppointment' onClick={handleMenuItemClick}>
         neuen Termin erstellen
       </LinkStyled>
-      <LinkStyled to='/followUp' onClick={handleMenuItemClick}>
-        Folgetermin
+      <LinkStyled to='/signUp' onClick={handleMenuItemClick}>
+        Registrieren
       </LinkStyled>
     </StyledMenu>
   )

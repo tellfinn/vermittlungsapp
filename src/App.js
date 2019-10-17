@@ -4,7 +4,7 @@ import GlobalStyles from './GlobalStyles'
 import Header from './common/Header'
 import AppointmentInputForm from './appointmentinput/AppointmentInputForm'
 import AppointmentPage from './appointments/AppointmentPage'
-import FollowUpForm from './appointmentinput/FollowUpForm'
+import SignUpForm from './users/signup/SignUpForm'
 
 function App() {
   return (
@@ -37,7 +37,7 @@ function App() {
             <AppointmentInputForm title='Terminanfrage erstellen' />
           )}
         />
-        <Route path='/followup' render={() => <FollowUpForm />} />
+        <Route path='/signUp' render={() => <SignUpForm />} />
       </Switch>
     </Router>
   )

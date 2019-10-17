@@ -25,7 +25,7 @@ export default function AppointmentDetails({
   const [isFollowUpFormVisible, setIsFollowUpFormVisible] = useState(false)
 
   return (
-    <ClickContainerStyled>
+    <ContainerStyled>
       <AppointmentDetailsStyled>
         <AppointmentDataStyled onClick={event => handleCloseClick(event)}>
           <div>{date}</div>
@@ -84,7 +84,7 @@ export default function AppointmentDetails({
           handleAbortClick={() => hideFollowUpForm()}
         />
       )}
-    </ClickContainerStyled>
+    </ContainerStyled>
   )
 
   function showFollowUpForm(event) {
@@ -101,24 +101,23 @@ const AppointmentDetailsStyled = styled.div`
   position: absolute;
   top: 45px;
   left: auto;
-  min-height: 350px;
-  width: 95%;
   display: grid;
-  margin-bottom: 1.5em;
+  margin: 5px;
   padding: 10px;
   border: 5px solid #f0f0f0;
   outline: 2px solid white;
   box-shadow: 3px 3px 2px grey;
   background-color: var(--greyish);
   align-items: space-between;
-  justify-content: center;
-  text-align: justify;
   overflow-y: scroll;
   z-index: 10;
 `
-const ClickContainerStyled = styled.div`
+const ContainerStyled = styled.div`
   position: fixed;
+  display: flex;
+  justify-content: center;
   top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   background-color: rgba(179, 179, 179, 0.5);

@@ -15,7 +15,7 @@ export default function AppointmentPage({ requestAccepted, period }) {
 
   useEffect(() => {
     getAppointments().then(setAppointments)
-  }, [appointments])
+  }, [])
 
   function renderAppointmentList(index) {
     const appointmentList = {
@@ -127,8 +127,15 @@ export default function AppointmentPage({ requestAccepted, period }) {
   }
 
   function removeAppointment(appointment) {
-    deleteAppointment(appointment._id)
-    setAppointments([...appointments])
+    deleteAppointment(appointment._id).then(deletedAppointment => {
+      const index = appointments.findIndex(
+        appointment => appointment._id === deletedAppointment._id
+      )
+      setAppointments([
+        ...appointments.slice(0, index),
+        ...appointments.slice(index + 1)
+      ])
+    })
   }
 
   function editAppointment(appointment, newAppointmentData) {
