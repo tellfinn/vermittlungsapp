@@ -48,14 +48,17 @@ export default function AppointmentDetails({
             <PhoneIconStyled />
           </IconAreaStyled>
           {acceptedByInterpreter ? (
-            <ButtonAreaStyled>
+            <ThreeButtonsAreaStyled>
               <ButtonStyled onClick={event => showFollowUpForm(event)}>
                 Folgetermin mitteilen
               </ButtonStyled>
               <ButtonStyled onClick={handleEditClick}>
                 Termin bearbeiten
               </ButtonStyled>
-            </ButtonAreaStyled>
+              <DeclineButtonStyled onClick={handleDeclineClick}>
+                Termin absagen
+              </DeclineButtonStyled>
+            </ThreeButtonsAreaStyled>
           ) : (
             <ButtonAreaStyled>
               <SubmitButton
@@ -96,7 +99,7 @@ export default function AppointmentDetails({
 
 const AppointmentDetailsStyled = styled.div`
   position: absolute;
-  top: 150px;
+  top: 80px;
   left: auto;
   min-height: 350px;
   width: 95%;
@@ -142,6 +145,16 @@ const ButtonAreaStyled = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 30px;
   margin: auto;
+`
+
+const ThreeButtonsAreaStyled = styled(ButtonAreaStyled)`
+  grid-template-rows: 2;
+`
+
+const DeclineButtonStyled = styled.button`
+  background-color: var(--red);
+  grid-column-start: 1;
+  grid-column-end: 3;
 `
 
 const ButtonStyled = styled.button`
