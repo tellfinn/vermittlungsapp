@@ -6,10 +6,12 @@ export default function LanguageOptions({
   handleChange,
   name,
   value,
-  defaultValue
+  defaultValue,
+  selectMultiple = false
 }) {
   return (
     <Select
+      isMulti={selectMultiple}
       defaultValue={defaultValue}
       value={value}
       placeholder={name}

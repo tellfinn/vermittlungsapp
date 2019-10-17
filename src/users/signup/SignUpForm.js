@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { postUser } from './services'
+import LanguageOptions from '../../appointmentinput/LanguageOptions'
+import { getLanguages } from '../../appointmentinput/services'
+import Page from '../../common/Page.js'
 
 export default function SignUpForm() {
   const [isLoading, setIsLoading] = useState(true)
+  const [languages, setLanguages] = useState([])
+  const [selectedLanguages, setSelectedLanguages] = useState([])
   const [token, setToken] = useState('')
   const [signUpError, setSignUpError] = useState('')
   const [signInError, setSignInError] = useState('')
@@ -14,11 +19,22 @@ export default function SignUpForm() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
-  const [isInterpreter, setIsInterpreter] = useState(true)
+  const [isInterpreter, setIsInterpreter] = useState(false)
+  const [signUpRepeatPassword, setSignUpRepeatPassword] = useState('')
+
+  const languageOptions = languages
+    .map(language => ({ value: language.name, label: language.name }))
+    .sort((a, b) => {
+      return a.name > b.name
+    })
 
   useEffect(() => {
     setIsLoading(false)
   }, [isLoading])
+
+  useEffect(() => {
+    getLanguages().then(setLanguages)
+  }, [])
 
   function onSignUp(event) {
     event.preventDefault()
@@ -26,10 +42,14 @@ export default function SignUpForm() {
     const signUpData = {
       email: signUpEmail,
       password: signUpPassword,
+      repeatedPassword: signUpRepeatPassword,
       firstName: firstName,
       lastName: lastName,
       phoneNumber: phoneNumber,
-      isInterpreter: isInterpreter
+      isInterpreter: isInterpreter,
+      languages: selectedLanguages[0].map(language => {
+        return language.value
+      })
     }
 
     postUser(signUpData).then(json => {
@@ -39,6 +59,11 @@ export default function SignUpForm() {
         setIsLoading(false)
         setSignUpEmail('')
         setSignUpPassword('')
+        setFirstName('')
+        setLastName('')
+        setPhoneNumber('')
+        setSelectedLanguages([])
+        setSignUpRepeatPassword('')
       } else {
         setSignUpError(json.message)
         setIsLoading(false)
@@ -47,7 +72,7 @@ export default function SignUpForm() {
   }
 
   return (
-    <>
+    <Page>
       {isLoading ? (
         <div>
           <p>Loading...</p>
@@ -58,6 +83,7 @@ export default function SignUpForm() {
             <input
               type='text'
               placeholder='Vorname'
+              value={firstName}
               onChange={onTextboxChangeFirstName}
             />
           </LabelStyled>
@@ -65,6 +91,7 @@ export default function SignUpForm() {
             <input
               type='text'
               placeholder='Nachname'
+              value={lastName}
               onChange={onTextboxChangeLastName}
             />
           </LabelStyled>
@@ -72,15 +99,22 @@ export default function SignUpForm() {
             <input
               type='checkbox'
               checked={isInterpreter}
-              onChange={() => setIsInterpreter(!isInterpreter)}
+              onChange={onInterpreterChange}
             />{' '}
             ich bin Dolmetschende/r
           </label>
-
+          {isInterpreter && (
+            <LanguageOptions
+              name='Sprache'
+              handleChange={handleLanguageChange}
+              selectMultiple={true}
+              options={languageOptions}></LanguageOptions>
+          )}
           <LabelStyled>
             <input
               type='number'
               placeholder='Telefonnummer'
+              value={phoneNumber}
               onChange={onTextboxChangePhoneNumber}
             />
           </LabelStyled>
@@ -88,6 +122,7 @@ export default function SignUpForm() {
             <input
               type='email'
               placeholder='e-Mailadresse'
+              value={signUpEmail}
               onChange={onTextboxChangeSignUpEmail}
             />
           </LabelStyled>
@@ -95,15 +130,31 @@ export default function SignUpForm() {
             <input
               type='password'
               placeholder='Passwort'
+              value={signUpPassword}
               onChange={onTextboxChangeSignUpPassword}
             />
           </LabelStyled>
-
+          <LabelStyled>
+            <input
+              type='password'
+              placeholder='Passwort wiederholen'
+              value={signUpRepeatPassword}
+              onChange={onTextboxChangeSignUpRepeatPassword}
+            />
+          </LabelStyled>
           <Registerbutton type='submit'>Registrieren</Registerbutton>
         </StyledSignUpForm>
       )}
-    </>
+    </Page>
   )
+
+  function handleLanguageChange(event) {
+    setSelectedLanguages([event, ...selectedLanguages])
+  }
+
+  function onInterpreterChange() {
+    setIsInterpreter(!isInterpreter)
+  }
 
   function onTextboxChangeSignInEmail(event) {
     setSignInEmail(event.target.value)
@@ -121,6 +172,10 @@ export default function SignUpForm() {
     setSignUpPassword(event.target.value)
   }
 
+  function onTextboxChangeSignUpRepeatPassword(event) {
+    setSignUpRepeatPassword(event.target.value)
+  }
+
   function onTextboxChangeFirstName(event) {
     setFirstName(event.target.value)
   }
@@ -135,19 +190,17 @@ export default function SignUpForm() {
 }
 
 const StyledSignUpForm = styled.form`
-  margin: 10px;
-  margin-top: 50px;
-
+  margin: 30px;
   display: grid;
-  grid-template-columns: 1;
+  grid-template-rows: auto;
   grid-gap: 30px;
-  align-items: center;
+  justify-content: center;
 `
 const LabelStyled = styled.label`
   display: grid;
   height: 1.2em;
   > input {
-    width: 100%;
+    width: 295px;
     font-size: inherit;
   }
 `

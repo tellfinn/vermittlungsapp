@@ -29,7 +29,15 @@ router.delete('/:id', (req, res) => {
 
 router.post('/', (req, res, next) => {
   const { body } = req
-  const { password, firstName, lastName } = body
+  const {
+    password,
+    firstName,
+    lastName,
+    isInterpreter,
+    phoneNumber,
+    languages,
+    repeatedPassword
+  } = body
   let { email } = body
 
   if (!firstName) {
@@ -52,10 +60,31 @@ router.post('/', (req, res, next) => {
     })
   }
 
+  if (!phoneNumber) {
+    res.send({
+      success: false,
+      message: 'Bitte geben Sie eine Telefonnummer an.'
+    })
+  }
+
   if (!password) {
     res.send({
       success: false,
       message: 'Bitte geben Sie ein Passwort an.'
+    })
+  }
+
+  if (!repeatedPassword) {
+    res.send({
+      success: false,
+      message: 'Bitte wiederholen Sie das Passwort.'
+    })
+  }
+
+  if (repeatedPassword !== password) {
+    res.send({
+      success: false,
+      message: 'Passwörter stimmen nicht überein.'
     })
   }
 
@@ -86,6 +115,11 @@ router.post('/', (req, res, next) => {
 
       newUser.email = email
       newUser.password = newUser.generateHash(password)
+      newUser.firstName = firstName
+      newUser.lastName = lastName
+      newUser.isInterpreter = isInterpreter
+      newUser.phoneNumber = phoneNumber
+      newUser.languages = languages
       newUser.save((err, user) => {
         if (err) {
           return res.send({

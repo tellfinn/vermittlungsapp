@@ -6,7 +6,8 @@ const UserSchema = new mongoose.Schema({
   lastName: { type: String },
   email: { type: String },
   password: { type: String },
-  isInterpreter: { type: Boolean, default: true },
+  isInterpreter: { type: Boolean },
+  languages: [String],
   isDeleted: { type: Boolean, default: false }
 })
 
