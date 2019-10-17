@@ -19,8 +19,7 @@ export default function AppointmentDetails({
   handleDeclineClick,
   handleContainerClick,
   handleEditClick,
-  acceptedByInterpreter,
-  handleSubmit
+  acceptedByInterpreter
 }) {
   const [isFollowUpFormVisible, setIsFollowUpFormVisible] = useState(false)
 
@@ -117,7 +116,7 @@ const AppointmentDetailsStyled = styled.div`
 const ClickContainerStyled = styled.div`
   position: fixed;
   top: 0;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   background-color: rgba(179, 179, 179, 0.5);
   z-index: 5;
