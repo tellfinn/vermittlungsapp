@@ -15,7 +15,7 @@ export function deleteUser(id) {
 }
 
 function fetchUsers({ method = 'GET', id = '', data } = {}) {
-  return fetch('/users/' + id, {
+  return fetch('/users/signup' + id, {
     method,
     body: JSON.stringify(data),
     headers: {

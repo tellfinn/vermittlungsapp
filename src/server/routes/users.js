@@ -1,33 +1,10 @@
 const router = require('express').Router()
 const User = require('../models/User')
-
-router.get('/', (req, res) => {
-  User.find()
-    .then(users => res.json(users))
-    .catch(err => res.json(err))
-})
-
-router.get('/:id', (req, res) => {
-  User.find({ _id: req.params.id })
-    .then(users => res.json(users))
-    .catch(err => res.json(err))
-})
-
-router.patch('/:id', (req, res) => {
-  User.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    .then(user => res.json(user))
-    .catch(err => res.json(err))
-})
-
-router.delete('/:id', (req, res) => {
-  User.findByIdAndDelete(req.params.id)
-    .then(user => res.json(user))
-    .catch(err => res.json(err))
-})
+const UserSession = require('../models/UserSession')
 
 //user sign up
 
-router.post('/', (req, res, next) => {
+router.post('/signup', (req, res, next) => {
   const { body } = req
   const {
     password,
@@ -133,6 +110,180 @@ router.post('/', (req, res, next) => {
           })
         }
       })
+    }
+  )
+})
+
+//user login
+
+router.post('/login', (req, res, next) => {
+  const { body } = req
+  const { password } = body
+  let { email } = body
+
+  if (!email) {
+    return res.send({
+      success: false,
+      message: 'Tragen Sie eine e-Mailadresse ein.'
+    })
+  }
+
+  if (!password) {
+    return res.send({
+      success: false,
+      message: 'Tragen Sie ein Passwort ein.'
+    })
+  }
+
+  email = email.toLowerCase()
+  email = email.trim()
+
+  User.find(
+    {
+      email: email
+    },
+    (err, users) => {
+      if (err) {
+        console.log('err 2:', err)
+        return res.send({
+          success: false,
+          message: 'Serverfehler'
+        })
+      }
+      if (users.length !== 1) {
+        return res.send({
+          success: false,
+          message: 'Fehler bei der Zuordnung'
+        })
+      }
+      const user = users[0]
+      if (!user.validPassword(password)) {
+        return res.send({
+          success: false,
+          message: 'ungültiges Passwort'
+        })
+      } //  correct user
+      const userSession = new UserSession()
+      userSession.userId = user._id
+      userSession.save((err, doc) => {
+        if (err) {
+          console.log(err)
+          return res.send({
+            success: false,
+            message: 'Serverfehler'
+          })
+        }
+        return res.send({
+          success: true,
+          message: 'eingeloggt',
+          token: doc._id
+        })
+      })
+    }
+  )
+})
+
+// user logout
+
+router.get('/logout', (req, res, next) => {
+  const { query } = req
+  const { token } = query
+
+  UserSession.findOneAndUpdate(
+    {
+      _id: token,
+      isDeleted: false
+    },
+    {
+      $set: {
+        isDeleted: true
+      }
+    },
+    null,
+    (err, sessions) => {
+      if (err) {
+        console.log(err)
+        return res.send({
+          success: false,
+          message: 'Serverfehler'
+        })
+      }
+      return res.send({
+        success: true,
+        message: 'ausgeloggt'
+      })
+    }
+  )
+})
+
+// Logout
+
+router.get('/logout', (req, res, next) => {
+  const { query } = req
+  const { token } = query
+  // ?token=test
+
+  // Verify the token is one of a kind and it's not deleted.
+
+  UserSession.findOneAndUpdate(
+    {
+      _id: token,
+      isDeleted: false
+    },
+    {
+      $set: {
+        isDeleted: true
+      }
+    },
+
+    null,
+    (err, sessions) => {
+      if (err) {
+        console.log(err)
+        return res.send({
+          success: false,
+          message: 'Serverfehler'
+        })
+      }
+
+      return res.send({
+        success: true,
+        message: 'Lougout erfolgreich'
+      })
+    }
+  )
+})
+
+// Verifizierung
+
+router.get('/verify', (req, res, next) => {
+  const { query } = req
+  const { token } = query
+
+  UserSession.find(
+    {
+      _id: token,
+      isDeleted: false
+    },
+    (err, sessions) => {
+      if (err) {
+        console.log(err)
+        return res.send({
+          success: false,
+          message: 'Serverfehler'
+        })
+      }
+      if (sessions.length !== 1) {
+        return res.send({
+          success: false,
+          message: 'Error: Invalid session'
+        })
+      } else {
+        return res.send({
+          success: true,
+          message: 'Good'
+        })
+      }
     }
   )
 })

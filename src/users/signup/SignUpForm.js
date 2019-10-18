@@ -9,11 +9,7 @@ export default function SignUpForm() {
   const [isLoading, setIsLoading] = useState(true)
   const [languages, setLanguages] = useState([])
   const [selectedLanguages, setSelectedLanguages] = useState([])
-  const [token, setToken] = useState('')
   const [signUpError, setSignUpError] = useState('')
-  const [signInError, setSignInError] = useState('')
-  const [signInEmail, setSignInEmail] = useState('')
-  const [signInPassword, setSignInPassword] = useState('')
   const [signUpEmail, setSignUpEmail] = useState('')
   const [signUpPassword, setSignUpPassword] = useState('')
   const [firstName, setFirstName] = useState('')
@@ -39,6 +35,13 @@ export default function SignUpForm() {
   function onSignUp(event) {
     event.preventDefault()
 
+    let languages =
+      selectedLanguages.length === 0
+        ? ''
+        : selectedLanguages[0].map(language => {
+            return language.value
+          })
+
     const signUpData = {
       email: signUpEmail,
       password: signUpPassword,
@@ -47,9 +50,7 @@ export default function SignUpForm() {
       lastName: lastName,
       phoneNumber: phoneNumber,
       isInterpreter: isInterpreter,
-      languages: selectedLanguages[0].map(language => {
-        return language.value
-      })
+      languages
     }
 
     postUser(signUpData).then(json => {
@@ -156,16 +157,8 @@ export default function SignUpForm() {
     setIsInterpreter(!isInterpreter)
   }
 
-  function onTextboxChangeSignInEmail(event) {
-    setSignInEmail(event.target.value)
-  }
-
   function onTextboxChangeSignUpEmail(event) {
     setSignUpEmail(event.target.value)
-  }
-
-  function onTextboxChangeSignInPassword(event) {
-    setSignInPassword(event.target.value)
   }
 
   function onTextboxChangeSignUpPassword(event) {

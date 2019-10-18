@@ -5,6 +5,7 @@ import Header from './common/Header'
 import AppointmentInputForm from './appointmentinput/AppointmentInputForm'
 import AppointmentPage from './appointments/AppointmentPage'
 import SignUpForm from './users/signup/SignUpForm'
+import LogIn from './users/login/LogInForm'
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           )}
         />
         <Route path='/signUp' render={() => <SignUpForm />} />
+        <Route path='/login' render={() => <LogIn />} />
       </Switch>
     </Router>
   )

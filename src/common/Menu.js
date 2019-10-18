@@ -21,6 +21,12 @@ export default function MyMenu({ handleMenuItemClick, isOpen }) {
       <LinkStyled to='/signUp' onClick={handleMenuItemClick}>
         Registrieren
       </LinkStyled>
+      <LinkStyled to='/login' onClick={handleMenuItemClick}>
+        Einloggen
+      </LinkStyled>
+      <LinkStyled to='/logout' onClick={handleMenuItemClick}>
+        ausloggen
+      </LinkStyled>
     </StyledMenu>
   )
 }
