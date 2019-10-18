@@ -216,41 +216,6 @@ router.get('/logout', (req, res, next) => {
   )
 })
 
-// Logout
-
-router.get('/logout', (req, res, next) => {
-  const { query } = req
-  const { token } = query
-
-  UserSession.findOneAndUpdate(
-    {
-      _id: token,
-      isDeleted: false
-    },
-    {
-      $set: {
-        isDeleted: true
-      }
-    },
-
-    null,
-    (err, sessions) => {
-      if (err) {
-        console.log(err)
-        return res.send({
-          success: false,
-          message: 'Serverfehler'
-        })
-      }
-
-      return res.send({
-        success: true,
-        message: 'Lougout erfolgreich'
-      })
-    }
-  )
-})
-
 // Verifizierung
 
 router.get('/verify', (req, res, next) => {
