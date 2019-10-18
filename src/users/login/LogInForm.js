@@ -14,7 +14,7 @@ export default function LogInForm() {
   useEffect(() => {
     const obj = getFromStorage('Dolmetschervermittlung')
     if (obj && obj.token) {
-      fetch('/verify?token=' + token)
+      fetch('/users/verify?token=' + token)
         .then(res => res.json())
         .then(json => {
           if (json.success) {
@@ -38,7 +38,7 @@ export default function LogInForm() {
     }
 
     fetchUserLogIn(LogInData).then(json => {
-      console.log('json', json)
+      console.log('json', json) ////console log if login successfull
       if (json.success) {
         setInStorage('Dolmetschervermittlung', { token: json.token })
         setLogInError(json.message)
@@ -93,25 +93,22 @@ export default function LogInForm() {
   }
 
   function logout() {
+    setIsLoading(true)
     const obj = getFromStorage('Dolmetschervermittlung')
-    if (obj && obj.token) {
-      setToken(obj)
-
-      fetch('/logout?token=' + token)
+    if (token && obj.token) {
+      fetch('users/logout?token=' + token)
         .then(res => res.json())
         .then(json => {
+          console.log('json', json) //console log if logout successfull
           if (json.success) {
             setToken('')
             setIsLoading(false)
-            console.log('if')
           } else {
             setIsLoading(false)
-            console.log('else1')
           }
         })
     } else {
       setIsLoading(false)
-      console.log('else12')
     }
   }
 }

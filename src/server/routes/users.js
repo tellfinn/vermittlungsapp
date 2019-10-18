@@ -221,9 +221,6 @@ router.get('/logout', (req, res, next) => {
 router.get('/logout', (req, res, next) => {
   const { query } = req
   const { token } = query
-  // ?token=test
-
-  // Verify the token is one of a kind and it's not deleted.
 
   UserSession.findOneAndUpdate(
     {
