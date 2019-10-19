@@ -6,7 +6,7 @@ export default function Page({ children }) {
 }
 
 const PageStyled = styled.main`
-  width: 100%;
+  width: 100vw;
   padding: 10px;
   margin-top: 50px;
 `

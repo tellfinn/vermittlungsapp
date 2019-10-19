@@ -24,4 +24,5 @@ export default function MyDatepicker({ date, onChange }) {
 
 const DatePickerStyled = styled(DatePicker)`
   font-size: inherit;
+  width: 100%;
 `
