@@ -11,12 +11,12 @@ export default function MyDatepicker({ date, onChange }) {
       selected={date}
       onChange={onChange}
       locale='de'
-      placeholderText='Einsatzbeginn'
+      minDate={new Date()}
       shouldCloseOnSelect={true}
       showTimeSelect
       timeFormat='HH:mm'
       timeIntervals={15}
-      timeCaption='time'
+      timeCaption='Uhrzeit'
       dateFormat='dd.MM.yyyy, HH:mm'
     />
   )

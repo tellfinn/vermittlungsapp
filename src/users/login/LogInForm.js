@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { fetchUserLogIn } from './sevices'
-import { setInStorage, getFromStorage } from '../../common/utils'
+import { postUserLogIn } from './sevices'
+import { setInStorage, getFromStorage } from '../utils'
 import Page from '../../common/Page'
 
 export default function LogInForm() {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [token, setToken] = useState('')
   const [logInError, setLogInError] = useState('')
   const [logInEmail, setLogInEmail] = useState('')
@@ -37,7 +37,7 @@ export default function LogInForm() {
       password: logInPassword
     }
 
-    fetchUserLogIn(LogInData).then(json => {
+    postUserLogIn(LogInData).then(json => {
       console.log('json', json) ////console log if login successfull
       if (json.success) {
         setInStorage('Dolmetschervermittlung', { token: json.token })

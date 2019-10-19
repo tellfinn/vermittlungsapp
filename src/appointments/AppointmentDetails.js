@@ -157,7 +157,7 @@ const DeleteButtonStyled = styled.button`
 `
 
 const ButtonStyled = styled.button`
-  background-color: var(--blueish);
+  background-color: var(--darkblueish);
 `
 
 const IconAreaStyled = styled.div`

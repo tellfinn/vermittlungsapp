@@ -109,6 +109,8 @@ export default function SignUpForm() {
               name='Sprache'
               handleChange={handleLanguageChange}
               selectMultiple={true}
+              defaultValue=''
+              value={selectedLanguages.value}
               options={languageOptions}></LanguageOptions>
           )}
           <LabelStyled>

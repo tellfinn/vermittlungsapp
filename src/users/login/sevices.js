@@ -1,4 +1,4 @@
-export function fetchUserLogIn(data) {
+export function postUserLogIn(data) {
   return fetch('/users/login', {
     method: 'POST',
     body: JSON.stringify(data),

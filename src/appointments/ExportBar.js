@@ -35,7 +35,7 @@ const CalendarBtnStyled = styled.button`
   width: 225px;
   border-radius: 5px;
   border: 0;
-  background: var(--blueish);
+  background: var(--darkblueish);
   font-size: 16px;
   line-height: 2.7em;
 `

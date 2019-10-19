@@ -32,11 +32,16 @@ export default function AppointmentPage({ requestAccepted, period }) {
     <Page>
       <SortByBar
         buttonTexts={['Datum', 'Uhrzeit', 'Ort']}
-        handleClick={setActiveIndex}
+        handleClick={onFilterButtonClick}
+        isActive={activeIndex}
       />
       {renderAppointmentList(activeIndex)}
     </Page>
   )
+
+  function onFilterButtonClick(index) {
+    setActiveIndex(index)
+  }
 
   function sortAppointments() {
     let sortedAppointments = appointments.filter(

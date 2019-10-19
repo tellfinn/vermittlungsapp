@@ -92,8 +92,7 @@ export default function Appointment({
   function boldText(date) {
     let insertDate
     const boldStyle = {
-      fontWeight: 'bolder',
-      animation: 'blink-animation 1s infinite'
+      fontWeight: 'bolder'
     }
     if (date === 'heute') {
       insertDate = <div style={boldStyle}> {date} </div>
@@ -134,10 +133,12 @@ const AppointmentStyled = styled.li`
   grid-template-rows: 2;
   grid-column-gap: 29px;
   min-height: 70px;
+  width: 355px;
   padding: 10px;
-  border: 5px solid #f0f0f0;
-  box-shadow: 2px 2px 2px grey;
-  background-color: var(--greyish);
+  border-bottom: 1px solid grey;
   align-items: space-between;
   text-align: justify;
 `
+/* border: 5px solid #f0f0f0;
+  box-shadow: 2px 2px 2px grey;
+  background-color: var(--greyish);*/

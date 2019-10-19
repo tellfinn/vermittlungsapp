@@ -29,7 +29,7 @@ const HeaderStyled = styled.header`
   justify-content: space-between;
   height: 40px;
   width: 100%;
-  background-color: var(--blueish);
+  background-color: var(--darkblueish);
   font-size: 22px;
   font-weight: bold;
   color: white;

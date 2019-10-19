@@ -7,8 +7,9 @@ scrollbar-width: none;
   }
 
   :root {
-  --blueish: #216ba5;
-  --greyish: #e8e8e8;
+    --blueish: #007fed;
+  --darkblueish: #216ba5;
+  --greyish: #e6e6e6;
   --green: #237726;
   --red: #963D3D;
 }
@@ -32,7 +33,7 @@ button {
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  background-color: var(--blueish);
+  background-color: var(--darkblueish);
   color: white;
   font-size: inherit;
  
