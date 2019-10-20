@@ -36,5 +36,5 @@ const StyledNextButton = styled.div`
   position: fixed;
   left: calc(50% - 20px);
   ${props => (props.iconName === 'next' ? 'bottom: 100px;' : 'top:  100px')};
-  z-index: 30;
+  ${props => (props.iconName === 'previous' ? 'z-index: 30;' : '')};
 `

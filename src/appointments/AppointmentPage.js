@@ -12,7 +12,6 @@ import SortByBar from './SortByBar'
 export default function AppointmentPage({ requestAccepted, period }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [appointments, setAppointments] = useState([])
-  
 
   useEffect(() => {
     getAppointments().then(setAppointments)
@@ -89,7 +88,6 @@ export default function AppointmentPage({ requestAccepted, period }) {
           handleEditClick={() => console.log('edit')}
           key={appointment._id}
           {...appointment}
-
         />
       ))
     }
@@ -115,7 +113,6 @@ export default function AppointmentPage({ requestAccepted, period }) {
   }
 
   function declineAppointment(appointment) {
-  
     patchAppointment(appointment._id, {
       acceptedByInterpreter: false,
       openAppointment: true
@@ -132,7 +129,6 @@ export default function AppointmentPage({ requestAccepted, period }) {
         ...appointments.slice(index + 1)
       ])
     })
-
   }
 
   function removeAppointment(appointment) {
