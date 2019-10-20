@@ -208,13 +208,16 @@ export default function FollowUpForm({
 const FollowUpFormStyled = styled.form`
   position: absolute;
   top: 50px;
+  bottom: 10px;
   display: grid;
   grid-gap: 20px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: auto;
+  outline: 1px solid white;
   max-width: 95%;
   padding: 10px;
-  background-color: var(--greyish);
+  background-color: var(--background-white);
+  box-shadow: var(--shadow);
+  outline: 1px solid var(--darkblueish);
   overflow-y: scroll;
   z-index: 20;
 `

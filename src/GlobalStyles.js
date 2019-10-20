@@ -13,6 +13,7 @@ scrollbar-width: none;
      --green: #237726;
      --red: #963D3D;
      --background-white:#faf9fb;
+     --shadow: 2px 2px 2px grey;
 }
 
   

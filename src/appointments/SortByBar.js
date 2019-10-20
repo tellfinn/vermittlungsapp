@@ -28,7 +28,7 @@ const SortByBarStyled = styled.nav`
 const SortBtnStyled = styled.button`
   height: 40px;
   border: none;
-  box-shadow: ${props => (props.active ? '0 0 0' : '2px 2px 2px grey')};
+  box-shadow: ${props => (props.active ? '0 0 0' : 'var(--shadow);')};
   background-color: ${props =>
     props.active ? 'var(--blueish)' : 'var(--darkblueish)'};
   font-size: 16px;

@@ -26,7 +26,7 @@ export default function AppointmentDetails({
   const [isFollowUpFormVisible, setIsFollowUpFormVisible] = useState(false)
 
   return (
-    <ContainerStyled>
+    <>
       <AppointmentDetailsStyled>
         <InfoBtn
           handleInfobtnClick={event => handleCloseClick(event)}
@@ -99,7 +99,7 @@ export default function AppointmentDetails({
           handleAbortClick={() => hideFollowUpForm()}
         />
       )}
-    </ContainerStyled>
+    </>
   )
 
   function showFollowUpForm(event) {
@@ -114,29 +114,46 @@ export default function AppointmentDetails({
 
 const AppointmentDetailsStyled = styled.div`
   position: absolute;
-  top: 55px;
-  left: auto;
+  left: calc(50%-178px);
+  top: -650px;
   display: grid;
-  margin: 5px;
-  padding: 20px;
-  box-shadow: 3px 3px 2px grey;
+  width: 95%;
+  padding: 10px;
+  padding-top: 20px;
+  box-shadow: var(--shadow);
   background-color: var(--background-white);
-  outline: 2px solid #ffffff;
+  outline: 1px solid var(--blueish);
   align-items: space-between;
   overflow-y: scroll;
   z-index: 10;
+
+  -webkit-animation: slide 0.5s forwards;
+  animation: slide 0.5s forwards;
+
+  @-webkit-keyframes slide {
+    100% {
+      top: 50px;
+    }
+  }
+
+  @keyframes slide {
+    100% {
+      top: 50px;
+    }
+  }
 `
-const ContainerStyled = styled.div`
+
+/*const ContainerStyled = styled.div`
   position: fixed;
-  display: flex;
-  justify-content: center;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(179, 179, 179, 0.5);
+  display: flex;
+  justify-content: center;
+  background-color: rgba(143, 143, 143, 0.5);
   z-index: 5;
-`
+`*/
 
 const AppointmentDataStyled = styled.div`
   display: grid;
