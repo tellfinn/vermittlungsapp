@@ -9,6 +9,7 @@ export default function SignUpForm() {
   const [isLoading, setIsLoading] = useState(true)
   const [languages, setLanguages] = useState([])
   const [selectedLanguages, setSelectedLanguages] = useState([])
+  // eslint-disable-next-line
   const [signUpError, setSignUpError] = useState('')
   const [signUpEmail, setSignUpEmail] = useState('')
   const [signUpPassword, setSignUpPassword] = useState('')

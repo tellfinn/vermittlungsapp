@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import MyMenu from './Menu'
-import { ReactComponent as Arrow } from '../icons/arrow-down.svg'
+// import { ReactComponent as Arrow } from '../icons/arrow-down.svg'
 
 export default function Header({ newAppointments }) {
   let [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -45,9 +45,9 @@ const HeaderStyled = styled.header`
   width: 100%;
   background-color: var(--darkblueish);
   color: white;
-  z-index: 99;
   font-size: 22px;
   font-weight: lighter;
+  z-index: 99;
 `
 
 const BtnArea = styled.div`
@@ -73,7 +73,7 @@ const NotificationsBtnStyled = styled(BtnArea)`
   font-size: 16px;
 `
 
-const ArrowStyled = styled(Arrow)`
+/*const ArrowStyled = styled(Arrow)`
   height: 18px;
   width: 30px;
-`
+`*/

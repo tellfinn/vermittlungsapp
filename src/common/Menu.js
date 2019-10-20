@@ -9,7 +9,7 @@ export default function MyMenu({
   menuItemTitles
 }) {
   return (
-    <StyledMenu isOpen={isOpen}>
+    <StyledMenu isOpen={isOpen} disableAutoFocus width={'230px'}>
       {menuItemTitles.map((itemTitle, index) => (
         <LinkStyled
           to={itemTitle.route}
@@ -23,28 +23,23 @@ export default function MyMenu({
 }
 
 const LinkStyled = styled(NavLink)`
-  padding: 5px;
-  font-size: 18px;
-  font-weight: normal;
+  padding: 10px;
+  padding-left: 20px;
+  font-size: 16px;
+  font-weight: bolder;
   font-style: normal;
-  display: flex;
-  width: 200px;
-  align-items: center;
+  text-align: justify;
   text-decoration: none;
 
-  &:visited {
+  &:link,
+  :visited {
     color: black;
   }
 `
 
 const StyledMenu = styled(Menu)`
-  display: grid;
-  grid-gap: 20px;
-  padding: 20px;
   position: fixed;
   left: 0;
   top: 40px;
-  width: 60vw;
-  z-index: 99;
   background-color: var(--greyish);
 `

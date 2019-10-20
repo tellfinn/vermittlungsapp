@@ -143,7 +143,7 @@ export default function AppointmentPage({ requestAccepted, period }) {
     })
   }
 
-  function editAppointment(appointment, newAppointmentData) {
+  /*function editAppointment(appointment, newAppointmentData) {
     patchAppointment(appointment._id, {
       ...appointment,
       newAppointmentData
@@ -159,5 +159,5 @@ export default function AppointmentPage({ requestAccepted, period }) {
         ...appointments.slice(index + 1)
       ])
     })
-  }
+  }*/
 }

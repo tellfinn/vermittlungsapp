@@ -21,6 +21,7 @@ export default function FollowUpForm({
   const [radioBtnValue, setRadioBtnValue] = useState(aptClinic)
   const [duration, setDuration] = useState(aptDuration)
   const [isInterpreterAvailable, setIsInterpreterAvailable] = useState(true)
+  // eslint-disable-next-line
   let [textInput, setTextInput] = useState('')
   const [date, setDate] = useState(Date.now())
   const [wrongLanguage, setWrongLanguage] = useState(false)
@@ -41,6 +42,7 @@ export default function FollowUpForm({
 
   useEffect(() => {
     setSelectedLanguage(appointmentLanguage)
+    // eslint-disable-next-line
   }, [])
 
   function handleSubmit(event) {
@@ -213,6 +215,7 @@ const FollowUpFormStyled = styled.form`
   max-width: 95%;
   padding: 10px;
   background-color: var(--greyish);
+  overflow-y: scroll;
   z-index: 20;
 `
 

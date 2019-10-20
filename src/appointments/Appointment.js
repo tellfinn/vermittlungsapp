@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
+import Swipeout from 'rc-swipeout'
 import styled from 'styled-components/macro'
 import AppointmentDetails from './AppointmentDetails'
+import { ReactComponent as MoreIcon } from '../icons/arrow-down.svg'
+//import NextButton from '../common/NextButton'
 
 export default function Appointment({
   appointmentDate,
@@ -21,7 +25,7 @@ export default function Appointment({
 }) {
   const [showDetails, setShowDetails] = useState(false)
 
-  const date = boldText(renderableDate(appointmentDate))
+  const date = displayTodayBolder(renderableDate(appointmentDate))
   time = renderableTime(appointmentDate)
   day = renderableDay(appointmentDate)
   duration =
@@ -33,14 +37,18 @@ export default function Appointment({
 
   return (
     <>
-      <AppointmentStyled onClick={showAppointmentDetails}>
+      <AppointmentStyled>
         {date}
         <div>{time}</div>
         <div>{clinic}</div>
         <div> {day} </div>
         <div style={{ letterSpacing: '-0.08em' }}>ca. {duration}</div>
         <div> {station} </div>
+        <ShowMoreBtnStyled onClick={showAppointmentDetails}>
+          <MoreIconStyled />
+        </ShowMoreBtnStyled>
       </AppointmentStyled>
+
       {showDetails && (
         <AppointmentDetails
           date={date}
@@ -89,7 +97,7 @@ export default function Appointment({
     return newDate
   }
 
-  function boldText(date) {
+  function displayTodayBolder(date) {
     let insertDate
     const boldStyle = {
       fontWeight: 'bolder'
@@ -128,6 +136,7 @@ export default function Appointment({
 }
 
 const AppointmentStyled = styled.li`
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1.2fr 0.8fr;
   grid-template-rows: 2;
@@ -135,10 +144,26 @@ const AppointmentStyled = styled.li`
   min-height: 70px;
   width: 355px;
   padding: 10px;
+  padding-bottom: 30px;
   border-bottom: 1px solid grey;
   align-items: space-between;
   text-align: justify;
 `
+
+const ShowMoreBtnStyled = styled.div`
+  position: absolute;
+  bottom: -10px;
+  display: flex;
+  justify-content: center;
+  height: 40px;
+  width: 100%;
+`
+
+const MoreIconStyled = styled(MoreIcon)`
+  height: 40px;
+  width: 40px;
+`
+
 /* border: 5px solid #f0f0f0;
   box-shadow: 2px 2px 2px grey;
   background-color: var(--greyish);*/

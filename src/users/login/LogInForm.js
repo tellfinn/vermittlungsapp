@@ -7,6 +7,7 @@ import Page from '../../common/Page'
 export default function LogInForm() {
   const [isLoading, setIsLoading] = useState(true)
   const [token, setToken] = useState('')
+  // eslint-disable-next-line
   const [logInError, setLogInError] = useState('')
   const [logInEmail, setLogInEmail] = useState('')
   const [logInPassword, setLogInPassword] = useState('')
@@ -27,6 +28,7 @@ export default function LogInForm() {
     } else {
       setIsLoading(false)
     }
+    // eslint-disable-next-line
   }, [])
 
   function onLogIn(event) {

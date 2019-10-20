@@ -17,6 +17,12 @@ export default function AppointmentInputForm() {
   ] = useState('')
   const [radioBtnValue, setRadioBtnValue] = useState('UKE')
   const [date, setDate] = useState(Date.now())
+  const [message, setMessage] = useState('')
+  const [favoritesChecked, setFavoritesChecked] = useState(false)
+  const [writtenTranslationChecked, setWrittenTranslationChecked] = useState(
+    false
+  )
+  const [swornInChecked, setSwornInChecked] = useState(false)
   const [count, setCount] = useState(0)
   const [showElement, setShowElement] = useState(count)
 
@@ -26,6 +32,7 @@ export default function AppointmentInputForm() {
 
   function handleSubmit(event) {
     event.preventDefault()
+
     const form = event.target
     const formData = new FormData(form)
     const appLanguage = selectedLanguage.value
@@ -40,17 +47,19 @@ export default function AppointmentInputForm() {
       acceptedByInterpreter: null,
       openAppointment: true
     }
+
     postAppointment(data)
-    /*  setSelectedLanguage('')
-    setSelectedAlternativeLanguage('')
-    setDate(Date.now())*/
-    form.reset()
   }
 
   function handleAbortClick(event) {
     event.preventDefault()
-    const form = event.target
-    form.reset()
+    setLanguages([])
+    setSelectedLanguage('')
+    setSelectedAlternativeLanguage('')
+    setRadioBtnValue('UKE')
+    setDate(Date.now())
+    setCount(0)
+    setShowElement(count)
   }
 
   const languageOptions = languages
@@ -67,6 +76,7 @@ export default function AppointmentInputForm() {
         <NextButton
           handleNextBtnClick={showPreviousElement}
           visibility={showElement > 0}
+          iconName='previous'
         />
         <Placeholder>
           <Wrapper isVisible={showElement === 0}>
@@ -74,23 +84,42 @@ export default function AppointmentInputForm() {
               name='Sprache'
               handleChange={handleLanguageChange}
               options={languageOptions}
+              value={selectedLanguage}
             />
             <LanguageOptions
               name='Alternativsprache'
               options={alternativeLanguageOptions}
               handleChange={handleAlternativeLanguageChange}
+              value={selectedAlternativeLanguage}
             />
           </Wrapper>
           <Wrapper isVisible={showElement === 1}>
             <label>
-              <input type='checkbox' name='favorites' /> nur an Favoriten
+              <input
+                type='checkbox'
+                name='favorites'
+                checked={favoritesChecked}
+                onChange={() => setFavoritesChecked(!favoritesChecked)}
+              />{' '}
+              nur an Favoriten
             </label>
             <label>
-              <input type='checkbox' name='writtenTranslation'></input>{' '}
+              <input
+                type='checkbox'
+                name='writtenTranslation'
+                onChange={() =>
+                  setWrittenTranslationChecked(!writtenTranslationChecked)
+                }></input>{' '}
               schriftliche Übersetzung
             </label>
             <label>
-              <input type='checkbox' name='swornIn'></input> vereidigt
+              <input
+                type='checkbox'
+                name='swornIn'
+                onChange={() =>
+                  setSwornInChecked(!swornInChecked)
+                }></input>{' '}
+              vereidigt
             </label>
           </Wrapper>
           <Wrapper isVisible={showElement === 2}>
@@ -106,7 +135,8 @@ export default function AppointmentInputForm() {
                 type='number'
                 min='0.25'
                 step='0.25'
-                lang='nb'></input>
+                lang='nb'
+                placeholder='0.25 Std = 15 Min'></input>
             </LabelStyled>
           </Wrapper>
           <Wrapper isVisible={showElement === 3}>
@@ -143,24 +173,31 @@ export default function AppointmentInputForm() {
               </label>
             </RadioBtnAreaStyled>
             <LabelStyled>
-              Station, Gebäude:
-              <input type='text' name='station'></input>
+              <input
+                type='text'
+                name='station'
+                placeholder='Station, Gebäude'></input>
             </LabelStyled>
             <LabelStyled>
-              Ansprechpartner:
-              <input type='text' name='contact'></input>
+              <input
+                type='text'
+                name='contact'
+                placeholder='Ansprechpartner'></input>
             </LabelStyled>
             <LabelStyled>
-              Durchwahl:
-              <input type='number' name='extension'></input>
+              <input
+                type='number'
+                name='extension'
+                placeholder='Durchwahl'></input>
             </LabelStyled>
           </Wrapper>
           <Wrapper isVisible={showElement === 4}>
             <label>
               <MessageField
-                type='textarea'
                 placeholder='weitere Informationen'
-                name='message'></MessageField>
+                name='message'
+                value={message}
+                onChange={event => setMessage(event.value)}></MessageField>
             </label>
             <RadioBtnAreaStyled>
               <SubmitButton text='absenden' type='submit' />
@@ -206,7 +243,6 @@ export default function AppointmentInputForm() {
 
 const AppointmentInputFormStyled = styled.form`
   display: grid;
-  justify-content: center;
   overflow: hidden;
 `
 
@@ -214,11 +250,8 @@ const Placeholder = styled.div`
   position: relative;
   display: grid;
   grid-gap: 20px;
-  justify-content: center;
-  align-items: auto;
   height: 420px;
-  width: 355px;
-  margin-top: 50px;
+  margin-top: 130px;
 `
 
 const Wrapper = styled.div`
@@ -226,12 +259,11 @@ const Wrapper = styled.div`
   display: ${props => (props.isVisible ? 'grid' : 'none')};
   grid-gap: 20px;
   width: 100%;
-  top: 120px;
   right: -360px;
   -webkit-animation: slide 0.5s forwards;
-  -webkit-animation-delay: 0.3s;
+  -webkit-animation-delay: 0.1s;
   animation: slide 0.5s forwards;
-  animation-delay: 0.3s;
+  animation-delay: 0.1s;
 
   @-webkit-keyframes slide {
     100% {
@@ -253,20 +285,25 @@ const RadioBtnAreaStyled = styled.div`
 `
 
 const LabelStyled = styled.label`
-  display: grid;
-  grid-template-columns: 60% auto;
-
   > input {
     width: 100%;
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #cccccc;
+    font-size: 18px;
   }
 `
 
-const MessageField = styled.input`
-  display: grid;
-  align-content: start;
+const MessageField = styled.textarea`
   min-height: 100px;
   width: 100%;
-  font-size: 1em;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+  padding: 8px;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: lighter;
 `
 
 //event.setHours(01,20) - event2.setTime(event1.getTime())

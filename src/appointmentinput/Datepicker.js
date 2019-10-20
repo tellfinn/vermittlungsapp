@@ -23,6 +23,9 @@ export default function MyDatepicker({ date, onChange }) {
 }
 
 const DatePickerStyled = styled(DatePicker)`
-  font-size: inherit;
+  padding: 8px;
   width: 100%;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+  font-size: inherit;
 `
