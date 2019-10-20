@@ -37,22 +37,27 @@ export default function Appointment({
 
   return (
     <>
-
-    <BackgroundContainer> ablehnen <ArrowStyled />
-    <SwipeToDismiss
-  onDismiss={handleDeclineClick} direction='left'>
-
-      <AppointmentStyled>
-        {date}
-        <div>{time}</div>
-        <div>{clinic}</div>
-        <div> {day} </div>
-        <div style={{ letterSpacing: '-0.08em' }}>ca. {duration}</div>
-        <div> {station} </div>
-        <InfoBtn handleInfobtnClick={showAppointmentDetails} infoType='more' />
-      </AppointmentStyled>
-</SwipeToDismiss>
-</BackgroundContainer>
+      <BackgroundContainer>
+        {' '}
+        ablehnen <ArrowStyled />
+        <SwipeToDismiss
+          onDismiss={handleDeclineClick}
+          direction='left'
+          distanceBeforeDismiss={parseInt(50)}>
+          <AppointmentStyled>
+            {date}
+            <div>{time}</div>
+            <div>{clinic}</div>
+            <div> {day} </div>
+            <div style={{ letterSpacing: '-0.08em' }}>ca. {duration}</div>
+            <div> {station} </div>
+            <InfoBtn
+              handleInfobtnClick={showAppointmentDetails}
+              infoType='more'
+            />
+          </AppointmentStyled>
+        </SwipeToDismiss>
+      </BackgroundContainer>
 
       {showDetails && (
         <AppointmentDetails
@@ -75,7 +80,6 @@ export default function Appointment({
       )}
     </>
   )
-
 
   function showAppointmentDetails() {
     setShowDetails(true)
@@ -160,7 +164,7 @@ const AppointmentStyled = styled.li`
 `
 
 const BackgroundContainer = styled.div`
-position: relative;
+  position: relative;
   display: flex;
   height: 90px;
   width: 355px;
@@ -173,12 +177,12 @@ position: relative;
 `
 
 const ArrowStyled = styled(Arrow)`
-position: relative;
-bottom: 30px;
-right: 15px;
-fill: white;
-height: 40px;
-width: 40px;
+  position: relative;
+  bottom: 30px;
+  right: 15px;
+  fill: white;
+  height: 40px;
+  width: 40px;
 `
 
 //alternativ: &#8853;
