@@ -4,6 +4,7 @@ import { ReactComponent as PhoneIcon } from '../icons/phone-fill.svg'
 import { ReactComponent as MailIcon } from '../icons/email.svg'
 import SubmitButton from '../common/SubmitButton'
 import EditAppointmentForm from '../appointmentinput/FollowUpForm'
+import InfoBtn from './InfoBtn'
 
 export default function AppointmentDetails({
   date,
@@ -27,7 +28,11 @@ export default function AppointmentDetails({
   return (
     <ContainerStyled>
       <AppointmentDetailsStyled>
-        <AppointmentDataStyled onClick={event => handleCloseClick(event)}>
+        <InfoBtn
+          handleInfobtnClick={event => handleCloseClick(event)}
+          infoType='less'
+        />
+        <AppointmentDataStyled>
           <div>{date}</div>
           <div>{time} Uhr</div>
           <div>{clinic}</div>
@@ -109,7 +114,7 @@ export default function AppointmentDetails({
 
 const AppointmentDetailsStyled = styled.div`
   position: absolute;
-  top: 45px;
+  top: 55px;
   left: auto;
   display: grid;
   margin: 5px;
@@ -138,6 +143,7 @@ const AppointmentDataStyled = styled.div`
   grid-template-columns: 1fr 1.2fr 0.8fr;
   grid-template-rows: 2;
   grid-column-gap: 29px;
+  margin-top: 20px;
 `
 
 const MoreDetailsStyled = styled.div`

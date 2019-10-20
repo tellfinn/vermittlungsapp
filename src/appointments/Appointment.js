@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom'
 import Swipeout from 'rc-swipeout'
 import styled from 'styled-components/macro'
 import AppointmentDetails from './AppointmentDetails'
-import { ReactComponent as MoreIcon } from '../icons/arrow-down.svg'
-//import NextButton from '../common/NextButton'
+import InfoBtn from './InfoBtn'
 
 export default function Appointment({
   appointmentDate,
@@ -44,9 +43,7 @@ export default function Appointment({
         <div> {day} </div>
         <div style={{ letterSpacing: '-0.08em' }}>ca. {duration}</div>
         <div> {station} </div>
-        <ShowMoreBtnStyled onClick={showAppointmentDetails}>
-          <MoreIconStyled />
-        </ShowMoreBtnStyled>
+        <InfoBtn handleInfobtnClick={showAppointmentDetails} infoType='more' />
       </AppointmentStyled>
 
       {showDetails && (
@@ -144,25 +141,13 @@ const AppointmentStyled = styled.li`
   min-height: 70px;
   width: 355px;
   padding: 10px;
-  padding-bottom: 30px;
+  padding-bottom: 40px;
   border-bottom: 1px solid grey;
   align-items: space-between;
   text-align: justify;
 `
 
-const ShowMoreBtnStyled = styled.div`
-  position: absolute;
-  bottom: -10px;
-  display: flex;
-  justify-content: center;
-  height: 40px;
-  width: 100%;
-`
-
-const MoreIconStyled = styled(MoreIcon)`
-  height: 40px;
-  width: 40px;
-`
+//alternativ: &#8853;
 
 /* border: 5px solid #f0f0f0;
   box-shadow: 2px 2px 2px grey;
