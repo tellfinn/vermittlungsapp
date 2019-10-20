@@ -45,7 +45,17 @@ export default function AppointmentDetails({
         </MoreDetailsStyled>
 
         <IconAreaStyled>
-          <MailIconStyled />
+          <a
+            href={
+              'mailto:buero@vermittlung.de?subject=' +
+              { date } +
+              '' +
+              { time } +
+              '' +
+              { station }
+            }>
+            <MailIconStyled />
+          </a>
           <PhoneIconStyled />
         </IconAreaStyled>
         {acceptedByInterpreter ? (
@@ -103,11 +113,10 @@ const AppointmentDetailsStyled = styled.div`
   left: auto;
   display: grid;
   margin: 5px;
-  padding: 10px;
-  border: 5px solid #f0f0f0;
-  outline: 2px solid white;
+  padding: 20px;
   box-shadow: 3px 3px 2px grey;
-  background-color: var(--greyish);
+  background-color: var(--background-white);
+  outline: 2px solid #ffffff;
   align-items: space-between;
   overflow-y: scroll;
   z-index: 10;

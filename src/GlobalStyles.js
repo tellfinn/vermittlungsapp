@@ -7,11 +7,12 @@ scrollbar-width: none;
   }
 
   :root {
-    --blueish: #007fed;
-  --darkblueish: #216ba5;
-  --greyish: #e6e6e6;
-  --green: #237726;
-  --red: #963D3D;
+     --blueish: #007fed;
+     --darkblueish: #216ba5;
+     --greyish: #e6e6e6;
+     --green: #237726;
+     --red: #963D3D;
+     --background-white:#faf9fb;
 }
 
   
@@ -19,7 +20,7 @@ scrollbar-width: none;
 display: flex; 
 height: 100vh;
 margin: 0;
-background-color: #faf9fb;
+background-color: var(--background-white);
 font-family: Helvetica, sans-serif; 
   font-weight: 300;
   font-size: 18px;

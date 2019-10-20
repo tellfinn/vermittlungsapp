@@ -14,8 +14,7 @@ function App() {
       <Header />
       <Switch>
         <Route
-          exact
-          path='/'
+          path='/request'
           render={() => (
             <AppointmentPage requestAccepted={null} period='present' />
           )}

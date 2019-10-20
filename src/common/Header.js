@@ -3,21 +3,35 @@ import styled from 'styled-components/macro'
 import MyMenu from './Menu'
 import { ReactComponent as Arrow } from '../icons/arrow-down.svg'
 
-export default function Header() {
+export default function Header({ newAppointments }) {
   let [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [title, setTitle] = useState('Willkommen')
+
+  function handleTitleChange(event) {
+    setIsMenuOpen(!isMenuOpen)
+    setTitle(event.target.text)
+  }
+
+  const titleArray = [
+    { route: '/request', title: 'Terminanfragen' },
+    { route: '/appointments', title: 'Terminübersicht' },
+    { route: '/pastappointments', title: 'vergangene Termine' },
+    { route: '/newAppointment', title: 'neuen Termin erstellen' },
+    { route: '/signUp', title: 'Registrieren' },
+    { route: '/login', title: 'Einloggen' },
+    { route: '/logout', title: 'ausloggen' }
+  ]
 
   return (
     <HeaderStyled>
       <BtnArea onClick={() => setIsMenuOpen(!isMenuOpen)} isOpen={isMenuOpen}>
         <MyMenu
-          handleMenuItemClick={() => setIsMenuOpen(!isMenuOpen)}
-          isOpen={isMenuOpen}></MyMenu>
+          handleMenuItemClick={handleTitleChange}
+          isOpen={isMenuOpen}
+          menuItemTitles={titleArray}></MyMenu>
       </BtnArea>
-      Titel
-      <NotificationsBtnStyled>
-        10
-        <ArrowStyled />
-      </NotificationsBtnStyled>
+      {title}
+      <NotificationsBtnStyled>{newAppointments}</NotificationsBtnStyled>
     </HeaderStyled>
   )
 }
@@ -30,10 +44,10 @@ const HeaderStyled = styled.header`
   height: 40px;
   width: 100%;
   background-color: var(--darkblueish);
-  font-size: 22px;
-  font-weight: bold;
   color: white;
   z-index: 99;
+  font-size: 22px;
+  font-weight: lighter;
 `
 
 const BtnArea = styled.div`
