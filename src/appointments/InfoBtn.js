@@ -22,14 +22,14 @@ const InfoBtnStyled = styled.div`
   position: absolute;
   display: flex;
   justify-content: center;
-  height: 40px;
+  height: 50px;
   width: 100%;
   padding: 10px;
   font-size: 25px;
 `
 
 const MoreInfoBtnStyled = styled(InfoBtnStyled)`
-  bottom: 10px;
+  bottom: 5px;
 `
 
 const LessInfoBtnStyled = styled(InfoBtnStyled)`

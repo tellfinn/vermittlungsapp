@@ -17,8 +17,8 @@ export default function Header({ newAppointments }) {
     { route: '/appointments', title: 'Terminübersicht' },
     { route: '/pastappointments', title: 'vergangene Termine' },
     { route: '/newAppointment', title: 'neuen Termin erstellen' },
-    { route: '/signUp', title: 'Registrieren' },
-    { route: '/login', title: 'Einloggen' },
+    { route: '/signUp', title: 'registrieren' },
+    { route: '/login', title: 'einloggen' },
     { route: '/logout', title: 'ausloggen' }
   ]
 

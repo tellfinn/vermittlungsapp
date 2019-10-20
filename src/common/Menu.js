@@ -10,6 +10,9 @@ export default function MyMenu({
 }) {
   return (
     <StyledMenu isOpen={isOpen} disableAutoFocus width={'230px'}>
+      <LinkStyled exact to='/' onClick={handleMenuItemClick}>
+        Home
+      </LinkStyled>
       {menuItemTitles.map((itemTitle, index) => (
         <LinkStyled
           to={itemTitle.route}

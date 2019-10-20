@@ -113,13 +113,13 @@ export default function AppointmentDetails({
 }
 
 const AppointmentDetailsStyled = styled.div`
-  position: absolute;
+  position: fixed;
   left: calc(50%-178px);
   top: -650px;
   display: grid;
   width: 95%;
   padding: 10px;
-  padding-top: 20px;
+  padding-top: 30px;
   box-shadow: var(--shadow);
   background-color: var(--background-white);
   outline: 1px solid var(--blueish);
