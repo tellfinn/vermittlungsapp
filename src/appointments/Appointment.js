@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import ReactDOM from 'react-dom'
-import Swipeout from 'rc-swipeout'
 import styled from 'styled-components/macro'
 import AppointmentDetails from './AppointmentDetails'
 import InfoBtn from './InfoBtn'
+import SwipeToDismiss from 'react-swipe-to-dismiss'
+import { ReactComponent as Arrow } from '../icons/chevron-left.svg'
 
 export default function Appointment({
   appointmentDate,
@@ -20,7 +20,8 @@ export default function Appointment({
   handleDeclineClick,
   handleDeleteClick,
   handleEditClick,
-  acceptedByInterpreter
+  acceptedByInterpreter,
+  isSwiping
 }) {
   const [showDetails, setShowDetails] = useState(false)
 
@@ -36,6 +37,11 @@ export default function Appointment({
 
   return (
     <>
+
+    <BackgroundContainer> ablehnen <ArrowStyled />
+    <SwipeToDismiss
+  onDismiss={handleDeclineClick} direction='left'>
+
       <AppointmentStyled>
         {date}
         <div>{time}</div>
@@ -45,6 +51,8 @@ export default function Appointment({
         <div> {station} </div>
         <InfoBtn handleInfobtnClick={showAppointmentDetails} infoType='more' />
       </AppointmentStyled>
+</SwipeToDismiss>
+</BackgroundContainer>
 
       {showDetails && (
         <AppointmentDetails
@@ -67,6 +75,7 @@ export default function Appointment({
       )}
     </>
   )
+
 
   function showAppointmentDetails() {
     setShowDetails(true)
@@ -133,7 +142,7 @@ export default function Appointment({
 }
 
 const AppointmentStyled = styled.li`
-  position: relative;
+  position: absolute;
   display: grid;
   grid-template-columns: 1fr 1.2fr 0.8fr;
   grid-template-rows: 2;
@@ -145,6 +154,31 @@ const AppointmentStyled = styled.li`
   border-bottom: 1px solid grey;
   align-items: space-between;
   text-align: justify;
+  background-color: var(--background-white);
+  color: black;
+  z-index: 5;
+`
+
+const BackgroundContainer = styled.div`
+position: relative;
+  display: flex;
+  height: 90px;
+  width: 355px;
+  margin: 20px 0;
+  justify-content: end;
+  align-items: end;
+  background-color: var(--red);
+  color: white;
+  z-index: 1;
+`
+
+const ArrowStyled = styled(Arrow)`
+position: relative;
+bottom: 30px;
+right: 15px;
+fill: white;
+height: 40px;
+width: 40px;
 `
 
 //alternativ: &#8853;

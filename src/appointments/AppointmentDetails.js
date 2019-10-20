@@ -112,6 +112,8 @@ export default function AppointmentDetails({
   }
 }
 
+
+
 const AppointmentDetailsStyled = styled.div`
   position: fixed;
   left: calc(50%-178px);
@@ -143,17 +145,7 @@ const AppointmentDetailsStyled = styled.div`
   }
 `
 
-/*const ContainerStyled = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  background-color: rgba(143, 143, 143, 0.5);
-  z-index: 5;
-`*/
+
 
 const AppointmentDataStyled = styled.div`
   display: grid;
