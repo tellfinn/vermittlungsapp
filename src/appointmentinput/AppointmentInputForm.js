@@ -128,7 +128,7 @@ export default function AppointmentInputForm() {
               date={date}
               onChange={handleDateChange}></MyDatepicker>
 
-            <LabelStyled>
+            <label>
               voraussichtliche Dauer:{' '}
               <input
                 name='duration'
@@ -137,7 +137,7 @@ export default function AppointmentInputForm() {
                 step='0.25'
                 lang='nb'
                 placeholder='0.25 Std = 15 Min'></input>
-            </LabelStyled>
+            </label>
           </Wrapper>
           <Wrapper isVisible={showElement === 3}>
             <RadioBtnAreaStyled>
@@ -172,24 +172,24 @@ export default function AppointmentInputForm() {
                 PNZ
               </label>
             </RadioBtnAreaStyled>
-            <LabelStyled>
+            <label>
               <input
                 type='text'
                 name='station'
                 placeholder='Station, Gebäude'></input>
-            </LabelStyled>
-            <LabelStyled>
+            </label>
+            <label>
               <input
                 type='text'
                 name='contact'
                 placeholder='Ansprechpartner'></input>
-            </LabelStyled>
-            <LabelStyled>
+            </label>
+            <label>
               <input
                 type='number'
                 name='extension'
                 placeholder='Durchwahl'></input>
-            </LabelStyled>
+            </label>
           </Wrapper>
           <Wrapper isVisible={showElement === 4}>
             <label>
@@ -284,26 +284,8 @@ const RadioBtnAreaStyled = styled.div`
   justify-content: space-between;
 `
 
-const LabelStyled = styled.label`
-  > input {
-    width: 100%;
-    padding: 8px;
-    border-radius: 3px;
-    border: 1px solid #cccccc;
-    font-size: 18px;
-  }
-`
-
 const MessageField = styled.textarea`
   min-height: 100px;
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #cccccc;
-  padding: 8px;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: lighter;
 `
 
 //event.setHours(01,20) - event2.setTime(event1.getTime())

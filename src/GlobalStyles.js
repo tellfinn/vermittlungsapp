@@ -127,4 +127,23 @@ button {
   padding: 0 12px;
 }
 
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+  padding: 8px;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: lighter;
+}
+
+input[type="text"], input[type="number"] {
+  width: 100%;
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #cccccc;
+    font-size: 18px;
+}
+
 `

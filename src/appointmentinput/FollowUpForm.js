@@ -175,10 +175,7 @@ export default function FollowUpForm({
       </LabelStyled>
 
       <label>
-        <MessageField
-          type='textarea'
-          placeholder='weitere Informationen'
-          name='message'></MessageField>
+        <textarea placeholder='weitere Informationen' name='message'></textarea>
       </label>
       <StyleArea>
         <SubmitButton text='absenden' type='submit' />
@@ -233,12 +230,6 @@ const LabelStyled = styled.label`
   grid-template-columns: 60% auto;
   height: 1.2em;
   > input {
-    width: 100%;
+    padding: 5px;
   }
-`
-
-const MessageField = styled.input`
-  height: 100px;
-  width: 100%;
-  font-size: 1em;
 `
