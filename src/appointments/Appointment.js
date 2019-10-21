@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import AppointmentDetails from './AppointmentDetails'
 import InfoBtn from './InfoBtn'
 import SwipeToDismiss from 'react-swipe-to-dismiss'
-import { ReactComponent as Arrow } from '../icons/chevron-left.svg'
+import { ReactComponent as Arrow } from '../icons/chevron-circle-left.svg'
 
 export default function Appointment({
   appointmentDate,

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ReactComponent as NextIcon } from '../icons/chevron-right.svg'
-import { ReactComponent as PreviousIcon } from '../icons/chevron-left.svg'
+import { ReactComponent as NextIcon } from '../icons/chevron-circle-right.svg'
+import { ReactComponent as PreviousIcon } from '../icons/chevron-circle-left.svg'
 
 export default function NextButton({
   iconName,
@@ -20,18 +20,20 @@ export default function NextButton({
 }
 
 const NextIconStyled = styled(NextIcon)`
-  height: 30px;
-  width: 30px;
+  fill: var(--darkblueish);
+  height: 50px;
+  width: 50px;
 `
 
 const PreviousIconStyled = styled(PreviousIcon)`
-  height: 30px;
-  width: 30px;
+  fill: var(--darkblueish);
+  height: 50px;
+  width: 50px;
 `
 
 const StyledNextButton = styled.div`
-  height: 40px;
-  width: 40px;
+  height: 50px;
+  width: 50px;
   ${props => (props.isVisible ? '' : 'display: none')};
   position: fixed;
   left: calc(50% - 20px);

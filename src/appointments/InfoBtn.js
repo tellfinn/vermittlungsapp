@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { ReactComponent as MoreIcon } from '../icons/chevron-down.svg'
-import { ReactComponent as LessIcon } from '../icons/chevron-up.svg'
+import { ReactComponent as MoreIcon } from '../icons/chevron-circle-down.svg'
+import { ReactComponent as LessIcon } from '../icons/chevron-circle-up.svg'
 
 export default function InfoBtn({ infoType, handleInfobtnClick }) {
   const infoBtn =
@@ -33,15 +33,17 @@ const MoreInfoBtnStyled = styled(InfoBtnStyled)`
 `
 
 const LessInfoBtnStyled = styled(InfoBtnStyled)`
-  top: -15px;
+  top: -10px;
 `
 
 const MoreIconStyled = styled(MoreIcon)`
-  height: 30px;
-  width: 30px;
+  fill: var(--darkblueish);
+  height: 40px;
+  width: 40px;
 `
 
 const LessIconStyled = styled(LessIcon)`
-  height: 40px;
-  width: 40px;
+  fill: var(--darkblueish);
+  height: 50px;
+  width: 50px;
 `
