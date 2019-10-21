@@ -6,13 +6,14 @@ import AppointmentInputForm from './appointmentinput/AppointmentInputForm'
 import AppointmentPage from './appointments/AppointmentPage'
 import SignUpForm from './users/signup/SignUpForm'
 import LogIn from './users/login/LogInForm'
-
+import { Redirect } from 'react-router-dom'
 function App() {
   return (
     <Router>
       <GlobalStyles></GlobalStyles>
       <Header />
       <Switch>
+        <Redirect exact from='/' to='/request' />
         <Route
           path='/request'
           render={() => (

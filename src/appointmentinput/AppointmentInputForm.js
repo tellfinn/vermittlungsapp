@@ -7,8 +7,10 @@ import { postAppointment } from '../appointments/services'
 import SubmitButton from '../common/SubmitButton'
 import { getLanguages } from './services'
 import NextButton from '../common/NextButton'
+import { useHistory } from 'react-router-dom'
 
 export default function AppointmentInputForm() {
+  let history = useHistory()
   const [languages, setLanguages] = useState([])
   const [selectedLanguage, setSelectedLanguage] = useState('')
   const [
@@ -48,11 +50,10 @@ export default function AppointmentInputForm() {
       openAppointment: true
     }
 
-    postAppointment(data)
+    postAppointment(data).then(history.push('/request'))
   }
 
-  function handleAbortClick(event) {
-    event.preventDefault()
+  function resetForm() {
     setLanguages([])
     setSelectedLanguage('')
     setSelectedAlternativeLanguage('')
@@ -60,6 +61,11 @@ export default function AppointmentInputForm() {
     setDate(Date.now())
     setCount(0)
     setShowElement(count)
+  }
+
+  function handleAbortClick(event) {
+    event.preventDefault()
+    resetForm()
   }
 
   const languageOptions = languages
@@ -287,5 +293,3 @@ const RadioBtnAreaStyled = styled.div`
 const MessageField = styled.textarea`
   min-height: 100px;
 `
-
-//event.setHours(01,20) - event2.setTime(event1.getTime())

@@ -13,8 +13,7 @@ export default function FollowUpForm({
   aptDuration,
   aptContact,
   aptExtension,
-  handleAbortClick,
-  appointmentState
+  handleAbortClick
 }) {
   const [languages, setLanguages] = useState([])
   const [selectedLanguage, setSelectedLanguage] = useState('')
@@ -62,8 +61,7 @@ export default function FollowUpForm({
       acceptedByInterpreter: isInterpreterAvailable,
       openAppointment: !isInterpreterAvailable
     }
-    postAppointment(data).then(appointmentState)
-    handleAbortClick()
+    postAppointment(data)
   }
 
   return (
