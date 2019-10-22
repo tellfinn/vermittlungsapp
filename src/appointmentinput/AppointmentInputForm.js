@@ -7,13 +7,11 @@ import { postAppointment } from '../appointments/services'
 import { useHistory } from 'react-router-dom'
 import SubmitButton from '../common/SubmitButton'
 import NextButton from '../common/NextButton'
+import { getLanguages } from './services'
 
-export default function AppointmentInputForm({
-  languages,
-  setAppointments,
-  setLanguages
-}) {
+export default function AppointmentInputForm({ setAppointments }) {
   let history = useHistory()
+  const [languages, setLanguages] = useState([])
   const [selectedLanguage, setSelectedLanguage] = useState('')
   const [
     selectedAlternativeLanguage,
@@ -31,9 +29,14 @@ export default function AppointmentInputForm({
   const [showElement, setShowElement] = useState(count)
 
   useEffect(() => {
-    setLanguages(languages)
-    // eslint-disable-next-line
+    getLanguages().then(setLanguages)
   }, [])
+
+  const languageOptions = languages
+    .map(language => ({ value: language.name, label: language.name }))
+    .sort((a, b) => {
+      return a.value > b.value
+    })
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -57,18 +60,9 @@ export default function AppointmentInputForm({
       .then(history.push('/request'))
   }
 
-  function resetForm() {
-    setSelectedLanguage('')
-    setSelectedAlternativeLanguage('')
-    setRadioBtnValue('UKE')
-    setDate(Date.now())
-    setCount(0)
-    setShowElement(count)
-  }
-
   function handleAbortClick(event) {
     event.preventDefault()
-    resetForm()
+    history.push('/request')
   }
 
   return (
@@ -86,12 +80,12 @@ export default function AppointmentInputForm({
               handleChange={event => {
                 setSelectedLanguage(event)
               }}
-              options={languages}
+              options={languageOptions}
               value={selectedLanguage}
             />
             <LanguageOptions
               name='Alternativsprache'
-              options={languages}
+              options={languageOptions}
               handleChange={event => setSelectedAlternativeLanguage(event)}
               value={selectedAlternativeLanguage}
             />
