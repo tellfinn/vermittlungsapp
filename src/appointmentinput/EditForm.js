@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
-import LanguageOptions from './LanguageOptions'
+import LanguageSelector from './LanguageSelector'
 import MyDatepicker from './Datepicker'
 import SubmitButton from '../common/SubmitButton'
-import { patchAppointment } from '../appointments/services'
 
 EditForm.propTypes = {
   appointmentLanguage: PropTypes.string,
@@ -17,7 +16,7 @@ EditForm.propTypes = {
   languages: PropTypes.array
 }
 
-export default function EditForm({ ...props }) {
+export default function EditForm({ isFollowUp = false, ...props }) {
   const [selectedLanguage, setSelectedLanguage] = useState('')
   const [radioBtnValue, setRadioBtnValue] = useState(props.aptClinic)
   const [duration, setDuration] = useState(props.aptDuration)
@@ -57,11 +56,17 @@ export default function EditForm({ ...props }) {
       _id: props.id
     }
 
-    patchAppointment(data._id, {
-      ...data
-    })
-      .then(props.setAptState())
-      .then(props.handleAbortClick())
+    isFollowUp === true
+      ? props
+          .handleEditSubmit(data)
+          .then(props.setAptState())
+          .then(props.handleAbortClick())
+      : props
+          .handleEditSubmit(data._id, {
+            ...data
+          })
+          .then(props.setAptState())
+          .then(props.handleAbortClick())
   }
 
   return (
@@ -77,12 +82,12 @@ export default function EditForm({ ...props }) {
       </label>
 
       {wrongLanguage && (
-        <LanguageOptions
+        <LanguageSelector
           name='Sprache'
           handleChange={event => setSelectedLanguage(event)}
           options={props.languages}
           value={selectedLanguage}
-          defaultValue={appointmentLanguage}></LanguageOptions>
+          defaultValue={appointmentLanguage}></LanguageSelector>
       )}
 
       <MyDatepicker
@@ -97,7 +102,7 @@ export default function EditForm({ ...props }) {
           checked={isInterpreterAvailable}
           onChange={() => setIsInterpreterAvailable(!isInterpreterAvailable)}
         />{' '}
-        gleicher Dolmetscher
+        {isFollowUp === true ? 'bin verfügbar' : 'gleicher Dolmetscher'}
       </label>
 
       <LabelStyled>

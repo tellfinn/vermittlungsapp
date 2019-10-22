@@ -1,7 +1,7 @@
 import React from 'react'
 import Select from 'react-select'
 
-export default function LanguageOptions({
+export default function LanguageSelector({
   options,
   handleChange,
   name,

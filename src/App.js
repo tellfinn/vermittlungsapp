@@ -12,8 +12,6 @@ import { getLanguages } from '../src/appointmentinput/services'
 
 function App() {
   const [languages, setLanguages] = useState([])
-  // eslint-disable-next-line
-  const [appointments, setAppointments] = useState([])
 
   useEffect(() => {
     getLanguages().then(setLanguages)
@@ -64,10 +62,7 @@ function App() {
         <Route
           path='/newAppointment'
           render={() => (
-            <AppointmentInputForm
-              title='Terminanfrage erstellen'
-              setAppointments={setAppointments}
-            />
+            <AppointmentInputForm title='Terminanfrage erstellen' />
           )}
         />
         <Route

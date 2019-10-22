@@ -1,7 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { ReactComponent as NextIcon } from '../icons/chevron-circle-right.svg'
 import { ReactComponent as PreviousIcon } from '../icons/chevron-circle-left.svg'
+
+NextButton.propTypes = {
+  iconName: PropTypes.string,
+  handleNextBtnClick: PropTypes.func,
+  visibility: PropTypes.bool
+}
 
 export default function NextButton({
   iconName,

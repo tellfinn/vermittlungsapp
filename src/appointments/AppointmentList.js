@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 
-export default function AppointmentList({ children, handleAcceptClick }) {
+export default function AppointmentList({ children }) {
   return <AppointmentListStyled>{children}</AppointmentListStyled>
 }
 

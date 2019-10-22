@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
+import { postAppointment, patchAppointment } from './services'
 import { ReactComponent as PhoneIcon } from '../icons/phone-fill.svg'
 import { ReactComponent as MailIcon } from '../icons/email.svg'
 import SubmitButton from '../common/SubmitButton'
 import EditForm from '../appointmentinput/EditForm'
-import FollowUpForm from '../appointmentinput/FollowUpForm'
 import InfoBtn from './InfoBtn'
 
 AppointmentDetails.propTypes = {
@@ -21,13 +21,11 @@ AppointmentDetails.propTypes = {
   handleAcceptClick: PropTypes.func,
   handleDeclineClick: PropTypes.func,
   handleCloseClick: PropTypes.func,
-  handleEditClick: PropTypes.func,
   handleDeleteClick: PropTypes.func,
-  handlePostClick: PropTypes.func,
   acceptedByInterpreter: PropTypes.bool
 }
 
-export default function AppointmentDetails({ languages, ...props }) {
+export default function AppointmentDetails({ ...props }) {
   const [isFollowUpFormVisible, setIsFollowUpFormVisible] = useState(false)
   const [isEditFormVisible, setIsEditFormVisible] = useState(false)
 
@@ -89,7 +87,7 @@ export default function AppointmentDetails({ languages, ...props }) {
       </AppointmentDetailsStyled>
 
       {isFollowUpFormVisible && (
-        <FollowUpForm
+        <EditForm
           language={props.language}
           aptClinic={props.clinic}
           newDate={props.formdate}
@@ -97,9 +95,11 @@ export default function AppointmentDetails({ languages, ...props }) {
           aptDuration={props.formduration}
           aptContact={props.contact}
           aptExtension={props.extension}
-          languages={languages}
+          languages={props.languages}
+          handleEditSubmit={postAppointment}
           handleAbortClick={() => hideFollowUpForm()}
           setAptState={props.setAptState}
+          isFollowUp={true}
         />
       )}
 
@@ -112,9 +112,10 @@ export default function AppointmentDetails({ languages, ...props }) {
           aptDuration={props.formduration}
           aptContact={props.contact}
           aptExtension={props.extension}
-          languages={languages}
+          languages={props.languages}
           handleAbortClick={() => hideEditForm()}
           setAptState={props.setAptState}
+          handleEditSubmit={patchAppointment}
           id={props.id}
         />
       )}

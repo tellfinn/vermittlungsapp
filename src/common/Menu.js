@@ -1,7 +1,14 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import PropTypes from 'prop-types'
 import { slide as Menu } from 'react-burger-menu'
 import { NavLink } from 'react-router-dom'
+
+MyMenu.propTypes = {
+  handleMenuItemClick: PropTypes.func,
+  isOpen: PropTypes.bool,
+  menuItemTitles: PropTypes.array
+}
 
 export default function MyMenu({
   handleMenuItemClick,

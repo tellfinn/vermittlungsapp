@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import {
   patchAppointment,
   deleteAppointment,
@@ -8,6 +9,12 @@ import Page from '../common/Page'
 import AppointmentList from './AppointmentList'
 import Appointment from './Appointment'
 import SortByBar from './SortByBar'
+
+AppointmentPage.propTypes = {
+  requestAccepted: PropTypes.bool,
+  period: PropTypes.string,
+  languages: PropTypes.array
+}
 
 export default function AppointmentPage({
   requestAccepted,
@@ -30,7 +37,7 @@ export default function AppointmentPage({
     return appointmentList[index]
   }
 
-  const timestamp = new Date().setHours(0, 0, 0, 0)
+  const currentTimestamp = new Date().setHours(0, 0, 0, 0)
 
   return (
     <Page>
@@ -67,12 +74,12 @@ export default function AppointmentPage({
 
     if (period === 'present') {
       sortedAppointments = sortedAppointments.filter(
-        appointment => new Date(appointment.appointmentDate) >= timestamp
+        appointment => new Date(appointment.appointmentDate) >= currentTimestamp
       )
     } else if (period === 'past') {
       sortedAppointments = sortedAppointments.filter(
         appointment =>
-          new Date(appointment.appointmentDate) < timestamp &&
+          new Date(appointment.appointmentDate) < currentTimestamp &&
           appointment.acceptedByInterpreter === true
       )
     }

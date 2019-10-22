@@ -1,7 +1,13 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import PropTypes from 'prop-types'
 import { ReactComponent as AcceptIcon } from '../icons/submit-icon.svg'
 import { ReactComponent as AbortIcon } from '../icons/cancel.svg'
+
+SubmitButton.propTypes = {
+  text: PropTypes.string,
+  handleClick: PropTypes.func
+}
 
 export default function SubmitButton({ text, handleClick }) {
   const btnColor =

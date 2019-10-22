@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import Page from '../common/Page'
-import LanguageOptions from './LanguageOptions'
+import LanguageSelector from './LanguageSelector'
 import MyDatepicker from './Datepicker'
 import { postAppointment } from '../appointments/services'
 import { useHistory } from 'react-router-dom'
@@ -9,7 +9,7 @@ import SubmitButton from '../common/SubmitButton'
 import NextButton from '../common/NextButton'
 import { getLanguages } from './services'
 
-export default function AppointmentInputForm({ setAppointments }) {
+export default function AppointmentInputForm() {
   let history = useHistory()
   const [languages, setLanguages] = useState([])
   const [selectedLanguage, setSelectedLanguage] = useState('')
@@ -55,9 +55,7 @@ export default function AppointmentInputForm({ setAppointments }) {
       acceptedByInterpreter: null,
       openAppointment: true
     }
-    postAppointment(data)
-      .then(setAppointments)
-      .then(history.push('/request'))
+    postAppointment(data).then(history.push('/request'))
   }
 
   function handleAbortClick(event) {
@@ -75,7 +73,7 @@ export default function AppointmentInputForm({ setAppointments }) {
         />
         <Placeholder>
           <Wrapper isVisible={showElement === 0}>
-            <LanguageOptions
+            <LanguageSelector
               name='Sprache'
               handleChange={event => {
                 setSelectedLanguage(event)
@@ -83,7 +81,7 @@ export default function AppointmentInputForm({ setAppointments }) {
               options={languageOptions}
               value={selectedLanguage}
             />
-            <LanguageOptions
+            <LanguageSelector
               name='Alternativsprache'
               options={languageOptions}
               handleChange={event => setSelectedAlternativeLanguage(event)}

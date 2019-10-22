@@ -20,7 +20,6 @@ Appointment.propTypes = {
   handleAcceptClick: PropTypes.func,
   handleDeclineClick: PropTypes.func,
   handleDeleteClick: PropTypes.func,
-  handleEditClick: PropTypes.func,
   acceptedByInterpreter: PropTypes.bool
 }
 

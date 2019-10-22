@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { postUser } from './services'
 import Page from '../../common/Page.js'
-import LanguageOptions from '../../appointmentinput/LanguageOptions'
+import LanguageSelector from '../../appointmentinput/LanguageSelector'
 import NextButton from '../../common/NextButton'
 
 export default function SignUpForm({ languages }) {
@@ -147,7 +147,7 @@ export default function SignUpForm({ languages }) {
           <Wrapper isVisible={showElement === 2}>
             {isInterpreter && (
               <>
-                <LanguageOptions
+                <LanguageSelector
                   name='Sprache'
                   handleChange={event =>
                     setSelectedLanguages([event, ...selectedLanguages])
