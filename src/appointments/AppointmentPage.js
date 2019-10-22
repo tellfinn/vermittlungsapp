@@ -12,8 +12,7 @@ import SortByBar from './SortByBar'
 export default function AppointmentPage({
   requestAccepted,
   period,
-  languages,
-  postAppointment
+  languages
 }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [appointments, setAppointments] = useState([])
@@ -86,11 +85,11 @@ export default function AppointmentPage({
           handleAcceptClick={() => acceptAppointment(appointment)}
           handleDeclineClick={() => declineAppointment(appointment)}
           handleDeleteClick={() => removeAppointment(appointment)}
-          handleEditClick={() => console.log('edit')}
+          handleEditClick={() => editAppointment(appointment)}
           key={appointment._id}
           {...appointment}
           languages={languages}
-          postAppointment={postAppointment}
+          setAptState={() => setAptStateFromChild}
         />
       ))
     }
@@ -146,21 +145,27 @@ export default function AppointmentPage({
     })
   }
 
-  /*function editAppointment(appointment, newAppointmentData) {
+  function editAppointment(appointment, newAppointmentData) {
+    console.log(appointment)
     patchAppointment(appointment._id, {
-      ...appointment,
-      newAppointmentData
-    }).then(updatedAppointment => {
-      const index = appointments.findIndex(
-        appointment => appointment._id === updatedAppointment._id
-      )
-      setAppointments([
-        ...appointments.slice(0, index),
-        {
-          ...appointment
-        },
-        ...appointments.slice(index + 1)
-      ])
+      ...appointment
     })
-  }*/
+      .then(updatedAppointment => {
+        const index = appointments.findIndex(
+          appointment => appointment._id === updatedAppointment._id
+        )
+        setAppointments([
+          ...appointments.slice(0, index),
+          {
+            ...appointment
+          },
+          ...appointments.slice(index + 1)
+        ])
+      })
+      .then(setAppointments)
+  }
+
+  function setAptStateFromChild() {
+    getAppointments().then(setAppointments)
+  }
 }

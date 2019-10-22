@@ -14,10 +14,15 @@ FollowUpForm.propTypes = {
   aptContact: PropTypes.string,
   aptExtension: PropTypes.number,
   handleAbortClick: PropTypes.func,
-  languages: PropTypes.array
+  languages: PropTypes.array,
+  handleFollowUpSubmit: PropTypes.func
 }
 
-export default function FollowUpForm({ languages, ...props }) {
+export default function FollowUpForm({
+  handleFollowUpSubmit,
+  languages,
+  ...props
+}) {
   const [selectedLanguage, setSelectedLanguage] = useState('')
   const [radioBtnValue, setRadioBtnValue] = useState(props.aptClinic)
   const [duration, setDuration] = useState(props.aptDuration)
@@ -26,8 +31,6 @@ export default function FollowUpForm({ languages, ...props }) {
   let [textInput, setTextInput] = useState('')
   const [date, setDate] = useState(Date.now())
   const [wrongLanguage, setWrongLanguage] = useState(false)
-
-  console.log(props.language)
 
   let appointmentLanguage = languages.find(language => {
     return language.value === props.language
@@ -55,7 +58,9 @@ export default function FollowUpForm({ languages, ...props }) {
       acceptedByInterpreter: isInterpreterAvailable,
       openAppointment: !isInterpreterAvailable
     }
-    postAppointment(data).then(props.handleAbortClick)
+    postAppointment(data)
+      .then(props.handleAbortClick)
+      .then(props.setAptState())
   }
 
   return (

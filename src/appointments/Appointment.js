@@ -93,7 +93,9 @@ export default function Appointment({
           acceptedByInterpreter={props.acceptedByInterpreter}
           handleEditClick={props.handleEditClick}
           handleDeleteClick={props.handleDeleteClick}
+          handlePostClick={props.handlePostClick}
           languages={props.languages}
+          setAptState={props.setAptState}
         />
       )}
     </>

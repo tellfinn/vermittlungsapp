@@ -32,6 +32,7 @@ export default function AppointmentInputForm({
 
   useEffect(() => {
     setLanguages(languages)
+    // eslint-disable-next-line
   }, [])
 
   function handleSubmit(event) {

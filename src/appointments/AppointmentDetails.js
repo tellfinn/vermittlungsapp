@@ -22,16 +22,13 @@ AppointmentDetails.propTypes = {
   handleCloseClick: PropTypes.func,
   handleEditClick: PropTypes.func,
   handleDeleteClick: PropTypes.func,
+  handlePostClick: PropTypes.func,
   acceptedByInterpreter: PropTypes.bool
 }
 
-export default function AppointmentDetails({
-  postAppointment,
-  languages,
-  ...props
-}) {
+export default function AppointmentDetails({ languages, ...props }) {
   const [isFollowUpFormVisible, setIsFollowUpFormVisible] = useState(false)
-
+  const [isEditFormVisible, setIsEditFormVisible] = useState(false)
   return (
     <>
       <AppointmentDetailsStyled>
@@ -73,6 +70,9 @@ export default function AppointmentDetails({
             <DeleteButtonStyled onClick={props.handleDeleteClick}>
               Termin löschen
             </DeleteButtonStyled>
+            <DeleteButtonStyled onClick={event => showEditForm(event)}>
+              Termin bearbeiten
+            </DeleteButtonStyled>
           </ThreeButtonsAreaStyled>
         ) : (
           <ButtonAreaStyled>
@@ -97,11 +97,34 @@ export default function AppointmentDetails({
           aptExtension={props.extension}
           languages={languages}
           handleAbortClick={() => hideFollowUpForm()}
-          followUpCallback={postAppointment}
+          setAptState={props.setAptState}
+        />
+      )}
+
+      {isEditFormVisible && (
+        <FollowUpForm
+          language={props.language}
+          aptClinic={props.clinic}
+          newDate={Date.now()}
+          aptStation={props.station}
+          aptDuration={props.duration}
+          aptContact={props.contact}
+          aptExtension={props.extension}
+          languages={languages}
+          handleAbortClick={() => hideEditForm()}
         />
       )}
     </>
   )
+
+  function showEditForm(event) {
+    event.stopPropagation()
+    setIsEditFormVisible(true)
+  }
+
+  function hideEditForm() {
+    setIsEditFormVisible(false)
+  }
 
   function showFollowUpForm(event) {
     event.stopPropagation()
@@ -173,8 +196,6 @@ const ThreeButtonsAreaStyled = styled(ButtonAreaStyled)`
 
 const DeleteButtonStyled = styled.button`
   background-color: var(--red);
-  grid-column-start: 1;
-  grid-column-end: 3;
 `
 
 const ButtonStyled = styled.button`

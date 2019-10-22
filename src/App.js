@@ -12,6 +12,7 @@ import { getLanguages } from '../src/appointmentinput/services'
 
 function App() {
   const [languages, setLanguages] = useState([])
+  // eslint-disable-next-line
   const [appointments, setAppointments] = useState([])
 
   useEffect(() => {
@@ -56,6 +57,7 @@ function App() {
             <AppointmentPage
               requestAccepted={true}
               period='past'
+              setAppointments={setAppointments}
               languages={languageOptions}
             />
           )}
