@@ -6,12 +6,12 @@ import { ReactComponent as LessIcon } from '../icons/chevron-circle-up.svg'
 export default function InfoBtn({ infoType, handleInfobtnClick }) {
   const infoBtn =
     infoType === 'more' ? (
-      <MoreInfoBtnStyled onClick={handleInfobtnClick}>
-        <MoreIconStyled />
+      <MoreInfoBtnStyled>
+        <MoreIconStyled onClick={handleInfobtnClick} />
       </MoreInfoBtnStyled>
     ) : (
-      <LessInfoBtnStyled onClick={handleInfobtnClick}>
-        <LessIconStyled />
+      <LessInfoBtnStyled>
+        <LessIconStyled onClick={handleInfobtnClick} />
       </LessInfoBtnStyled>
     )
 
@@ -22,18 +22,19 @@ const InfoBtnStyled = styled.div`
   position: absolute;
   display: flex;
   justify-content: center;
-  height: 50px;
+  align-items: center;
+  height: ${props => (props.infoType === 'more' ? '60px;' : '40px')};
   width: 100%;
   padding: 10px;
-  font-size: 25px;
 `
 
 const MoreInfoBtnStyled = styled(InfoBtnStyled)`
-  bottom: 5px;
+  margin-top: 5px;
+  bottom: 0;
 `
 
 const LessInfoBtnStyled = styled(InfoBtnStyled)`
-  top: -10px;
+  top: 0;
 `
 
 const MoreIconStyled = styled(MoreIcon)`

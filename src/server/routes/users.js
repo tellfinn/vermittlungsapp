@@ -4,7 +4,7 @@ const UserSession = require('../models/UserSession')
 
 //user sign up
 
-router.post('/signup', (req, res, next) => {
+router.post('/register', (req, res) => {
   const { body } = req
   const {
     password,
@@ -86,32 +86,24 @@ router.post('/signup', (req, res, next) => {
           message: 'ein Account mit dieser e-Mailadresse existiert bereits.'
         })
       }
-
-      // save new user
-      const newUser = new User()
-
-      newUser.email = email
-      newUser.password = newUser.generateHash(password)
-      newUser.firstName = firstName
-      newUser.lastName = lastName
-      newUser.isInterpreter = isInterpreter
-      newUser.phoneNumber = phoneNumber
-      newUser.languages = languages
-      newUser.save((err, user) => {
-        if (err) {
-          return res.send({
-            success: false,
-            message: 'Es ist ein Fehler aufgetreten (Serverfehler).'
-          })
-        } else {
-          return res.send({
-            success: true,
-            message: 'Registrierung erfolgreich'
-          })
-        }
-      })
     }
   )
+
+  // save new user
+  const newUser = new User()
+
+  newUser.email = email
+  newUser.password = newUser.generateHash(password)
+  newUser.firstName = firstName
+  newUser.lastName = lastName
+  newUser.isInterpreter = isInterpreter
+  newUser.phoneNumber = phoneNumber
+  newUser.languages = languages
+
+  newUser
+    .save(req.body)
+    .then(user => res.json(user))
+    .catch(err => res.json(err))
 })
 
 //user login
@@ -144,7 +136,6 @@ router.post('/login', (req, res, next) => {
     },
     (err, users) => {
       if (err) {
-        console.log('err 2:', err)
         return res.send({
           success: false,
           message: 'Serverfehler'
@@ -153,7 +144,7 @@ router.post('/login', (req, res, next) => {
       if (users.length !== 1) {
         return res.send({
           success: false,
-          message: 'Fehler bei der Zuordnung'
+          message: 'kein User mit dieser eMailadresse vorhanden'
         })
       }
       const user = users[0]
@@ -167,7 +158,6 @@ router.post('/login', (req, res, next) => {
       userSession.userId = user._id
       userSession.save((err, doc) => {
         if (err) {
-          console.log(err)
           return res.send({
             success: false,
             message: 'Serverfehler'
@@ -248,6 +238,30 @@ router.get('/verify', (req, res, next) => {
       }
     }
   )
+})
+
+router.get('/', (req, res) => {
+  User.find()
+    .then(users => res.json(users))
+    .catch(err => res.json(err))
+})
+
+router.get('/:id', (req, res) => {
+  User.find({ _id: req.params.id })
+    .then(users => res.json(users))
+    .catch(err => res.json(err))
+})
+
+router.patch('/:id', (req, res) => {
+  User.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then(users => res.json(users))
+    .catch(err => res.json(err))
+})
+
+router.delete('/:id', (req, res) => {
+  User.findByIdAndDelete(req.params.id)
+    .then(users => res.json(users))
+    .catch(err => res.json(err))
 })
 
 module.exports = router

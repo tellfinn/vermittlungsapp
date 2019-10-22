@@ -1,9 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import de from 'date-fns/locale/de'
 import 'react-datepicker/dist/react-datepicker.css'
 registerLocale('de', de)
+
+MyDatepicker.propTypes = {
+  // date: Proptypes.instanceOf(Date),
+  onChange: PropTypes.func
+}
 
 export default function MyDatepicker({ date, onChange }) {
   return (

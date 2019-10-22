@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import Page from '../common/Page'
 import LanguageOptions from './LanguageOptions'
 import MyDatepicker from './Datepicker'
 import { postAppointment } from '../appointments/services'
-import SubmitButton from '../common/SubmitButton'
-import { getLanguages } from './services'
-import NextButton from '../common/NextButton'
 import { useHistory } from 'react-router-dom'
+import SubmitButton from '../common/SubmitButton'
+import NextButton from '../common/NextButton'
 
-export default function AppointmentInputForm() {
+export default function AppointmentInputForm({ languages, setAppointments }) {
   let history = useHistory()
-  const [languages, setLanguages] = useState([])
   const [selectedLanguage, setSelectedLanguage] = useState('')
   const [
     selectedAlternativeLanguage,
@@ -27,10 +25,6 @@ export default function AppointmentInputForm() {
   const [swornInChecked, setSwornInChecked] = useState(false)
   const [count, setCount] = useState(0)
   const [showElement, setShowElement] = useState(count)
-
-  useEffect(() => {
-    getLanguages().then(setLanguages)
-  }, [])
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -49,12 +43,12 @@ export default function AppointmentInputForm() {
       acceptedByInterpreter: null,
       openAppointment: true
     }
-
-    postAppointment(data).then(history.push('/request'))
+    postAppointment(data)
+      .then(setAppointments)
+      .then(history.push('/request'))
   }
 
   function resetForm() {
-    setLanguages([])
     setSelectedLanguage('')
     setSelectedAlternativeLanguage('')
     setRadioBtnValue('UKE')
@@ -68,14 +62,6 @@ export default function AppointmentInputForm() {
     resetForm()
   }
 
-  const languageOptions = languages
-    .map(language => ({ value: language.name, label: language.name }))
-    .sort((a, b) => {
-      return a.name > b.name
-    })
-
-  const alternativeLanguageOptions = languageOptions
-
   return (
     <Page>
       <AppointmentInputFormStyled onSubmit={handleSubmit}>
@@ -88,14 +74,16 @@ export default function AppointmentInputForm() {
           <Wrapper isVisible={showElement === 0}>
             <LanguageOptions
               name='Sprache'
-              handleChange={handleLanguageChange}
-              options={languageOptions}
+              handleChange={event => {
+                setSelectedLanguage(event)
+              }}
+              options={languages}
               value={selectedLanguage}
             />
             <LanguageOptions
               name='Alternativsprache'
-              options={alternativeLanguageOptions}
-              handleChange={handleAlternativeLanguageChange}
+              options={languages}
+              handleChange={event => setSelectedAlternativeLanguage(event)}
               value={selectedAlternativeLanguage}
             />
           </Wrapper>
@@ -132,7 +120,7 @@ export default function AppointmentInputForm() {
             <MyDatepicker
               name='date'
               date={date}
-              onChange={handleDateChange}></MyDatepicker>
+              onChange={value => setDate(value)}></MyDatepicker>
 
             <label>
               voraussichtliche Dauer:{' '}
@@ -228,18 +216,6 @@ export default function AppointmentInputForm() {
   function showPreviousElement() {
     setCount(count => count - 1)
     setShowElement(count - 1)
-  }
-
-  function handleLanguageChange(event) {
-    setSelectedLanguage(event)
-  }
-
-  function handleAlternativeLanguageChange(event) {
-    setSelectedAlternativeLanguage(event)
-  }
-
-  function handleDateChange(value) {
-    setDate(value)
   }
 
   function handleRadioChange(event) {

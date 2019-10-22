@@ -1,42 +1,36 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
+import PropTypes from 'prop-types'
 import LanguageOptions from './LanguageOptions'
 import MyDatepicker from './Datepicker'
 import { postAppointment } from '../appointments/services'
 import SubmitButton from '../common/SubmitButton'
-import { getLanguages } from './services'
 
-export default function FollowUpForm({
-  aptLanguage,
-  aptClinic,
-  aptStation,
-  aptDuration,
-  aptContact,
-  aptExtension,
-  handleAbortClick
-}) {
-  const [languages, setLanguages] = useState([])
+FollowUpForm.propTypes = {
+  appointmentLanguage: PropTypes.string,
+  aptClinic: PropTypes.string,
+  aptStation: PropTypes.string,
+  aptDuration: PropTypes.string,
+  aptContact: PropTypes.string,
+  aptExtension: PropTypes.number,
+  handleAbortClick: PropTypes.func,
+  languages: PropTypes.array
+}
+
+export default function FollowUpForm({ languages, ...props }) {
   const [selectedLanguage, setSelectedLanguage] = useState('')
-  const [radioBtnValue, setRadioBtnValue] = useState(aptClinic)
-  const [duration, setDuration] = useState(aptDuration)
+  const [radioBtnValue, setRadioBtnValue] = useState(props.aptClinic)
+  const [duration, setDuration] = useState(props.aptDuration)
   const [isInterpreterAvailable, setIsInterpreterAvailable] = useState(true)
   // eslint-disable-next-line
   let [textInput, setTextInput] = useState('')
   const [date, setDate] = useState(Date.now())
   const [wrongLanguage, setWrongLanguage] = useState(false)
 
-  const languageOptions = languages
-    .map(language => ({ value: language.name, label: language.name }))
-    .sort((a, b) => {
-      return a.name > b.name
-    })
+  console.log(props.language)
 
-  useEffect(() => {
-    getLanguages().then(setLanguages)
-  }, [])
-
-  const appointmentLanguage = languageOptions.find(language => {
-    return language.value === aptLanguage
+  let appointmentLanguage = languages.find(language => {
+    return language.value === props.language
   })
 
   useEffect(() => {
@@ -61,7 +55,7 @@ export default function FollowUpForm({
       acceptedByInterpreter: isInterpreterAvailable,
       openAppointment: !isInterpreterAvailable
     }
-    postAppointment(data)
+    postAppointment(data).then(props.handleAbortClick)
   }
 
   return (
@@ -80,7 +74,7 @@ export default function FollowUpForm({
         <LanguageOptions
           name='Sprache'
           handleChange={handleLanguageChange}
-          options={languageOptions}
+          options={languages}
           value={selectedLanguage}
           defaultValue={appointmentLanguage}></LanguageOptions>
       )}
@@ -95,7 +89,7 @@ export default function FollowUpForm({
           type='checkbox'
           name='availability'
           checked={isInterpreterAvailable}
-          onChange={toggleAvailability}
+          onChange={() => setIsInterpreterAvailable(!isInterpreterAvailable)}
         />{' '}
         bin verfügbar
       </label>
@@ -149,7 +143,7 @@ export default function FollowUpForm({
         <input
           type='text'
           name='station'
-          defaultValue={aptStation}
+          defaultValue={props.aptStation}
           onChange={event => setTextInput(event.target.value)}
         />
       </LabelStyled>
@@ -158,7 +152,7 @@ export default function FollowUpForm({
         <input
           type='text'
           name='contact'
-          defaultValue={aptContact}
+          defaultValue={props.aptContact}
           onChange={event => setTextInput(event.target.value)}
         />
       </LabelStyled>
@@ -167,7 +161,7 @@ export default function FollowUpForm({
         <input
           type='number'
           name='extension'
-          defaultValue={aptExtension}
+          defaultValue={props.aptExtension}
           onChange={event => setTextInput(event.target.value)}
         />
       </LabelStyled>
@@ -177,7 +171,7 @@ export default function FollowUpForm({
       </label>
       <StyleArea>
         <SubmitButton text='absenden' type='submit' />
-        <SubmitButton text='verwerfen' handleClick={handleAbortClick} />
+        <SubmitButton text='verwerfen' handleClick={props.handleAbortClick} />
       </StyleArea>
     </FollowUpFormStyled>
   )
@@ -193,15 +187,10 @@ export default function FollowUpForm({
   function handleRadioChange(event) {
     setRadioBtnValue(event.target.value)
   }
-
-  function toggleAvailability(event) {
-    event.stopPropagation()
-    setIsInterpreterAvailable(!isInterpreterAvailable)
-  }
 }
 
 const FollowUpFormStyled = styled.form`
-  position: absolute;
+  position: fixed;
   top: 50px;
   bottom: 10px;
   display: grid;

@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import {
-  getAppointments,
-  patchAppointment,
-  deleteAppointment
-} from './services'
+import React, { useState } from 'react'
+import { patchAppointment, deleteAppointment } from './services'
 import Page from '../common/Page'
 import AppointmentList from './AppointmentList'
 import Appointment from './Appointment'
 import SortByBar from './SortByBar'
 
-export default function AppointmentPage({ requestAccepted, period }) {
+export default function AppointmentPage({
+  requestAccepted,
+  period,
+  languages,
+  appointments,
+  setAppointments,
+  postAppointment
+}) {
   const [activeIndex, setActiveIndex] = useState(0)
-  const [appointments, setAppointments] = useState([])
-
-  useEffect(() => {
-    getAppointments().then(setAppointments)
-  }, [])
 
   function renderAppointmentList(index) {
     const appointmentList = {
@@ -32,16 +30,12 @@ export default function AppointmentPage({ requestAccepted, period }) {
     <Page>
       <SortByBar
         buttonTexts={['Datum', 'Uhrzeit', 'Ort']}
-        handleClick={onFilterButtonClick}
+        handleClick={index => setActiveIndex(index)}
         isActive={activeIndex}
       />
       {renderAppointmentList(activeIndex)}
     </Page>
   )
-
-  function onFilterButtonClick(index) {
-    setActiveIndex(index)
-  }
 
   function sortAppointments() {
     let sortedAppointments = appointments.filter(
@@ -88,6 +82,8 @@ export default function AppointmentPage({ requestAccepted, period }) {
           handleEditClick={() => console.log('edit')}
           key={appointment._id}
           {...appointment}
+          languages={languages}
+          postAppointment={postAppointment}
         />
       ))
     }

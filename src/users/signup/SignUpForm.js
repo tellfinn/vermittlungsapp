@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { postUser } from './services'
 import LanguageOptions from '../../appointmentinput/LanguageOptions'
-import { getLanguages } from '../../appointmentinput/services'
 import Page from '../../common/Page.js'
 
-export default function SignUpForm() {
+export default function SignUpForm({ languages }) {
   const [isLoading, setIsLoading] = useState(true)
-  const [languages, setLanguages] = useState([])
   const [selectedLanguages, setSelectedLanguages] = useState([])
   // eslint-disable-next-line
   const [signUpError, setSignUpError] = useState('')
@@ -28,10 +26,6 @@ export default function SignUpForm() {
   useEffect(() => {
     setIsLoading(false)
   }, [isLoading])
-
-  useEffect(() => {
-    getLanguages().then(setLanguages)
-  }, [])
 
   function onSignUp(event) {
     event.preventDefault()

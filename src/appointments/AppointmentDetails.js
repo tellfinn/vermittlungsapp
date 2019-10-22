@@ -1,27 +1,34 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
+import PropTypes from 'prop-types'
 import { ReactComponent as PhoneIcon } from '../icons/phone-fill.svg'
 import { ReactComponent as MailIcon } from '../icons/email.svg'
 import SubmitButton from '../common/SubmitButton'
-import EditAppointmentForm from '../appointmentinput/FollowUpForm'
+import FollowUpForm from '../appointmentinput/FollowUpForm'
 import InfoBtn from './InfoBtn'
 
+AppointmentDetails.propTypes = {
+  date: PropTypes.object,
+  time: PropTypes.string,
+  duration: PropTypes.string,
+  contact: PropTypes.string,
+  extension: PropTypes.number,
+  clinic: PropTypes.string,
+  station: PropTypes.string,
+  language: PropTypes.string,
+  message: PropTypes.string,
+  handleAcceptClick: PropTypes.func,
+  handleDeclineClick: PropTypes.func,
+  handleCloseClick: PropTypes.func,
+  handleEditClick: PropTypes.func,
+  handleDeleteClick: PropTypes.func,
+  acceptedByInterpreter: PropTypes.bool
+}
+
 export default function AppointmentDetails({
-  date,
-  time,
-  duration,
-  contact,
-  extension,
-  clinic,
-  station,
-  language,
-  message,
-  handleAcceptClick,
-  handleDeclineClick,
-  handleCloseClick,
-  handleEditClick,
-  handleDeleteClick,
-  acceptedByInterpreter
+  postAppointment,
+  languages,
+  ...props
 }) {
   const [isFollowUpFormVisible, setIsFollowUpFormVisible] = useState(false)
 
@@ -29,49 +36,41 @@ export default function AppointmentDetails({
     <>
       <AppointmentDetailsStyled>
         <InfoBtn
-          handleInfobtnClick={event => handleCloseClick(event)}
+          handleInfobtnClick={event => props.handleCloseClick(event)}
           infoType='less'
         />
         <AppointmentDataStyled>
-          <div>{date}</div>
-          <div>{time} Uhr</div>
-          <div>{clinic}</div>
-          <div>{language}</div>
-          <div style={{ letterSpacing: '-0.08em' }}> ca. {duration}</div>
-          <div> {station} </div>
+          <div>{props.date}</div>
+          <div>{props.time} Uhr</div>
+          <div>{props.clinic}</div>
+          <div>{props.language}</div>
+          <div style={{ letterSpacing: '-0.08em' }}> ca. {props.duration}</div>
+          <div> {props.station} </div>
         </AppointmentDataStyled>
         <MoreDetailsStyled>
           <div>Ansprechpartner: </div>
-          <div> {contact} </div>
+          <div> {props.contact} </div>
           <div>Durchwahl: </div>
-          <div> {extension}</div>
+          <div> {props.extension}</div>
           <div>Details: </div>
-          <div> {message} </div>
+          <div> {props.message} </div>
         </MoreDetailsStyled>
 
         <IconAreaStyled>
-          <a
-            href={
-              'mailto:buero@vermittlung.de?subject=' +
-              { date } +
-              '' +
-              { time } +
-              '' +
-              { station }
-            }>
+          <a href={'mailto:buero@vermittlung.de'}>
             <MailIconStyled />
           </a>
           <PhoneIconStyled />
         </IconAreaStyled>
-        {acceptedByInterpreter ? (
+        {props.acceptedByInterpreter ? (
           <ThreeButtonsAreaStyled>
             <ButtonStyled onClick={event => showFollowUpForm(event)}>
               Folgetermin mitteilen
             </ButtonStyled>
-            <ButtonStyled onClick={handleDeclineClick}>
+            <ButtonStyled onClick={props.handleDeclineClick}>
               Termin absagen
             </ButtonStyled>
-            <DeleteButtonStyled onClick={handleDeleteClick}>
+            <DeleteButtonStyled onClick={props.handleDeleteClick}>
               Termin löschen
             </DeleteButtonStyled>
           </ThreeButtonsAreaStyled>
@@ -79,24 +78,26 @@ export default function AppointmentDetails({
           <ButtonAreaStyled>
             <SubmitButton
               text='zusagen'
-              handleClick={handleAcceptClick}></SubmitButton>
+              handleClick={props.handleAcceptClick}></SubmitButton>
             <SubmitButton
               text='ablehnen'
-              handleClick={handleDeclineClick}></SubmitButton>
+              handleClick={props.handleDeclineClick}></SubmitButton>
           </ButtonAreaStyled>
         )}
       </AppointmentDetailsStyled>
 
       {isFollowUpFormVisible && (
-        <EditAppointmentForm
-          aptLanguage={language}
-          aptClinic={clinic}
+        <FollowUpForm
+          language={props.language}
+          aptClinic={props.clinic}
           newDate={Date.now()}
-          aptStation={station}
-          aptDuration={duration}
-          aptContact={contact}
-          aptExtension={extension}
+          aptStation={props.station}
+          aptDuration={props.duration}
+          aptContact={props.contact}
+          aptExtension={props.extension}
+          languages={languages}
           handleAbortClick={() => hideFollowUpForm()}
+          followUpCallback={postAppointment}
         />
       )}
     </>
@@ -111,8 +112,6 @@ export default function AppointmentDetails({
     setIsFollowUpFormVisible(false)
   }
 }
-
-
 
 const AppointmentDetailsStyled = styled.div`
   position: fixed;
@@ -145,14 +144,12 @@ const AppointmentDetailsStyled = styled.div`
   }
 `
 
-
-
 const AppointmentDataStyled = styled.div`
   display: grid;
   grid-template-columns: 1fr 1.2fr 0.8fr;
   grid-template-rows: 2;
   grid-column-gap: 29px;
-  margin-top: 20px;
+  margin-top: 40px;
 `
 
 const MoreDetailsStyled = styled.div`

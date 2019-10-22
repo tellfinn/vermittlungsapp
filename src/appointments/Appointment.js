@@ -1,9 +1,28 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
+import PropTypes from 'prop-types'
 import AppointmentDetails from './AppointmentDetails'
 import InfoBtn from './InfoBtn'
 import SwipeToDismiss from 'react-swipe-to-dismiss'
 import { ReactComponent as Arrow } from '../icons/chevron-circle-left.svg'
+
+Appointment.propTypes = {
+  appointmentDate: PropTypes.string,
+  time: PropTypes.string,
+  day: PropTypes.object,
+  duration: PropTypes.number,
+  clinic: PropTypes.string,
+  station: PropTypes.string,
+  appLanguage: PropTypes.string,
+  extension: PropTypes.number,
+  message: PropTypes.string,
+  contact: PropTypes.string,
+  handleAcceptClick: PropTypes.func,
+  handleDeclineClick: PropTypes.func,
+  handleDeleteClick: PropTypes.func,
+  handleEditClick: PropTypes.func,
+  acceptedByInterpreter: PropTypes.bool
+}
 
 export default function Appointment({
   appointmentDate,
@@ -16,12 +35,7 @@ export default function Appointment({
   extension,
   message,
   contact,
-  handleAcceptClick,
-  handleDeclineClick,
-  handleDeleteClick,
-  handleEditClick,
-  acceptedByInterpreter,
-  isSwiping
+  ...props
 }) {
   const [showDetails, setShowDetails] = useState(false)
 
@@ -41,7 +55,7 @@ export default function Appointment({
         {' '}
         ablehnen <ArrowStyled />
         <SwipeToDismiss
-          onDismiss={handleDeclineClick}
+          onDismiss={props.handleDeclineClick}
           direction='left'
           distanceBeforeDismiss={parseInt(50)}>
           <AppointmentStyled>
@@ -71,11 +85,12 @@ export default function Appointment({
           contact={contact}
           station={station}
           handleCloseClick={hideAppointmentDetails}
-          handleAcceptClick={handleAcceptClick}
-          handleDeclineClick={handleDeclineClick}
-          acceptedByInterpreter={acceptedByInterpreter}
-          handleEditClick={handleEditClick}
-          handleDeleteClick={handleDeleteClick}
+          handleAcceptClick={props.handleAcceptClick}
+          handleDeclineClick={props.handleDeclineClick}
+          acceptedByInterpreter={props.acceptedByInterpreter}
+          handleEditClick={props.handleEditClick}
+          handleDeleteClick={props.handleDeleteClick}
+          languages={props.languages}
         />
       )}
     </>
@@ -151,7 +166,7 @@ const AppointmentStyled = styled.li`
   grid-template-columns: 1fr 1.2fr 0.8fr;
   grid-template-rows: 2;
   grid-column-gap: 29px;
-  min-height: 70px;
+  min-height: 75px;
   width: 355px;
   padding: 10px;
   padding-bottom: 40px;
@@ -166,9 +181,8 @@ const AppointmentStyled = styled.li`
 const BackgroundContainer = styled.div`
   position: relative;
   display: flex;
-  height: 90px;
+  min-height: 100px;
   width: 355px;
-  margin: 20px 0;
   justify-content: end;
   align-items: end;
   background-color: var(--red);
@@ -184,9 +198,3 @@ const ArrowStyled = styled(Arrow)`
   height: 40px;
   width: 40px;
 `
-
-//alternativ: &#8853;
-
-/* border: 5px solid #f0f0f0;
-  box-shadow: 2px 2px 2px grey;
-  background-color: var(--greyish);*/

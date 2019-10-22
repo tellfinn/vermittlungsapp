@@ -8,6 +8,8 @@ const UserSchema = new mongoose.Schema({
   password: { type: String },
   isInterpreter: { type: Boolean },
   isFavorite: { type: Boolean, default: false },
+  isSwornIn: { type: Boolean, default: false },
+  writtenTranslations: { type: Boolean, default: false },
   languages: [String],
   isDeleted: { type: Boolean, default: false }
 })
