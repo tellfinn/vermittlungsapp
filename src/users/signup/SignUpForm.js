@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { postUser } from './services'
-import LanguageOptions from '../../appointmentinput/LanguageOptions'
 import Page from '../../common/Page.js'
+import LanguageOptions from '../../appointmentinput/LanguageOptions'
+import NextButton from '../../common/NextButton'
 
 export default function SignUpForm({ languages }) {
   const [isLoading, setIsLoading] = useState(true)
@@ -15,17 +16,11 @@ export default function SignUpForm({ languages }) {
   const [lastName, setLastName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [isInterpreter, setIsInterpreter] = useState(false)
+  const [isSwornIn, setIsSwornIn] = useState(false)
+  const [doesWrittenTranslations, setDoesWrittenTranslations] = useState(false)
+  const [count, setCount] = useState(0)
+  const [showElement, setShowElement] = useState(count)
   const [signUpRepeatPassword, setSignUpRepeatPassword] = useState('')
-
-  const languageOptions = languages
-    .map(language => ({ value: language.name, label: language.name }))
-    .sort((a, b) => {
-      return a.name > b.name
-    })
-
-  useEffect(() => {
-    setIsLoading(false)
-  }, [isLoading])
 
   function onSignUp(event) {
     event.preventDefault()
@@ -45,6 +40,8 @@ export default function SignUpForm({ languages }) {
       lastName: lastName,
       phoneNumber: phoneNumber,
       isInterpreter: isInterpreter,
+      isSwornIn: isSwornIn,
+      writtenTranslations: doesWrittenTranslations,
       languages
     }
 
@@ -60,6 +57,8 @@ export default function SignUpForm({ languages }) {
         setPhoneNumber('')
         setSelectedLanguages([])
         setSignUpRepeatPassword('')
+        setDoesWrittenTranslations(false)
+        setIsSwornIn(false)
       } else {
         setSignUpError(json.message)
         setIsLoading(false)
@@ -67,135 +66,195 @@ export default function SignUpForm({ languages }) {
     })
   }
 
+  const isRegisterButtonVisible =
+    isInterpreter === true
+      ? count === 2
+        ? true
+        : false
+      : count === 1
+      ? true
+      : false
+
   return (
     <Page>
-      {isLoading ? (
-        <div>
-          <p>Loading...</p>
-        </div>
-      ) : (
-        <StyledSignUpForm onSubmit={onSignUp}>
-          <LabelStyled>
-            <input
-              type='text'
-              placeholder='Vorname'
-              value={firstName}
-              onChange={onTextboxChangeFirstName}
-            />
-          </LabelStyled>
-          <LabelStyled>
-            <input
-              type='text'
-              placeholder='Nachname'
-              value={lastName}
-              onChange={onTextboxChangeLastName}
-            />
-          </LabelStyled>
-          <label>
-            <input
-              type='checkbox'
-              checked={isInterpreter}
-              onChange={onInterpreterChange}
-            />{' '}
-            ich bin Dolmetschende/r
-          </label>
-          {isInterpreter && (
-            <LanguageOptions
-              name='Sprache'
-              handleChange={handleLanguageChange}
-              selectMultiple={true}
-              defaultValue=''
-              value={selectedLanguages.value}
-              options={languageOptions}></LanguageOptions>
-          )}
-          <LabelStyled>
-            <input
-              type='number'
-              placeholder='Telefonnummer'
-              value={phoneNumber}
-              onChange={onTextboxChangePhoneNumber}
-            />
-          </LabelStyled>
-          <LabelStyled>
-            <input
-              type='email'
-              placeholder='e-Mailadresse'
-              value={signUpEmail}
-              onChange={onTextboxChangeSignUpEmail}
-            />
-          </LabelStyled>
-          <LabelStyled>
-            <input
-              type='password'
-              placeholder='Passwort'
-              value={signUpPassword}
-              onChange={onTextboxChangeSignUpPassword}
-            />
-          </LabelStyled>
-          <LabelStyled>
-            <input
-              type='password'
-              placeholder='Passwort wiederholen'
-              value={signUpRepeatPassword}
-              onChange={onTextboxChangeSignUpRepeatPassword}
-            />
-          </LabelStyled>
-          <Registerbutton type='submit'>Registrieren</Registerbutton>
-        </StyledSignUpForm>
-      )}
+      <StyledSignUpForm onSubmit={onSignUp}>
+        <NextButton
+          handleNextBtnClick={showPreviousElement}
+          visibility={showElement > 0}
+          iconName='previous'
+        />
+        <Placeholder>
+          <Wrapper isVisible={showElement === 0}>
+            <LabelStyled>
+              <input
+                type='text'
+                placeholder='Vorname'
+                value={firstName}
+                onChange={event => setFirstName(event.target.value)}
+              />
+            </LabelStyled>
+            <LabelStyled>
+              <input
+                type='text'
+                placeholder='Nachname'
+                value={lastName}
+                onChange={event => setLastName(event.target.value)}
+              />
+            </LabelStyled>
+            <label>
+              <input
+                type='checkbox'
+                checked={isInterpreter}
+                onChange={() => setIsInterpreter(!isInterpreter)}
+              />{' '}
+              ich bin Dolmetschende*r
+            </label>
+          </Wrapper>
+          <Wrapper isVisible={showElement === 1}>
+            <LabelStyled>
+              <input
+                type='number'
+                placeholder='Telefonnummer'
+                value={phoneNumber}
+                onChange={event => setPhoneNumber(event.target.value)}
+              />
+            </LabelStyled>
+            <LabelStyled>
+              <input
+                type='email'
+                placeholder='e-Mailadresse'
+                value={signUpEmail}
+                onChange={event => setSignUpEmail(event.target.value)}
+              />
+            </LabelStyled>
+            <LabelStyled>
+              <input
+                type='password'
+                placeholder='Passwort'
+                value={signUpPassword}
+                onChange={event => setSignUpPassword(event.target.value)}
+              />
+            </LabelStyled>
+            <LabelStyled>
+              <input
+                type='password'
+                placeholder='Passwort wiederholen'
+                value={signUpRepeatPassword}
+                onChange={event => setSignUpRepeatPassword(event.target.value)}
+              />
+            </LabelStyled>
+          </Wrapper>
+          <Wrapper isVisible={showElement === 2}>
+            {isInterpreter && (
+              <>
+                <LanguageOptions
+                  name='Sprache'
+                  handleChange={event =>
+                    setSelectedLanguages([event, ...selectedLanguages])
+                  }
+                  selectMultiple={true}
+                  defaultValue=''
+                  value={selectedLanguages.value}
+                  options={languages}
+                />
+                <label>
+                  <input
+                    type='checkbox'
+                    checked={isSwornIn}
+                    onChange={event => setIsSwornIn(!isSwornIn)}
+                  />{' '}
+                  vereidigt
+                </label>
+                <label>
+                  <input
+                    type='checkbox'
+                    checked={doesWrittenTranslations}
+                    onChange={() =>
+                      setDoesWrittenTranslations(!doesWrittenTranslations)
+                    }
+                  />{' '}
+                  ich mache auch schriftliche Übersetzungen
+                </label>{' '}
+              </>
+            )}
+          </Wrapper>
+          <Registerbutton
+            type='submit'
+            registerBtnVisibility={isRegisterButtonVisible}>
+            Registrieren
+          </Registerbutton>
+        </Placeholder>
+        <NextButton
+          iconName='next'
+          handleNextBtnClick={showNextElement}
+          visibility={
+            isInterpreter === true ? showElement < 2 : showElement < 1
+          }
+        />
+      </StyledSignUpForm>
     </Page>
   )
 
-  function handleLanguageChange(event) {
-    setSelectedLanguages([event, ...selectedLanguages])
+  function showNextElement() {
+    setCount(count + 1)
+    setShowElement(count + 1)
   }
 
-  function onInterpreterChange() {
-    setIsInterpreter(!isInterpreter)
-  }
-
-  function onTextboxChangeSignUpEmail(event) {
-    setSignUpEmail(event.target.value)
-  }
-
-  function onTextboxChangeSignUpPassword(event) {
-    setSignUpPassword(event.target.value)
-  }
-
-  function onTextboxChangeSignUpRepeatPassword(event) {
-    setSignUpRepeatPassword(event.target.value)
-  }
-
-  function onTextboxChangeFirstName(event) {
-    setFirstName(event.target.value)
-  }
-
-  function onTextboxChangeLastName(event) {
-    setLastName(event.target.value)
-  }
-
-  function onTextboxChangePhoneNumber(event) {
-    setPhoneNumber(event.target.value)
+  function showPreviousElement() {
+    setCount(count => count - 1)
+    setShowElement(count - 1)
   }
 }
 
-const StyledSignUpForm = styled.form`
-  margin: 30px;
+const Placeholder = styled.div`
+  position: relative;
   display: grid;
-  grid-template-rows: auto;
-  grid-gap: 30px;
-  justify-content: center;
+  height: 420px;
+  margin-top: 130px;
+`
+
+const Wrapper = styled.div`
+  position: absolute;
+  display: ${props => (props.isVisible ? 'grid' : 'none')};
+  grid-row-gap: 40px;
+  width: 100%;
+  right: -360px;
+  -webkit-animation: slide 0.5s forwards;
+  -webkit-animation-delay: 0.1s;
+  animation: slide 0.5s forwards;
+  animation-delay: 0.1s;
+
+  @-webkit-keyframes slide {
+    100% {
+      right: 0;
+    }
+  }
+
+  @keyframes slide {
+    100% {
+      right: 0;
+    }
+  }
+`
+
+const StyledSignUpForm = styled.form`
+  display: grid;
+  overflow: hidden;
 `
 const LabelStyled = styled.label`
   display: grid;
   height: 1.2em;
   > input {
-    width: 295px;
+    width: 100%;
     font-size: inherit;
   }
 `
 
 const Registerbutton = styled.button`
+  position: absolute;
+  bottom: 40px;
+  left: calc(50% - 100px);
   width: 200px;
   margin: auto;
+  ${props => (props.registerBtnVisibility === false ? 'display: none' : '')};
 `

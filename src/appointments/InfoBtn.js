@@ -1,7 +1,13 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import PropTypes from 'prop-types'
 import { ReactComponent as MoreIcon } from '../icons/chevron-circle-down.svg'
 import { ReactComponent as LessIcon } from '../icons/chevron-circle-up.svg'
+
+InfoBtn.propTypes = {
+  infoType: PropTypes.string,
+  handleInfobtnClick: PropTypes.func
+}
 
 export default function InfoBtn({ infoType, handleInfobtnClick }) {
   const infoBtn =

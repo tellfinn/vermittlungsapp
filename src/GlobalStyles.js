@@ -138,7 +138,7 @@ textarea {
   font-weight: lighter;
 }
 
-input[type="text"], input[type="number"] {
+input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
   width: 100%;
     padding: 8px;
     border-radius: 3px;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import Page from '../common/Page'
 import LanguageOptions from './LanguageOptions'
@@ -8,7 +8,11 @@ import { useHistory } from 'react-router-dom'
 import SubmitButton from '../common/SubmitButton'
 import NextButton from '../common/NextButton'
 
-export default function AppointmentInputForm({ languages, setAppointments }) {
+export default function AppointmentInputForm({
+  languages,
+  setAppointments,
+  setLanguages
+}) {
   let history = useHistory()
   const [selectedLanguage, setSelectedLanguage] = useState('')
   const [
@@ -25,6 +29,10 @@ export default function AppointmentInputForm({ languages, setAppointments }) {
   const [swornInChecked, setSwornInChecked] = useState(false)
   const [count, setCount] = useState(0)
   const [showElement, setShowElement] = useState(count)
+
+  useEffect(() => {
+    setLanguages(languages)
+  }, [])
 
   function handleSubmit(event) {
     event.preventDefault()

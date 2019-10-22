@@ -13,7 +13,10 @@ router.post('/register', (req, res) => {
     isInterpreter,
     phoneNumber,
     languages,
-    repeatedPassword
+    repeatedPassword,
+    writtenTranslations,
+    isFavourite,
+    isSwornIn
   } = body
   let { email } = body
 
@@ -99,6 +102,9 @@ router.post('/register', (req, res) => {
   newUser.isInterpreter = isInterpreter
   newUser.phoneNumber = phoneNumber
   newUser.languages = languages
+  newUser.isSwornIn = isSwornIn
+  newUser.writtenTranslations = writtenTranslations
+  newUser.isFavourite = isFavourite
 
   newUser
     .save(req.body)

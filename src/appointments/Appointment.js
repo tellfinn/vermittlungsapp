@@ -39,7 +39,7 @@ export default function Appointment({
 }) {
   const [showDetails, setShowDetails] = useState(false)
 
-  const date = displayTodayBolder(renderableDate(appointmentDate))
+  const date = displayTodayBold(renderableDate(appointmentDate))
   time = renderableTime(appointmentDate)
   day = renderableDay(appointmentDate)
   duration =
@@ -52,25 +52,28 @@ export default function Appointment({
   return (
     <>
       <BackgroundContainer>
-        {' '}
-        ablehnen <ArrowStyled />
         <SwipeToDismiss
           onDismiss={props.handleDeclineClick}
           direction='left'
           distanceBeforeDismiss={parseInt(50)}>
           <AppointmentStyled>
             {date}
-            <div>{time}</div>
-            <div>{clinic}</div>
+            <ImportantData>{time}</ImportantData>
+            <ImportantData>{clinic}</ImportantData>
             <div> {day} </div>
             <div style={{ letterSpacing: '-0.08em' }}>ca. {duration}</div>
             <div> {station} </div>
             <InfoBtn
-              handleInfobtnClick={showAppointmentDetails}
-              infoType='more'
-            />
+              handleInfobtnClick={() => setShowDetails(true)}
+              infoType='more'></InfoBtn>
+            <DeclineInfoField>
+              ablehnen <ArrowStyled />
+            </DeclineInfoField>
           </AppointmentStyled>
         </SwipeToDismiss>
+        <DeclineInfoField>
+          ablehnen <ArrowStyled />
+        </DeclineInfoField>
       </BackgroundContainer>
 
       {showDetails && (
@@ -84,7 +87,7 @@ export default function Appointment({
           clinic={clinic}
           contact={contact}
           station={station}
-          handleCloseClick={hideAppointmentDetails}
+          handleCloseClick={() => setShowDetails(false)}
           handleAcceptClick={props.handleAcceptClick}
           handleDeclineClick={props.handleDeclineClick}
           acceptedByInterpreter={props.acceptedByInterpreter}
@@ -95,14 +98,6 @@ export default function Appointment({
       )}
     </>
   )
-
-  function showAppointmentDetails() {
-    setShowDetails(true)
-  }
-
-  function hideAppointmentDetails() {
-    setShowDetails(false)
-  }
 
   function renderableDate(appointmentDate) {
     let newDate
@@ -122,15 +117,12 @@ export default function Appointment({
     return newDate
   }
 
-  function displayTodayBolder(date) {
+  function displayTodayBold(date) {
     let insertDate
-    const boldStyle = {
-      fontWeight: 'bolder'
-    }
     if (date === 'heute') {
-      insertDate = <div style={boldStyle}> {date} </div>
+      insertDate = <div style={{ fontWeight: 'bold' }}> {date} </div>
     } else {
-      insertDate = <div>{date}</div>
+      insertDate = <div style={{ fontWeight: 'bolder' }}>{date}</div>
     }
     return insertDate
   }
@@ -178,23 +170,33 @@ const AppointmentStyled = styled.li`
   z-index: 5;
 `
 
+const DeclineInfoField = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #ebecef;
+`
+
 const BackgroundContainer = styled.div`
   position: relative;
   display: flex;
   min-height: 100px;
   width: 355px;
-  justify-content: end;
-  align-items: end;
   background-color: var(--red);
-  color: white;
   z-index: 1;
 `
 
 const ArrowStyled = styled(Arrow)`
-  position: relative;
-  bottom: 30px;
-  right: 15px;
-  fill: white;
   height: 40px;
   width: 40px;
+  fill: #ebecef;
+  text-justify: end;
+  align-self: end;
+`
+
+const ImportantData = styled.div`
+  font-weight: bolder;
 `

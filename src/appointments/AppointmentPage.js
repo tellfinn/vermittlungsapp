@@ -1,5 +1,9 @@
-import React, { useState } from 'react'
-import { patchAppointment, deleteAppointment } from './services'
+import React, { useState, useEffect } from 'react'
+import {
+  patchAppointment,
+  deleteAppointment,
+  getAppointments
+} from './services'
 import Page from '../common/Page'
 import AppointmentList from './AppointmentList'
 import Appointment from './Appointment'
@@ -9,11 +13,14 @@ export default function AppointmentPage({
   requestAccepted,
   period,
   languages,
-  appointments,
-  setAppointments,
   postAppointment
 }) {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [appointments, setAppointments] = useState([])
+
+  useEffect(() => {
+    getAppointments().then(setAppointments)
+  }, [])
 
   function renderAppointmentList(index) {
     const appointmentList = {
