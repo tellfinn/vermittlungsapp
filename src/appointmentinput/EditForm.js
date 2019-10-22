@@ -3,32 +3,31 @@ import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 import LanguageOptions from './LanguageOptions'
 import MyDatepicker from './Datepicker'
-import { postAppointment } from '../appointments/services'
 import SubmitButton from '../common/SubmitButton'
+import { patchAppointment } from '../appointments/services'
 
 EditForm.propTypes = {
   appointmentLanguage: PropTypes.string,
   aptClinic: PropTypes.string,
   aptStation: PropTypes.string,
-  aptDuration: PropTypes.string,
+  aptDuration: PropTypes.number,
   aptContact: PropTypes.string,
   aptExtension: PropTypes.number,
   handleAbortClick: PropTypes.func,
-  languages: PropTypes.array,
-  handleEditSubmit: PropTypes.func
+  languages: PropTypes.array
 }
 
-export default function EditForm({ handleEditSubmit, languages, ...props }) {
+export default function EditForm({ ...props }) {
   const [selectedLanguage, setSelectedLanguage] = useState('')
   const [radioBtnValue, setRadioBtnValue] = useState(props.aptClinic)
   const [duration, setDuration] = useState(props.aptDuration)
   const [isInterpreterAvailable, setIsInterpreterAvailable] = useState(true)
   // eslint-disable-next-line
   let [textInput, setTextInput] = useState('')
-  const [date, setDate] = useState({})
+  const [date, setDate] = useState(new Date(props.newDate))
   const [wrongLanguage, setWrongLanguage] = useState(false)
 
-  let appointmentLanguage = languages.find(language => {
+  let appointmentLanguage = props.languages.find(language => {
     return language.value === props.language
   })
 
@@ -39,6 +38,7 @@ export default function EditForm({ handleEditSubmit, languages, ...props }) {
 
   function handleSubmit(event) {
     event.preventDefault()
+
     const form = event.target
     const formData = new FormData(form)
     const appLanguage =
@@ -47,16 +47,21 @@ export default function EditForm({ handleEditSubmit, languages, ...props }) {
         : selectedLanguage.value
     let appointmentDate = new Date(date)
     let data = Object.fromEntries(formData)
+
     data = {
       ...data,
       appointmentDate,
       appLanguage,
       acceptedByInterpreter: isInterpreterAvailable,
-      openAppointment: !isInterpreterAvailable
+      openAppointment: !isInterpreterAvailable,
+      _id: props.id
     }
-    postAppointment(data)
-      .then(props.handleAbortClick)
+
+    patchAppointment(data._id, {
+      ...data
+    })
       .then(props.setAptState())
+      .then(props.handleAbortClick())
   }
 
   return (
@@ -74,8 +79,8 @@ export default function EditForm({ handleEditSubmit, languages, ...props }) {
       {wrongLanguage && (
         <LanguageOptions
           name='Sprache'
-          handleChange={handleLanguageChange}
-          options={languages}
+          handleChange={event => setSelectedLanguage(event)}
+          options={props.languages}
           value={selectedLanguage}
           defaultValue={appointmentLanguage}></LanguageOptions>
       )}
@@ -83,7 +88,7 @@ export default function EditForm({ handleEditSubmit, languages, ...props }) {
       <MyDatepicker
         name='date'
         date={date}
-        onChange={handleDateChange}></MyDatepicker>
+        onChange={value => setDate(value)}></MyDatepicker>
 
       <label>
         <input
@@ -92,7 +97,7 @@ export default function EditForm({ handleEditSubmit, languages, ...props }) {
           checked={isInterpreterAvailable}
           onChange={() => setIsInterpreterAvailable(!isInterpreterAvailable)}
         />{' '}
-        bin verfügbar
+        gleicher Dolmetscher
       </label>
 
       <LabelStyled>
@@ -176,14 +181,6 @@ export default function EditForm({ handleEditSubmit, languages, ...props }) {
       </StyleArea>
     </EditFormStyled>
   )
-
-  function handleLanguageChange(event) {
-    setSelectedLanguage(event)
-  }
-
-  function handleDateChange(value) {
-    setDate(value)
-  }
 
   function handleRadioChange(event) {
     setRadioBtnValue(event.target.value)

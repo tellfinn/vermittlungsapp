@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { ReactComponent as PhoneIcon } from '../icons/phone-fill.svg'
 import { ReactComponent as MailIcon } from '../icons/email.svg'
 import SubmitButton from '../common/SubmitButton'
+import EditForm from '../appointmentinput/EditForm'
 import FollowUpForm from '../appointmentinput/FollowUpForm'
 import InfoBtn from './InfoBtn'
 
@@ -29,6 +30,7 @@ AppointmentDetails.propTypes = {
 export default function AppointmentDetails({ languages, ...props }) {
   const [isFollowUpFormVisible, setIsFollowUpFormVisible] = useState(false)
   const [isEditFormVisible, setIsEditFormVisible] = useState(false)
+
   return (
     <>
       <AppointmentDetailsStyled>
@@ -90,9 +92,9 @@ export default function AppointmentDetails({ languages, ...props }) {
         <FollowUpForm
           language={props.language}
           aptClinic={props.clinic}
-          newDate={Date.now()}
+          newDate={props.formdate}
           aptStation={props.station}
-          aptDuration={props.duration}
+          aptDuration={props.formduration}
           aptContact={props.contact}
           aptExtension={props.extension}
           languages={languages}
@@ -102,16 +104,18 @@ export default function AppointmentDetails({ languages, ...props }) {
       )}
 
       {isEditFormVisible && (
-        <FollowUpForm
+        <EditForm
           language={props.language}
           aptClinic={props.clinic}
-          newDate={Date.now()}
+          newDate={props.formdate}
           aptStation={props.station}
-          aptDuration={props.duration}
+          aptDuration={props.formduration}
           aptContact={props.contact}
           aptExtension={props.extension}
           languages={languages}
           handleAbortClick={() => hideEditForm()}
+          setAptState={props.setAptState}
+          id={props.id}
         />
       )}
     </>

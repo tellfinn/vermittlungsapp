@@ -57,7 +57,6 @@ function App() {
             <AppointmentPage
               requestAccepted={true}
               period='past'
-              setAppointments={setAppointments}
               languages={languageOptions}
             />
           )}
@@ -67,9 +66,7 @@ function App() {
           render={() => (
             <AppointmentInputForm
               title='Terminanfrage erstellen'
-              languages={languageOptions}
               setAppointments={setAppointments}
-              setLanguages={setLanguages}
             />
           )}
         />

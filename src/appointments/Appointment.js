@@ -24,30 +24,17 @@ Appointment.propTypes = {
   acceptedByInterpreter: PropTypes.bool
 }
 
-export default function Appointment({
-  appointmentDate,
-  time,
-  day,
-  duration,
-  clinic,
-  station,
-  appLanguage,
-  extension,
-  message,
-  contact,
-  ...props
-}) {
+export default function Appointment({ ...props }) {
   const [showDetails, setShowDetails] = useState(false)
-
-  const date = displayTodayBold(renderableDate(appointmentDate))
-  time = renderableTime(appointmentDate)
-  day = renderableDay(appointmentDate)
-  duration =
-    duration < 1
-      ? duration * 60 + ' Min'
-      : duration % 1 === 0
-      ? duration + ' Std'
-      : calculateDuration(duration)
+  const date = displayTodayBold(renderableDate(props.appointmentDate))
+  const time = renderableTime(props.appointmentDate)
+  const day = renderableDay(props.appointmentDate)
+  const duration =
+    props.duration < 1
+      ? props.duration * 60 + ' Min'
+      : props.duration % 1 === 0
+      ? props.duration + ' Std'
+      : calculateDuration(props.duration)
 
   return (
     <>
@@ -59,10 +46,10 @@ export default function Appointment({
           <AppointmentStyled>
             {date}
             <ImportantData>{time}</ImportantData>
-            <ImportantData>{clinic}</ImportantData>
+            <ImportantData>{props.clinic}</ImportantData>
             <div> {day} </div>
             <div style={{ letterSpacing: '-0.08em' }}>ca. {duration}</div>
-            <div> {station} </div>
+            <div> {props.station} </div>
             <InfoBtn
               handleInfobtnClick={() => setShowDetails(true)}
               infoType='more'></InfoBtn>
@@ -79,19 +66,21 @@ export default function Appointment({
       {showDetails && (
         <AppointmentDetails
           date={date}
+          id={props._id}
           time={time}
           duration={duration}
-          language={appLanguage}
-          extension={extension}
-          message={message}
-          clinic={clinic}
-          contact={contact}
-          station={station}
+          formduration={props.duration}
+          formdate={props.appointmentDate}
+          language={props.appLanguage}
+          extension={props.extension}
+          message={props.message}
+          clinic={props.clinic}
+          contact={props.contact}
+          station={props.station}
           handleCloseClick={() => setShowDetails(false)}
           handleAcceptClick={props.handleAcceptClick}
           handleDeclineClick={props.handleDeclineClick}
           acceptedByInterpreter={props.acceptedByInterpreter}
-          handleEditClick={props.handleEditClick}
           handleDeleteClick={props.handleDeleteClick}
           handlePostClick={props.handlePostClick}
           languages={props.languages}

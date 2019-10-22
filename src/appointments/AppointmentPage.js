@@ -85,7 +85,6 @@ export default function AppointmentPage({
           handleAcceptClick={() => acceptAppointment(appointment)}
           handleDeclineClick={() => declineAppointment(appointment)}
           handleDeleteClick={() => removeAppointment(appointment)}
-          handleEditClick={() => editAppointment(appointment)}
           key={appointment._id}
           {...appointment}
           languages={languages}
@@ -143,26 +142,6 @@ export default function AppointmentPage({
         ...appointments.slice(index + 1)
       ])
     })
-  }
-
-  function editAppointment(appointment, newAppointmentData) {
-    console.log(appointment)
-    patchAppointment(appointment._id, {
-      ...appointment
-    })
-      .then(updatedAppointment => {
-        const index = appointments.findIndex(
-          appointment => appointment._id === updatedAppointment._id
-        )
-        setAppointments([
-          ...appointments.slice(0, index),
-          {
-            ...appointment
-          },
-          ...appointments.slice(index + 1)
-        ])
-      })
-      .then(setAppointments)
   }
 
   function setAptStateFromChild() {
