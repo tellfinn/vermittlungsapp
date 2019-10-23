@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import MyMenu from './Menu'
 
-// import { ReactComponent as Arrow } from '../icons/arrow-down.svg'
-
 export default function Header({ newAppointments }) {
   let [isMenuOpen, setIsMenuOpen] = useState(false)
   const [title, setTitle] = useState('Terminanfragen')

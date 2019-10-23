@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 registerLocale('de', de)
 
 MyDatepicker.propTypes = {
-  // date: Proptypes.instanceOf(Date),
+  date: PropTypes.instanceOf(Date),
   onChange: PropTypes.func
 }
 

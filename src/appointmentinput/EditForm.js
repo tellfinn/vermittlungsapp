@@ -22,7 +22,7 @@ export default function EditForm({ isFollowUp = false, ...props }) {
   const [duration, setDuration] = useState(props.aptDuration)
   const [isInterpreterAvailable, setIsInterpreterAvailable] = useState(true)
   // eslint-disable-next-line
-  let [textInput, setTextInput] = useState('')
+  const [textInput, setTextInput] = useState('')
   const [date, setDate] = useState(new Date(props.newDate))
   const [wrongLanguage, setWrongLanguage] = useState(false)
 
