@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Redirect } from 'react-router-dom'
-import { getFromStorage } from './users/utils'
+import { getFromStorage, deleteFromStorage } from './users/utils'
 import { getLanguages } from '../src/appointmentinput/services'
 import GlobalStyles from './GlobalStyles'
 import Header from './common/Header'
@@ -49,7 +49,7 @@ function App() {
   return (
     <Router>
       <GlobalStyles></GlobalStyles>
-      <Header handleLogoutClick={'logout'} isLoggedIn={isLoggedIn} />
+      <Header handleLogoutClick={logout} isLoggedIn={isLoggedIn} />
       <Switch>
         {isLoggedIn === true ? (
           <Redirect exact from='/' to='/request' />
@@ -128,6 +128,27 @@ function App() {
       </Switch>
     </Router>
   )
+
+  function logout() {
+    const obj = getFromStorage('Dolmetschervermittlung')
+    if (token && obj.token) {
+      console.log(token)
+      fetch('users/logout?token=' + token)
+        .then(res => res.json())
+        .then(json => {
+          console.log('json', json) //console log if logout successfull
+          if (json.success) {
+            setToken('')
+            deleteFromStorage('Dolmetschervermittlung')
+            setLoggedIn(false)
+          } else {
+            setLoggedIn(false)
+          }
+        })
+    } else {
+      setLoggedIn(false)
+    }
+  }
 }
 
 export default App

@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { postUserLogIn } from './sevices'
-import { useHistory } from 'react-router-dom'
-import { setInStorage, getFromStorage, deleteFromStorage } from '../utils'
+import { Redirect } from 'react-router-dom'
+import { setInStorage } from '../utils'
 import Page from '../../common/Page'
 
 LogInForm.propTypes = {
@@ -12,8 +12,6 @@ LogInForm.propTypes = {
 }
 
 export default function LogInForm({ ...props }) {
-  let history = useHistory()
-
   // eslint-disable-next-line
   const [logInError, setLogInError] = useState('')
   const [logInEmail, setLogInEmail] = useState('')
@@ -46,9 +44,7 @@ export default function LogInForm({ ...props }) {
   return (
     <Page>
       {props.isLoggedIn ? (
-        <div>
-          <p>logged in...</p>
-        </div>
+        <Redirect to='/' />
       ) : (
         <StyledLogInForm onSubmit={onLogIn}>
           <LabelStyled>
@@ -70,7 +66,6 @@ export default function LogInForm({ ...props }) {
           <LogInButtonStyled type='submit'>einloggen</LogInButtonStyled>
         </StyledLogInForm>
       )}
-      <button onClick={logout}>ausloggen</button>
     </Page>
   )
 
@@ -80,27 +75,6 @@ export default function LogInForm({ ...props }) {
 
   function onTextboxChangeLogInPassword(event) {
     setLogInPassword(event.target.value)
-  }
-
-  function logout() {
-    const obj = getFromStorage('Dolmetschervermittlung')
-    if (props.token && obj.token) {
-      console.log(props.token)
-      fetch('users/logout?token=' + props.token)
-        .then(res => res.json())
-        .then(json => {
-          console.log('json', json) //console log if logout successfull
-          if (json.success) {
-            props.setToken('')
-            deleteFromStorage('Dolmetschervermittlung')
-            props.setLoggedIn(false)
-          } else {
-            props.setLoggedIn(false)
-          }
-        })
-    } else {
-      props.setLoggedIn(false)
-    }
   }
 }
 

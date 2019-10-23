@@ -4,7 +4,7 @@ import MyMenu from './Menu'
 import { ReactComponent as LogoutIcon } from '../icons/exit.svg'
 // import { ReactComponent as Arrow } from '../icons/arrow-down.svg'
 
-export default function Header({ handleLogoutClick, isLoggedIn }) {
+export default function Header({ ...props }) {
   let [isMenuOpen, setIsMenuOpen] = useState(false)
   const [title, setTitle] = useState('Terminanfragen')
 
@@ -14,13 +14,12 @@ export default function Header({ handleLogoutClick, isLoggedIn }) {
   }
 
   const titleArray =
-    isLoggedIn === true
+    props.isLoggedIn === true
       ? [
           { route: '/request', title: 'Terminanfragen' },
           { route: '/appointments', title: 'Terminübersicht' },
           { route: '/pastappointments', title: 'vergangene Termine' },
-          { route: '/newAppointment', title: 'neuen Termin erstellen' },
-          { route: '/login', title: 'einloggen' }
+          { route: '/newAppointment', title: 'neuen Termin erstellen' }
         ]
       : [
           { route: '/signUp', title: 'registrieren' },
@@ -36,7 +35,7 @@ export default function Header({ handleLogoutClick, isLoggedIn }) {
           menuItemTitles={titleArray}></MyMenu>
       </BtnArea>
       {title}
-      <BtnArea onClick={handleLogoutClick}>
+      <BtnArea onClick={props.handleLogoutClick} isLoggedIn={props.isLoggedIn}>
         <LogoutIconStyled />
       </BtnArea>
     </HeaderStyled>
@@ -71,4 +70,5 @@ const LogoutIconStyled = styled(LogoutIcon)`
   height: 38px;
   width: 38px;
   margin-top: 1px;
+  fill: ${props => (props.isLoggedIn ? '#000000' : 'grey')};
 `
