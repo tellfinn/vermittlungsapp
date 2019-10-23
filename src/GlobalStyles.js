@@ -31,7 +31,7 @@ font-family: Helvetica, sans-serif;
  
 button {
   display: flex;
-  padding: 15px;
+  padding: 10px;
   justify-content: center;
   align-items: center;
   border-radius: 5px;

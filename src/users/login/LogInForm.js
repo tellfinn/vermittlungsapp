@@ -1,35 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { postUserLogIn } from './sevices'
-import { setInStorage, getFromStorage } from '../utils'
+import { useHistory } from 'react-router-dom'
+import { setInStorage, getFromStorage, deleteFromStorage } from '../utils'
 import Page from '../../common/Page'
 
-export default function LogInForm() {
-  const [isLoading, setIsLoading] = useState(true)
-  const [token, setToken] = useState('')
+LogInForm.propTypes = {
+  setLoggedIn: PropTypes.func,
+  isLoggedIn: PropTypes.bool
+}
+
+export default function LogInForm({ ...props }) {
+  let history = useHistory()
+
   // eslint-disable-next-line
   const [logInError, setLogInError] = useState('')
   const [logInEmail, setLogInEmail] = useState('')
   const [logInPassword, setLogInPassword] = useState('')
-
-  useEffect(() => {
-    const obj = getFromStorage('Dolmetschervermittlung')
-    if (obj && obj.token) {
-      fetch('/users/verify?token=' + token)
-        .then(res => res.json())
-        .then(json => {
-          if (json.success) {
-            setToken(obj)
-            setIsLoading(false)
-          } else {
-            setIsLoading(false)
-          }
-        })
-    } else {
-      setIsLoading(false)
-    }
-    // eslint-disable-next-line
-  }, [])
 
   function onLogIn(event) {
     event.preventDefault()
@@ -44,22 +32,22 @@ export default function LogInForm() {
       if (json.success) {
         setInStorage('Dolmetschervermittlung', { token: json.token })
         setLogInError(json.message)
-        setIsLoading(false)
+        props.setLoggedIn(true)
         setLogInPassword('')
         setLogInEmail('')
-        setToken(json.token)
+        props.setToken(json.token)
       } else {
         setLogInError(json.message)
-        setIsLoading(false)
+        props.setLoggedIn(false)
       }
     })
   }
 
   return (
     <Page>
-      {isLoading ? (
+      {props.isLoggedIn ? (
         <div>
-          <p>Loading...</p>
+          <p>logged in...</p>
         </div>
       ) : (
         <StyledLogInForm onSubmit={onLogIn}>
@@ -95,22 +83,23 @@ export default function LogInForm() {
   }
 
   function logout() {
-    setIsLoading(true)
     const obj = getFromStorage('Dolmetschervermittlung')
-    if (token && obj.token) {
-      fetch('users/logout?token=' + token)
+    if (props.token && obj.token) {
+      console.log(props.token)
+      fetch('users/logout?token=' + props.token)
         .then(res => res.json())
         .then(json => {
           console.log('json', json) //console log if logout successfull
           if (json.success) {
-            setToken('')
-            setIsLoading(false)
+            props.setToken('')
+            deleteFromStorage('Dolmetschervermittlung')
+            props.setLoggedIn(false)
           } else {
-            setIsLoading(false)
+            props.setLoggedIn(false)
           }
         })
     } else {
-      setIsLoading(false)
+      props.setLoggedIn(false)
     }
   }
 }

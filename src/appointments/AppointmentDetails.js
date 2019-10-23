@@ -65,13 +65,13 @@ export default function AppointmentDetails({ ...props }) {
               Folgetermin mitteilen
             </ButtonStyled>
             <ButtonStyled onClick={props.handleDeclineClick}>
-              Termin absagen
+              absagen
             </ButtonStyled>
             <DeleteButtonStyled onClick={props.handleDeleteClick}>
-              Termin löschen
+              löschen
             </DeleteButtonStyled>
             <DeleteButtonStyled onClick={event => showEditForm(event)}>
-              Termin bearbeiten
+              bearbeiten
             </DeleteButtonStyled>
           </ThreeButtonsAreaStyled>
         ) : (
