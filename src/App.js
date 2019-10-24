@@ -15,6 +15,8 @@ function App() {
   const [languages, setLanguages] = useState([])
   const [isLoggedIn, setLoggedIn] = useState(false)
   const [token, setToken] = useState('')
+  const [currentUser, setCurrentUser] = useState('')
+  const [interpreterLanguages, setInterpreterLanguages] = useState([])
 
   useEffect(() => {
     getLanguages().then(setLanguages)
@@ -28,7 +30,6 @@ function App() {
         if (res) {
           setToken(obj)
           setLoggedIn(true)
-          console.log('bin da')
         } else {
           setLoggedIn(false)
         }
@@ -36,7 +37,6 @@ function App() {
     } else {
       setLoggedIn(false)
     }
-    console.log(isLoggedIn)
     // eslint-disable-next-line
   }, [])
 
@@ -64,6 +64,8 @@ function App() {
               requestAccepted={null}
               period='present'
               languages={languageOptions}
+              currentUser={currentUser}
+              interpreterLanguages={interpreterLanguages}
             />
           }
         />
@@ -76,6 +78,8 @@ function App() {
               requestAccepted={true}
               period='present'
               languages={languageOptions}
+              currentUser={currentUser}
+              interpreterLanguages={interpreterLanguages}
             />
           }
         />
@@ -88,6 +92,8 @@ function App() {
               requestAccepted={true}
               period='past'
               languages={languageOptions}
+              currentUser={currentUser}
+              interpreterLanguages={interpreterLanguages}
             />
           }
         />
@@ -96,18 +102,6 @@ function App() {
           path='/newAppointment'
           loggedIn={isLoggedIn}
           component={<AppointmentInputForm title='Terminanfrage erstellen' />}
-        />
-
-        <ProtectedRoute
-          path='/appointments'
-          loggedIn={isLoggedIn}
-          component={
-            <AppointmentPage
-              requestAccepted={true}
-              period='present'
-              languages={languageOptions}
-            />
-          }
         />
 
         <Route
@@ -122,6 +116,8 @@ function App() {
               isLoggedIn={isLoggedIn}
               setToken={setToken}
               token={token}
+              setCurrentUser={setCurrentUser}
+              setInterpreterLanguages={setInterpreterLanguages}
             />
           )}
         />
@@ -132,7 +128,6 @@ function App() {
   function logout() {
     const obj = getFromStorage('Dolmetschervermittlung')
     if (token && obj.token) {
-      console.log(token)
       fetch('users/logout?token=' + token)
         .then(res => res.json())
         .then(json => {

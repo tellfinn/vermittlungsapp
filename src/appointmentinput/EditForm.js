@@ -45,12 +45,14 @@ export default function EditForm({ isFollowUp = false, ...props }) {
         ? appointmentLanguage.value
         : selectedLanguage.value
     let appointmentDate = new Date(date)
+    const showToInterpreter = isInterpreterAvailable ? props.currentUser : ''
     let data = Object.fromEntries(formData)
 
     data = {
       ...data,
       appointmentDate,
       appLanguage,
+      showToInterpreter,
       acceptedByInterpreter: isInterpreterAvailable,
       openAppointment: !isInterpreterAvailable,
       _id: props.id

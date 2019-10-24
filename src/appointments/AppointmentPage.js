@@ -19,7 +19,9 @@ AppointmentPage.propTypes = {
 export default function AppointmentPage({
   requestAccepted,
   period,
-  languages
+  languages,
+  currentUser,
+  interpreterLanguages
 }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [appointments, setAppointments] = useState([])
@@ -51,9 +53,17 @@ export default function AppointmentPage({
   )
 
   function sortAppointments() {
-    let sortedAppointments = appointments.filter(
-      appointment => appointment.acceptedByInterpreter === requestAccepted
-    )
+    let sortedAppointments = appointments
+      .filter(
+        appointment =>
+          appointment.acceptedByInterpreter === requestAccepted &&
+          interpreterLanguages.includes(appointment.appLanguage)
+      )
+      .filter(
+        appointment =>
+          appointment.showToInterpreter.length === 0 ||
+          appointment.showToInterpreter === currentUser
+      )
 
     if (activeIndex === 0) {
       sortedAppointments = sortedAppointments.slice().sort((a, b) => {
@@ -95,6 +105,7 @@ export default function AppointmentPage({
           key={appointment._id}
           {...appointment}
           languages={languages}
+          currentUser={currentUser}
           setAptState={() => setAptStateFromChild}
         />
       ))
@@ -104,6 +115,7 @@ export default function AppointmentPage({
   function acceptAppointment(appointment) {
     patchAppointment(appointment._id, {
       acceptedByInterpreter: true,
+      showToInterpreter: currentUser,
       openAppointment: false
     }).then(updatedAppointment => {
       const index = appointments.findIndex(

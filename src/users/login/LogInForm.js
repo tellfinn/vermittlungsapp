@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { postUserLogIn } from './sevices'
@@ -26,14 +26,18 @@ export default function LogInForm({ ...props }) {
     }
 
     postUserLogIn(LogInData).then(json => {
-      console.log('json', json) ////console log if login successfull
+      //   console.log('json', json) ////console log if login successfull
       if (json.success) {
         setInStorage('Dolmetschervermittlung', { token: json.token })
+        const userid = json.userID
+        const userLang = json.userLang
+        props.setCurrentUser(userid)
         setLogInError(json.message)
         props.setLoggedIn(true)
         setLogInPassword('')
         setLogInEmail('')
         props.setToken(json.token)
+        props.setInterpreterLanguages(userLang)
       } else {
         setLogInError(json.message)
         props.setLoggedIn(false)

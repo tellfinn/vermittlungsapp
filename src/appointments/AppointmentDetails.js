@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 import { postAppointment, patchAppointment } from './services'
+import { ReactComponent as EditIcon } from '../icons/edit.svg'
+import { ReactComponent as TrashIcon } from '../icons/trash.svg'
 import { ReactComponent as PhoneIcon } from '../icons/phone-fill.svg'
 import { ReactComponent as MailIcon } from '../icons/email.svg'
 import SubmitButton from '../common/SubmitButton'
@@ -68,10 +70,10 @@ export default function AppointmentDetails({ ...props }) {
               absagen
             </ButtonStyled>
             <DeleteButtonStyled onClick={props.handleDeleteClick}>
-              löschen
+              <TrashIconStyled />
             </DeleteButtonStyled>
             <DeleteButtonStyled onClick={event => showEditForm(event)}>
-              bearbeiten
+              <EditIconStyled />
             </DeleteButtonStyled>
           </ThreeButtonsAreaStyled>
         ) : (
@@ -100,6 +102,7 @@ export default function AppointmentDetails({ ...props }) {
           handleAbortClick={() => hideFollowUpForm()}
           setAptState={props.setAptState}
           isFollowUp={true}
+          currentUser={props.currentUser}
         />
       )}
 
@@ -117,6 +120,7 @@ export default function AppointmentDetails({ ...props }) {
           setAptState={props.setAptState}
           handleEditSubmit={patchAppointment}
           id={props.id}
+          currentUser={props.currentUser}
         />
       )}
     </>
@@ -222,6 +226,15 @@ const PhoneIconStyled = styled(PhoneIcon)`
 `
 
 const MailIconStyled = styled(MailIcon)`
+  height: 40px;
+  width: 40px;
+`
+const EditIconStyled = styled(EditIcon)`
+  height: 40px;
+  width: 40px;
+`
+
+const TrashIconStyled = styled(TrashIcon)`
   height: 40px;
   width: 40px;
 `
