@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import MyMenu from './Menu'
+import { ReactComponent as LogoutIcon } from '../icons/exit.svg'
+// import { ReactComponent as Arrow } from '../icons/arrow-down.svg'
 
-export default function Header({ newAppointments }) {
+export default function Header({ ...props }) {
   let [isMenuOpen, setIsMenuOpen] = useState(false)
   const [title, setTitle] = useState('Terminanfragen')
 
@@ -11,15 +13,18 @@ export default function Header({ newAppointments }) {
     setTitle(event.target.text)
   }
 
-  const titleArray = [
-    { route: '/request', title: 'Terminanfragen' },
-    { route: '/appointments', title: 'Terminübersicht' },
-    { route: '/pastappointments', title: 'vergangene Termine' },
-    { route: '/newAppointment', title: 'neuen Termin erstellen' },
-    { route: '/signUp', title: 'registrieren' },
-    { route: '/login', title: 'einloggen' },
-    { route: '/logout', title: 'ausloggen' }
-  ]
+  const titleArray =
+    props.isLoggedIn === true
+      ? [
+          { route: '/request', title: 'Terminanfragen' },
+          { route: '/appointments', title: 'Terminübersicht' },
+          { route: '/pastappointments', title: 'vergangene Termine' },
+          { route: '/newAppointment', title: 'neuen Termin erstellen' }
+        ]
+      : [
+          { route: '/signUp', title: 'registrieren' },
+          { route: '/login', title: 'einloggen' }
+        ]
 
   return (
     <HeaderStyled>
@@ -30,7 +35,9 @@ export default function Header({ newAppointments }) {
           menuItemTitles={titleArray}></MyMenu>
       </BtnArea>
       {title}
-      <NotificationsBtnStyled>{newAppointments}</NotificationsBtnStyled>
+      <BtnArea onClick={props.handleLogoutClick} isLoggedIn={props.isLoggedIn}>
+        <LogoutIconStyled />
+      </BtnArea>
     </HeaderStyled>
   )
 }
@@ -53,26 +60,15 @@ const BtnArea = styled.div`
   height: 40px;
   width: 40px;
   justify-content: center;
+  align-items: center;
   background-color: var(--greyish);
   border: 0;
   text-align: center;
 `
 
-const NotificationsBtnStyled = styled(BtnArea)`
-  display: grid;
-  grid-auto-rows: 2;
-  height: 40px;
-  width: 40px;
-  padding-top: 0;
-  background-color: var(--greyish);
-  border: 0;
-  text-align: center;
-  color: red;
-  font-weight: bold;
-  font-size: 16px;
+const LogoutIconStyled = styled(LogoutIcon)`
+  height: 38px;
+  width: 38px;
+  margin-top: 1px;
+  fill: ${props => (props.isLoggedIn ? '#000000' : 'grey')};
 `
-
-/*const ArrowStyled = styled(Arrow)`
-  height: 18px;
-  width: 30px;
-`*/

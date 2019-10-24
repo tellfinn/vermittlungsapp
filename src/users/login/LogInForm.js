@@ -1,35 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { postUserLogIn } from './sevices'
-import { setInStorage, getFromStorage } from '../utils'
+import { Redirect } from 'react-router-dom'
+import { setInStorage } from '../utils'
 import Page from '../../common/Page'
 
-export default function LogInForm() {
-  const [isLoading, setIsLoading] = useState(true)
-  const [token, setToken] = useState('')
+LogInForm.propTypes = {
+  setLoggedIn: PropTypes.func,
+  isLoggedIn: PropTypes.bool
+}
+
+export default function LogInForm({ ...props }) {
   // eslint-disable-next-line
   const [logInError, setLogInError] = useState('')
   const [logInEmail, setLogInEmail] = useState('')
   const [logInPassword, setLogInPassword] = useState('')
-
-  useEffect(() => {
-    const obj = getFromStorage('Dolmetschervermittlung')
-    if (obj && obj.token) {
-      fetch('/users/verify?token=' + token)
-        .then(res => res.json())
-        .then(json => {
-          if (json.success) {
-            setToken(obj)
-            setIsLoading(false)
-          } else {
-            setIsLoading(false)
-          }
-        })
-    } else {
-      setIsLoading(false)
-    }
-    // eslint-disable-next-line
-  }, [])
 
   function onLogIn(event) {
     event.preventDefault()
@@ -40,27 +26,29 @@ export default function LogInForm() {
     }
 
     postUserLogIn(LogInData).then(json => {
-      console.log('json', json) ////console log if login successfull
+      //   console.log('json', json) ////console log if login successfull
       if (json.success) {
         setInStorage('Dolmetschervermittlung', { token: json.token })
+        const userid = json.userID
+        const userLang = json.userLang
+        props.setCurrentUser(userid)
         setLogInError(json.message)
-        setIsLoading(false)
+        props.setLoggedIn(true)
         setLogInPassword('')
         setLogInEmail('')
-        setToken(json.token)
+        props.setToken(json.token)
+        props.setInterpreterLanguages(userLang)
       } else {
         setLogInError(json.message)
-        setIsLoading(false)
+        props.setLoggedIn(false)
       }
     })
   }
 
   return (
     <Page>
-      {isLoading ? (
-        <div>
-          <p>Loading...</p>
-        </div>
+      {props.isLoggedIn ? (
+        <Redirect to='/' />
       ) : (
         <StyledLogInForm onSubmit={onLogIn}>
           <LabelStyled>
@@ -82,7 +70,6 @@ export default function LogInForm() {
           <LogInButtonStyled type='submit'>einloggen</LogInButtonStyled>
         </StyledLogInForm>
       )}
-      <button onClick={logout}>ausloggen</button>
     </Page>
   )
 
@@ -92,26 +79,6 @@ export default function LogInForm() {
 
   function onTextboxChangeLogInPassword(event) {
     setLogInPassword(event.target.value)
-  }
-
-  function logout() {
-    setIsLoading(true)
-    const obj = getFromStorage('Dolmetschervermittlung')
-    if (token && obj.token) {
-      fetch('users/logout?token=' + token)
-        .then(res => res.json())
-        .then(json => {
-          console.log('json', json) //console log if logout successfull
-          if (json.success) {
-            setToken('')
-            setIsLoading(false)
-          } else {
-            setIsLoading(false)
-          }
-        })
-    } else {
-      setIsLoading(false)
-    }
   }
 }
 

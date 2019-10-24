@@ -150,7 +150,7 @@ router.post('/login', (req, res, next) => {
       if (users.length !== 1) {
         return res.send({
           success: false,
-          message: 'kein User mit dieser eMailadresse vorhanden'
+          message: 'Fehler bei der Zuordnung'
         })
       }
       const user = users[0]
@@ -159,9 +159,10 @@ router.post('/login', (req, res, next) => {
           success: false,
           message: 'ungültiges Passwort'
         })
-      } //  correct user
+      } //  current user
       const userSession = new UserSession()
-      userSession.userId = user._id
+      userSession.userID = user._id
+      userSession.userLang = user.languages
       userSession.save((err, doc) => {
         if (err) {
           return res.send({
@@ -172,7 +173,9 @@ router.post('/login', (req, res, next) => {
         return res.send({
           success: true,
           message: 'eingeloggt',
-          token: doc._id
+          token: doc._id,
+          userID: userSession.userID,
+          userLang: userSession.userLang
         })
       })
     }

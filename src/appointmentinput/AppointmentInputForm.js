@@ -45,14 +45,21 @@ export default function AppointmentInputForm() {
     const formData = new FormData(form)
     const appLanguage = selectedLanguage.value
     const alternativeAppLanguage = selectedAlternativeLanguage.value
+    const toFavorites = favoritesChecked
+    const toSwornIn = swornInChecked
+    const writtenTranslation = writtenTranslationChecked
     let appointmentDate = new Date(date)
     let data = Object.fromEntries(formData)
     data = {
       ...data,
       appointmentDate,
       appLanguage,
+      toFavorites,
+      writtenTranslation,
+      toSwornIn,
       alternativeAppLanguage,
       acceptedByInterpreter: null,
+      showToInterpreter: '',
       openAppointment: true
     }
     postAppointment(data).then(history.push('/request'))

@@ -11,10 +11,11 @@ const Appointment = mongoose.model('Appointment', {
   message: String,
   extension: Number,
   contact: String,
-  favorites: Boolean,
-  swornIn: Boolean,
+  toFavorites: Boolean,
+  toSwornIn: Boolean,
   writtenTranslation: Boolean,
   acceptedByInterpreter: Boolean,
+  showToInterpreter: String,
   openAppointment: Boolean
 })
 

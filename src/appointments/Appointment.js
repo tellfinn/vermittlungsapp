@@ -84,6 +84,7 @@ export default function Appointment({ ...props }) {
           handlePostClick={props.handlePostClick}
           languages={props.languages}
           setAptState={props.setAptState}
+          currentUser={props.currentUser}
         />
       )}
     </>
