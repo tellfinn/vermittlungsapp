@@ -2,13 +2,11 @@ import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 import { postAppointment, patchAppointment } from './services'
-import { ReactComponent as EditIcon } from '../icons/edit.svg'
-import { ReactComponent as TrashIcon } from '../icons/trash.svg'
-import { ReactComponent as PhoneIcon } from '../icons/phone-fill.svg'
-import { ReactComponent as MailIcon } from '../icons/email.svg'
+import ContactBar from './AppointmentDetailsContactBar'
+import SettingsBar from './AppointmentDetailsSettingsBar'
 import SubmitButton from '../common/SubmitButton'
-import EditForm from '../appointmentinput/EditForm'
 import InfoBtn from './InfoBtn'
+import EditForm from '../appointmentinput/EditForm'
 
 AppointmentDetails.propTypes = {
   date: PropTypes.object,
@@ -30,6 +28,8 @@ AppointmentDetails.propTypes = {
 export default function AppointmentDetails({ ...props }) {
   const [isFollowUpFormVisible, setIsFollowUpFormVisible] = useState(false)
   const [isEditFormVisible, setIsEditFormVisible] = useState(false)
+  const [showSettings, setShowSettings] = useState(false)
+  const [showContact, setShowContact] = useState(false)
 
   return (
     <>
@@ -55,29 +55,33 @@ export default function AppointmentDetails({ ...props }) {
           <div> {props.message} </div>
         </MoreDetailsStyled>
 
-        <IconAreaStyled>
-          <a href={'mailto:buero@vermittlung.de'}>
-            <MailIconStyled />
-          </a>
-          <PhoneIconStyled />
+        <IconAreaStyled positionIcons={props.acceptedByInterpreter}>
+          {props.acceptedByInterpreter && (
+            <SettingsBar
+              toggleSettings={() => setShowSettings(!showSettings)}
+              declineClick={props.handleDeclineClick}
+              deleteClick={props.handleDeleteClick}
+              editClick={event => showEditForm(event)}
+              showSettings={showSettings}
+            />
+          )}
+
+          <ContactBar
+            toggleSettings={() => setShowContact(!showContact)}
+            showContact={showContact}
+          />
         </IconAreaStyled>
+
         {props.acceptedByInterpreter ? (
-          <ThreeButtonsAreaStyled>
-            <ButtonStyled onClick={event => showFollowUpForm(event)}>
-              Folgetermin mitteilen
-            </ButtonStyled>
-            <ButtonStyled onClick={props.handleDeclineClick}>
-              absagen
-            </ButtonStyled>
-            <DeleteButtonStyled onClick={props.handleDeleteClick}>
-              <TrashIconStyled />
-            </DeleteButtonStyled>
-            <DeleteButtonStyled onClick={event => showEditForm(event)}>
-              <EditIconStyled />
-            </DeleteButtonStyled>
-          </ThreeButtonsAreaStyled>
+          <>
+            <ButtonAreaStyled numberOfBtns={props.acceptedByInterpreter}>
+              <ButtonStyled onClick={event => showFollowUpForm(event)}>
+                Folgetermin mitteilen
+              </ButtonStyled>
+            </ButtonAreaStyled>
+          </>
         ) : (
-          <ButtonAreaStyled>
+          <ButtonAreaStyled numberOfBtns={props.acceptedByInterpreter}>
             <SubmitButton
               text='zusagen'
               handleClick={props.handleAcceptClick}></SubmitButton>
@@ -151,11 +155,11 @@ const AppointmentDetailsStyled = styled.div`
   top: -650px;
   display: grid;
   width: 95%;
-  padding: 10px;
-  padding-top: 30px;
   box-shadow: var(--shadow);
   background-color: var(--background-white);
   outline: 1px solid var(--blueish);
+  padding: 10px;
+  padding-top: 30px;
   align-items: space-between;
   overflow-y: scroll;
   z-index: 10;
@@ -193,48 +197,22 @@ const MoreDetailsStyled = styled.div`
 `
 
 const ButtonAreaStyled = styled.div`
+  ${props => (props.numberOfBtns ? '' : 'grid-template-columns: 1fr 0.8fr;')};
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 30px;
+  grid-gap: 25px;
   margin: auto;
 `
 
-const ThreeButtonsAreaStyled = styled(ButtonAreaStyled)`
-  grid-template-rows: 2;
-`
+const IconAreaStyled = styled.div`
+  position: relative;
+  bottom: 30px;
+  height: 50px;
+  width: 100%;
 
-const DeleteButtonStyled = styled.button`
-  background-color: var(--red);
+  display: grid;
+  ${props => (props.positionIcons ? 'grid-template-columns: 1fr 1fr;' : '')};
 `
 
 const ButtonStyled = styled.button`
   background-color: var(--darkblueish);
-`
-
-const IconAreaStyled = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 40px;
-  padding: 20px;
-  margin-bottom: 40px;
-  justify-items: end;
-`
-
-const PhoneIconStyled = styled(PhoneIcon)`
-  height: 40px;
-  width: 40px;
-`
-
-const MailIconStyled = styled(MailIcon)`
-  height: 40px;
-  width: 40px;
-`
-const EditIconStyled = styled(EditIcon)`
-  height: 40px;
-  width: 40px;
-`
-
-const TrashIconStyled = styled(TrashIcon)`
-  height: 40px;
-  width: 40px;
 `
