@@ -134,7 +134,7 @@ function App() {
           console.log('json', json) //console log if logout successfull
           if (json.success) {
             setToken('')
-            deleteFromStorage('Dolmetschervermittlung')
+            //   deleteFromStorage('Dolmetschervermittlung')
             setLoggedIn(false)
           } else {
             setLoggedIn(false)

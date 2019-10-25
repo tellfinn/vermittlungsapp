@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import { ReactComponent as PhoneIcon } from '../icons/phone-fill.svg'
 import { ReactComponent as MailIcon } from '../icons/email.svg'
 import { ReactComponent as ContactIcon } from '../icons/contact.svg'

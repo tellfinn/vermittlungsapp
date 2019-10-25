@@ -182,9 +182,9 @@ const AppointmentDetailsStyled = styled.div`
 
 const AppointmentDataStyled = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1.2fr 0.8fr;
+  grid-template-columns: 0.9fr 1.4fr 0.7fr;
   grid-template-rows: 2;
-  grid-column-gap: 29px;
+  grid-column-gap: 25px;
   margin-top: 40px;
 `
 

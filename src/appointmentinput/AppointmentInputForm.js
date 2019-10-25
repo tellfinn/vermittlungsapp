@@ -247,6 +247,13 @@ const Placeholder = styled.div`
 const Wrapper = styled.div`
   position: absolute;
   display: ${props => (props.isVisible ? 'grid' : 'none')};
+  grid-gap: 10px;
+  width: 100%;
+`
+
+/*const Wrapper = styled.div`
+  position: absolute;
+  display: ${props => (props.isVisible ? 'grid' : 'none')};
   grid-gap: 20px;
   width: 100%;
   right: -360px;
@@ -266,7 +273,7 @@ const Wrapper = styled.div`
       right: 0;
     }
   }
-`
+`*/
 
 const RadioBtnAreaStyled = styled.div`
   display: flex;

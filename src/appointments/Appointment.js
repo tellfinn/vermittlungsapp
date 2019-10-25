@@ -127,12 +127,31 @@ export default function Appointment({ ...props }) {
   }
 
   function renderableTime(appointmentDate) {
-    const timeString = new Date(appointmentDate).toLocaleString('de-DE', {
+    const convertedToDate = new Date(appointmentDate)
+    const timeStringStartDate = convertedToDate.toLocaleString('de-DE', {
       hour: '2-digit',
       minute: '2-digit'
     })
 
-    return timeString
+    const rest = props.duration % 1
+    const minutes = rest * 60
+    const hours = Math.floor(props.duration)
+
+    const endTimeWithHours = new Date(
+      convertedToDate.setHours(convertedToDate.getHours() + hours)
+    )
+    const endTimeWithMinutes = endTimeWithHours.setMinutes(
+      convertedToDate.getMinutes() + minutes
+    )
+    const timeStringEndDate = new Date(endTimeWithMinutes).toLocaleString(
+      'de-DE',
+      {
+        hour: '2-digit',
+        minute: '2-digit'
+      }
+    )
+
+    return timeStringStartDate + '-' + timeStringEndDate
   }
 
   function calculateDuration(duration) {
