@@ -6,7 +6,7 @@ import { ReactComponent as LogoutIcon } from '../icons/exit.svg'
 
 export default function Header({ ...props }) {
   let [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [title, setTitle] = useState('Terminanfragen')
+  const [title, setTitle] = useState('')
 
   function handleTitleChange(event) {
     setIsMenuOpen(!isMenuOpen)
