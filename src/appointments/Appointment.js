@@ -13,7 +13,7 @@ Appointment.propTypes = {
   duration: PropTypes.number,
   clinic: PropTypes.string,
   station: PropTypes.string,
-  appLanguage: PropTypes.string,
+  appointmentLanguage: PropTypes.string,
   extension: PropTypes.number,
   message: PropTypes.string,
   contact: PropTypes.string,
@@ -23,17 +23,21 @@ Appointment.propTypes = {
   acceptedByInterpreter: PropTypes.bool
 }
 
-export default function Appointment({ ...props }) {
+export default function Appointment({ appointment, ...props }) {
+  const rest = appointment.duration % 1
+  const minutes = rest * 60
+  const hours = Math.floor(appointment.duration)
   const [showDetails, setShowDetails] = useState(false)
-  const date = displayTodayBold(renderableDate(props.appointmentDate))
-  const time = renderableTime(props.appointmentDate)
-  const day = renderableDay(props.appointmentDate)
+  const date = displayTodayBold(renderableDate(appointment.appointmentDate))
+  const time = renderableTime(appointment.appointmentDate)
+  const day = renderableDay(appointment.appointmentDate)
+
   const duration =
-    props.duration < 1
-      ? props.duration * 60 + ' Min'
-      : props.duration % 1 === 0
-      ? props.duration + ' Std'
-      : calculateDuration(props.duration)
+    appointment.duration < 1
+      ? appointment.duration * 60 + ' Min'
+      : appointment.duration % 1 === 0
+      ? appointment.duration + ' Std'
+      : calculateDuration(appointment.duration)
 
   return (
     <>
@@ -45,10 +49,10 @@ export default function Appointment({ ...props }) {
           <AppointmentStyled>
             {date}
             <ImportantData>{time}</ImportantData>
-            <ImportantData>{props.clinic}</ImportantData>
+            <ImportantData>{appointment.clinic}</ImportantData>
             <div> {day} </div>
             <div style={{ letterSpacing: '-0.08em' }}>ca. {duration}</div>
-            <div> {props.station} </div>
+            <div> {appointment.station} </div>
             <InfoBtn
               handleInfobtnClick={() => setShowDetails(true)}
               infoType='more'></InfoBtn>
@@ -65,17 +69,9 @@ export default function Appointment({ ...props }) {
       {showDetails && (
         <AppointmentDetails
           date={date}
-          id={props._id}
           time={time}
           duration={duration}
-          formduration={props.duration}
-          formdate={props.appointmentDate}
-          language={props.appLanguage}
-          extension={props.extension}
-          message={props.message}
-          clinic={props.clinic}
-          contact={props.contact}
-          station={props.station}
+          appointment={appointment}
           handleCloseClick={() => setShowDetails(false)}
           handleAcceptClick={props.handleAcceptClick}
           handleDeclineClick={props.handleDeclineClick}
@@ -133,10 +129,6 @@ export default function Appointment({ ...props }) {
       minute: '2-digit'
     })
 
-    const rest = props.duration % 1
-    const minutes = rest * 60
-    const hours = Math.floor(props.duration)
-
     const endTimeWithHours = new Date(
       convertedToDate.setHours(convertedToDate.getHours() + hours)
     )
@@ -154,10 +146,7 @@ export default function Appointment({ ...props }) {
     return timeStringStartDate + '-' + timeStringEndDate
   }
 
-  function calculateDuration(duration) {
-    const rest = duration % 1
-    const minutes = rest * 60
-    const hours = Math.floor(duration)
+  function calculateDuration() {
     return hours + ' Std ' + minutes + ' Min'
   }
 }

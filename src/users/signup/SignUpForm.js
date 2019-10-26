@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { postUser } from './services'
+import { postUser } from '../services'
 import Page from '../../common/Page.js'
-import LanguageSelector from '../../appointmentinput/LanguageSelector'
+import LanguageSelector from '../../appointmentinput/inputFields/LanguageSelector'
 import NextButton from '../../common/NextButton'
 
 export default function SignUpForm({ languages }) {
+  // eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(true)
   const [selectedLanguages, setSelectedLanguages] = useState([])
   // eslint-disable-next-line

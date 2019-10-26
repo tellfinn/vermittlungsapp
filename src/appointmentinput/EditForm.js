@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
-import LanguageSelector from './LanguageSelector'
-import MyDatepicker from './Datepicker'
+import LanguageSelector from './inputFields/LanguageSelector'
+import MyDatepicker from './inputFields/Datepicker'
+import Checkbox from './inputFields/CheckBox'
+import NumberInput from './inputFields/NumberInput'
+import TextInput from './inputFields/TextInput'
+import RadioBtnArea from './inputFields/RadioBtnArea'
+import MessageField from './inputFields/MessageField'
 import SubmitButton from '../common/SubmitButton'
 
 EditForm.propTypes = {
@@ -16,18 +21,22 @@ EditForm.propTypes = {
   languages: PropTypes.array
 }
 
-export default function EditForm({ isFollowUp = false, ...props }) {
+export default function EditForm({
+  isFollowUp = false,
+  appointment,
+  ...props
+}) {
   const [selectedLanguage, setSelectedLanguage] = useState('')
-  const [radioBtnValue, setRadioBtnValue] = useState(props.aptClinic)
-  const [duration, setDuration] = useState(props.aptDuration)
+  const [radioBtnValue, setRadioBtnValue] = useState(appointment.clinic)
+  const [duration, setDuration] = useState(appointment.duration)
   const [isInterpreterAvailable, setIsInterpreterAvailable] = useState(true)
+  const [date, setDate] = useState(new Date(appointment.appointmentDate))
+  const [wrongLanguage, setWrongLanguage] = useState(false)
   // eslint-disable-next-line
   const [textInput, setTextInput] = useState('')
-  const [date, setDate] = useState(new Date(props.newDate))
-  const [wrongLanguage, setWrongLanguage] = useState(false)
 
   let appointmentLanguage = props.languages.find(language => {
-    return language.value === props.language
+    return language.value === appointment.appointmentLanguage
   })
 
   useEffect(() => {
@@ -40,9 +49,9 @@ export default function EditForm({ isFollowUp = false, ...props }) {
 
     const form = event.target
     const formData = new FormData(form)
-    const appLanguage =
+    const appointmentLanguage =
       selectedLanguage === undefined
-        ? appointmentLanguage.value
+        ? appointment.appointmentLanguage.value
         : selectedLanguage.value
     let appointmentDate = new Date(date)
     const showToInterpreter = isInterpreterAvailable ? props.currentUser : ''
@@ -51,11 +60,11 @@ export default function EditForm({ isFollowUp = false, ...props }) {
     data = {
       ...data,
       appointmentDate,
-      appLanguage,
+      appointmentLanguage,
       showToInterpreter,
       acceptedByInterpreter: isInterpreterAvailable,
       openAppointment: !isInterpreterAvailable,
-      _id: props.id
+      _id: appointment._id
     }
 
     isFollowUp === true
@@ -73,23 +82,19 @@ export default function EditForm({ isFollowUp = false, ...props }) {
 
   return (
     <EditFormStyled onSubmit={handleSubmit}>
-      <label>
-        <input
-          type='checkbox'
-          name='availability'
-          checked={wrongLanguage}
-          onChange={() => setWrongLanguage(!wrongLanguage)}
-        />{' '}
-        Sprache ändern
-      </label>
+      <Checkbox
+        name='wrongLanguage'
+        checked={wrongLanguage}
+        text=' Sprache ändern'
+        onChange={() => setWrongLanguage(!wrongLanguage)}
+      />
 
       {wrongLanguage && (
         <LanguageSelector
           name='Sprache'
           handleChange={event => setSelectedLanguage(event)}
           options={props.languages}
-          value={selectedLanguage}
-          defaultValue={appointmentLanguage}></LanguageSelector>
+          value={selectedLanguage}></LanguageSelector>
       )}
 
       <MyDatepicker
@@ -97,101 +102,61 @@ export default function EditForm({ isFollowUp = false, ...props }) {
         date={date}
         onChange={value => setDate(value)}></MyDatepicker>
 
-      <label>
-        <input
-          type='checkbox'
-          name='availability'
-          checked={isInterpreterAvailable}
-          onChange={() => setIsInterpreterAvailable(!isInterpreterAvailable)}
-        />{' '}
-        {isFollowUp === true ? 'bin verfügbar' : 'gleicher Dolmetscher'}
-      </label>
-
+      <Checkbox
+        name='availability'
+        checked={isInterpreterAvailable}
+        text={isFollowUp === true ? ' bin verfügbar' : ' gleicher Dolmetscher'}
+        onChange={() => setIsInterpreterAvailable(!isInterpreterAvailable)}
+      />
       <LabelStyled>
         voraussichtliche Dauer:{' '}
-        <input
-          name='duration'
-          type='number'
+        <NumberInput
+          name={duration}
           min='0.25'
           step='0.25'
-          lang='nb'
-          defaultValue={duration}
-          onChange={setDuration}></input>
+          placeholder='0.25 Std = 15 Min'
+          defaultValue={appointment.duration}
+          onChange={event => setDuration(event.target.value)}
+        />
       </LabelStyled>
-      <StyleArea>
-        <label>
-          <input
-            type='radio'
-            name='clinic'
-            value='UKE'
-            checked={radioBtnValue === 'UKE'}
-            onChange={handleRadioChange}
-          />
-          UKE
-        </label>
-        <label>
-          <input
-            type='radio'
-            name='clinic'
-            value='AKK'
-            checked={radioBtnValue === 'AKK'}
-            onChange={handleRadioChange}
-          />
-          AKK
-        </label>
-        <label>
-          <input
-            type='radio'
-            name='clinic'
-            value='PNZ'
-            checked={radioBtnValue === 'PNZ'}
-            onChange={handleRadioChange}
-          />
-          PNZ
-        </label>
-      </StyleArea>
+
+      <RadioBtnArea
+        handleRadioChange={event => setRadioBtnValue(event.target.value)}
+        radioBtnValue={radioBtnValue}
+      />
 
       <LabelStyled>
         Station, Gebäude:
-        <input
-          type='text'
+        <TextInput
           name='station'
-          defaultValue={props.aptStation}
+          defaultValue={appointment.station}
           onChange={event => setTextInput(event.target.value)}
         />
       </LabelStyled>
       <LabelStyled>
         Ansprechpartner:
-        <input
-          type='text'
+        <TextInput
           name='contact'
-          defaultValue={props.aptContact}
+          defaultValue={appointment.contact}
           onChange={event => setTextInput(event.target.value)}
         />
       </LabelStyled>
       <LabelStyled>
         Durchwahl:
-        <input
-          type='number'
+        <NumberInput
           name='extension'
-          defaultValue={props.aptExtension}
+          defaultValue={appointment.extension}
           onChange={event => setTextInput(event.target.value)}
         />
       </LabelStyled>
 
-      <label>
-        <textarea placeholder='weitere Informationen' name='message'></textarea>
-      </label>
+      <MessageField />
       <StyleArea>
         <SubmitButton text='absenden' type='submit' />
         <SubmitButton text='verwerfen' handleClick={props.handleAbortClick} />
       </StyleArea>
     </EditFormStyled>
   )
-
-  function handleRadioChange(event) {
-    setRadioBtnValue(event.target.value)
-  }
 }
 
 const EditFormStyled = styled.form`

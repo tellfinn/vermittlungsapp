@@ -57,7 +57,7 @@ export default function AppointmentPage({
       .filter(
         appointment =>
           appointment.acceptedByInterpreter === requestAccepted &&
-          interpreterLanguages.includes(appointment.appLanguage)
+          interpreterLanguages.includes(appointment.appointmentLanguage)
       )
       .filter(
         appointment =>
@@ -65,7 +65,7 @@ export default function AppointmentPage({
           appointment.showToInterpreter === currentUser
       )
 
-    if (activeIndex === 0) {
+    if (!activeIndex) {
       sortedAppointments = sortedAppointments.slice().sort((a, b) => {
         return new Date(a.appointmentDate) - new Date(b.appointmentDate)
       })
@@ -103,7 +103,7 @@ export default function AppointmentPage({
           handleDeclineClick={() => declineAppointment(appointment)}
           handleDeleteClick={() => removeAppointment(appointment)}
           key={appointment._id}
-          {...appointment}
+          appointment={appointment}
           languages={languages}
           currentUser={currentUser}
           setAptState={() => setAptStateFromChild}

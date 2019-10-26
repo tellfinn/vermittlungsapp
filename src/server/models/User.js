@@ -5,7 +5,10 @@ const UserSchema = new mongoose.Schema({
   firstName: { type: String },
   lastName: { type: String },
   email: { type: String },
-  password: { type: String },
+  password: {
+    type: String,
+    set: p => bcrypt.hashSync(p, bcrypt.genSaltSync(8), null)
+  },
   isInterpreter: { type: Boolean },
   isFavorite: { type: Boolean, default: false },
   isSwornIn: { type: Boolean, default: false },

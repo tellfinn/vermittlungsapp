@@ -25,7 +25,7 @@ AppointmentDetails.propTypes = {
   acceptedByInterpreter: PropTypes.bool
 }
 
-export default function AppointmentDetails({ ...props }) {
+export default function AppointmentDetails({ appointment, ...props }) {
   const [isFollowUpFormVisible, setIsFollowUpFormVisible] = useState(false)
   const [isEditFormVisible, setIsEditFormVisible] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
@@ -41,22 +41,22 @@ export default function AppointmentDetails({ ...props }) {
         <AppointmentDataStyled>
           <div>{props.date}</div>
           <div>{props.time} Uhr</div>
-          <div>{props.clinic}</div>
-          <div>{props.language}</div>
+          <div>{appointment.clinic}</div>
+          <div>{appointment.appointmentLanguage}</div>
           <div style={{ letterSpacing: '-0.08em' }}> ca. {props.duration}</div>
-          <div> {props.station} </div>
+          <div> {appointment.station} </div>
         </AppointmentDataStyled>
         <MoreDetailsStyled>
           <div>Ansprechpartner: </div>
-          <div> {props.contact} </div>
+          <div> {appointment.contact} </div>
           <div>Durchwahl: </div>
-          <div> {props.extension}</div>
+          <div> {appointment.extension}</div>
           <div>Details: </div>
-          <div> {props.message} </div>
+          <div> {appointment.message} </div>
         </MoreDetailsStyled>
 
-        <IconAreaStyled positionIcons={props.acceptedByInterpreter}>
-          {props.acceptedByInterpreter && (
+        <IconAreaStyled positionIcons={appointment.acceptedByInterpreter}>
+          {appointment.acceptedByInterpreter && (
             <SettingsBar
               toggleSettings={() => setShowSettings(!showSettings)}
               declineClick={props.handleDeclineClick}
@@ -72,16 +72,16 @@ export default function AppointmentDetails({ ...props }) {
           />
         </IconAreaStyled>
 
-        {props.acceptedByInterpreter ? (
+        {appointment.acceptedByInterpreter ? (
           <>
-            <ButtonAreaStyled numberOfBtns={props.acceptedByInterpreter}>
+            <ButtonAreaStyled forOneBtn={appointment.acceptedByInterpreter}>
               <ButtonStyled onClick={event => showFollowUpForm(event)}>
                 Folgetermin mitteilen
               </ButtonStyled>
             </ButtonAreaStyled>
           </>
         ) : (
-          <ButtonAreaStyled numberOfBtns={props.acceptedByInterpreter}>
+          <ButtonAreaStyled forOneBtn={appointment.acceptedByInterpreter}>
             <SubmitButton
               text='zusagen'
               handleClick={props.handleAcceptClick}></SubmitButton>
@@ -94,13 +94,7 @@ export default function AppointmentDetails({ ...props }) {
 
       {isFollowUpFormVisible && (
         <EditForm
-          language={props.language}
-          aptClinic={props.clinic}
-          newDate={props.formdate}
-          aptStation={props.station}
-          aptDuration={props.formduration}
-          aptContact={props.contact}
-          aptExtension={props.extension}
+          appointment={appointment}
           languages={props.languages}
           handleEditSubmit={postAppointment}
           handleAbortClick={() => hideFollowUpForm()}
@@ -112,18 +106,15 @@ export default function AppointmentDetails({ ...props }) {
 
       {isEditFormVisible && (
         <EditForm
-          language={props.language}
-          aptClinic={props.clinic}
+          appointment={appointment}
+          /*       
+          id={props.id}
+        */
           newDate={props.formdate}
-          aptStation={props.station}
-          aptDuration={props.formduration}
-          aptContact={props.contact}
-          aptExtension={props.extension}
           languages={props.languages}
           handleAbortClick={() => hideEditForm()}
           setAptState={props.setAptState}
           handleEditSubmit={patchAppointment}
-          id={props.id}
           currentUser={props.currentUser}
         />
       )}
@@ -197,7 +188,7 @@ const MoreDetailsStyled = styled.div`
 `
 
 const ButtonAreaStyled = styled.div`
-  ${props => (props.numberOfBtns ? '' : 'grid-template-columns: 1fr 0.8fr;')};
+  ${props => (props.forOneBtn ? '' : 'grid-template-columns: 1fr 0.8fr;')};
   display: grid;
   grid-gap: 25px;
   margin: auto;
