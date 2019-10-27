@@ -5,6 +5,11 @@ import { ReactComponent as PhoneIcon } from '../icons/phone-fill.svg'
 import { ReactComponent as MailIcon } from '../icons/email.svg'
 import { ReactComponent as ContactIcon } from '../icons/contact.svg'
 
+Settingsbar.propTypes = {
+  toggleSettings: PropTypes.func,
+  showContact: PropTypes.bool
+}
+
 export default function Settingsbar({ toggleSettings, showContact }) {
   return (
     <StyledSettingsBar>

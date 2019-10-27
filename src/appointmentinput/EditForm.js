@@ -34,6 +34,7 @@ export default function EditForm({
   const [textInput, setTextInput] = useState('')
   const [date, setDate] = useState(new Date(appointment.appointmentDate))
   const [wrongLanguage, setWrongLanguage] = useState(false)
+  const [message, setMessage] = useState(appointment.message)
 
   let appointmentLanguage = props.languages.find(language => {
     return language.value === appointment.appointmentLanguage
@@ -54,7 +55,9 @@ export default function EditForm({
         ? appointment.appointmentLanguage.value
         : selectedLanguage.value
     let appointmentDate = new Date(date)
+    const sentBy = isFollowUp ? appointment.sentBy : props.currentUser
     const showToInterpreter = isInterpreterAvailable ? props.currentUser : ''
+
     let data = Object.fromEntries(formData)
 
     data = {
@@ -64,7 +67,8 @@ export default function EditForm({
       showToInterpreter,
       acceptedByInterpreter: isInterpreterAvailable,
       openAppointment: !isInterpreterAvailable,
-      _id: props.id
+      _id: props.id,
+      sentBy
     }
 
     isFollowUp === true
@@ -145,7 +149,10 @@ export default function EditForm({
           onChange={event => setTextInput(event.target.value)}
         />
       </LabelStyled>
-      <MessageField />
+      <MessageField
+        defaultValue={message}
+        onChange={event => setMessage(event.target.value)}
+      />
       <StyleArea>
         <SubmitButton text='absenden' type='submit' />
         <SubmitButton text='verwerfen' handleClick={props.handleAbortClick} />

@@ -14,7 +14,7 @@ import NumberInput from './inputFields/NumberInput'
 import SubmitButton from '../common/SubmitButton'
 import NextButton from '../common/NextButton'
 
-export default function AppointmentInputForm() {
+export default function AppointmentInputForm({ currentUser }) {
   let history = useHistory()
   const [languages, setLanguages] = useState([])
   const [selectedLanguage, setSelectedLanguage] = useState('')
@@ -65,7 +65,8 @@ export default function AppointmentInputForm() {
       alternativeLanguage,
       acceptedByInterpreter: null,
       showToInterpreter: '',
-      openAppointment: true
+      openAppointment: true,
+      sentBy: currentUser
     }
     postAppointment(data).then(history.push('/request'))
   }

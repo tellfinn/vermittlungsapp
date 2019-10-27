@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { postUserLogIn } from './sevices'
+import { postUserLogIn } from './services'
 import { Redirect } from 'react-router-dom'
-import { setInStorage } from '../utils'
-import Page from '../../common/Page'
+import { setInStorage } from './utils'
+import Page from '../common/Page'
 
 LogInForm.propTypes = {
   setLoggedIn: PropTypes.func,
@@ -26,7 +26,7 @@ export default function LogInForm({ ...props }) {
     }
 
     postUserLogIn(LogInData).then(json => {
-      //   console.log('json', json) ////console log if login successfull
+      console.log('json', json) ////console log if login successfull
       if (json.success) {
         setInStorage('Dolmetschervermittlung', { token: json.token })
         const userid = json.userID

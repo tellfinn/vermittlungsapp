@@ -70,5 +70,5 @@ const LogoutIconStyled = styled(LogoutIcon)`
   height: 38px;
   width: 38px;
   margin-top: 1px;
-  fill: ${props => (props.isLoggedIn ? '#000000' : 'grey')};
+  fill: #000000;
 `

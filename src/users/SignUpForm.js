@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { postUser } from './services'
-import Page from '../../common/Page.js'
-import LanguageSelector from '../../appointmentinput/inputFields/LanguageSelector'
-import NextButton from '../../common/NextButton'
+import Page from '../common/Page.js'
+import LanguageSelector from '../appointmentinput/inputFields/LanguageSelector'
+import NextButton from '../common/NextButton'
 
 export default function SignUpForm({ languages }) {
-  const [isLoading, setIsLoading] = useState(true)
+  //  const [isLoading, setIsLoading] = useState(true)
   const [selectedLanguages, setSelectedLanguages] = useState([])
   // eslint-disable-next-line
   const [signUpError, setSignUpError] = useState('')
@@ -49,7 +49,7 @@ export default function SignUpForm({ languages }) {
       console.log('json', json)
       if (json.success) {
         setSignUpError(json.message)
-        setIsLoading(false)
+        // setIsLoading(false)
         setSignUpEmail('')
         setSignUpPassword('')
         setFirstName('')
@@ -61,7 +61,7 @@ export default function SignUpForm({ languages }) {
         setIsSwornIn(false)
       } else {
         setSignUpError(json.message)
-        setIsLoading(false)
+        //      setIsLoading(false)
       }
     })
   }

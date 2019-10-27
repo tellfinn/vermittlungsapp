@@ -7,8 +7,8 @@ import GlobalStyles from './GlobalStyles'
 import Header from './common/Header'
 import AppointmentInputForm from './appointmentinput/AppointmentInputForm'
 import AppointmentPage from './appointments/AppointmentPage'
-import SignUpForm from './users/signup/SignUpForm'
-import LogIn from './users/login/LogInForm'
+import SignUpForm from './users/SignUpForm'
+import LogIn from './users/LogInForm'
 import ProtectedRoute from './users/ProtectedRoute'
 
 function App() {
@@ -23,12 +23,12 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const obj = getFromStorage('Dolmetschervermittlung')
+    const session = getFromStorage('Dolmetschervermittlung')
 
-    if (obj && obj.token > 0) {
+    if (session && session.token > 0) {
       fetch('/users/verify?token=' + token).then(res => {
         if (res) {
-          setToken(obj)
+          setToken(session)
           setLoggedIn(true)
         } else {
           setLoggedIn(false)
@@ -101,7 +101,12 @@ function App() {
         <ProtectedRoute
           path='/newAppointment'
           loggedIn={isLoggedIn}
-          component={<AppointmentInputForm title='Terminanfrage erstellen' />}
+          component={
+            <AppointmentInputForm
+              title='Terminanfrage erstellen'
+              currentUser={currentUser}
+            />
+          }
         />
 
         <Route
@@ -126,8 +131,8 @@ function App() {
   )
 
   function logout() {
-    const obj = getFromStorage('Dolmetschervermittlung')
-    if (token && obj.token) {
+    const session = getFromStorage('Dolmetschervermittlung')
+    if (token && session.token) {
       fetch('users/logout?token=' + token)
         .then(res => res.json())
         .then(json => {

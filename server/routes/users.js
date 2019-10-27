@@ -249,6 +249,8 @@ router.get('/verify', (req, res, next) => {
   )
 })
 
+// user finden
+
 router.get('/', (req, res) => {
   User.find()
     .then(users => res.json(users))

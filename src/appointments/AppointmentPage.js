@@ -57,12 +57,14 @@ export default function AppointmentPage({
       .filter(
         appointment =>
           appointment.acceptedByInterpreter === requestAccepted &&
-          interpreterLanguages.includes(appointment.appointmentLanguage)
+          (interpreterLanguages.includes(appointment.appointmentLanguage) ||
+            appointment.sentBy === currentUser)
       )
       .filter(
         appointment =>
           appointment.showToInterpreter.length === 0 ||
-          appointment.showToInterpreter === currentUser
+          appointment.showToInterpreter === currentUser ||
+          appointment.sentBy === currentUser
       )
 
     if (activeIndex === 0) {
@@ -157,9 +159,8 @@ export default function AppointmentPage({
         appointment => appointment._id === deletedAppointment._id
       )
       setAppointments([
-        ...appointments
-        //        ...appointments.slice(0, index),
-        //      ...appointments.slice(index + 1)
+        ...appointments.slice(0, index),
+        ...appointments.slice(index + 1)
       ])
     })
   }
