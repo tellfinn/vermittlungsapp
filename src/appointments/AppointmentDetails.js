@@ -25,7 +25,7 @@ AppointmentDetails.propTypes = {
   acceptedByInterpreter: PropTypes.bool
 }
 
-export default function AppointmentDetails({ ...props }) {
+export default function AppointmentDetails({ appointment, ...props }) {
   const [isFollowUpFormVisible, setIsFollowUpFormVisible] = useState(false)
   const [isEditFormVisible, setIsEditFormVisible] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
@@ -41,22 +41,22 @@ export default function AppointmentDetails({ ...props }) {
         <AppointmentDataStyled>
           <div>{props.date}</div>
           <div>{props.time} Uhr</div>
-          <div>{props.clinic}</div>
-          <div>{props.language}</div>
+          <div>{appointment.clinic}</div>
+          <div>{appointment.appointmentLanguage}</div>
           <div style={{ letterSpacing: '-0.08em' }}> ca. {props.duration}</div>
-          <div> {props.station} </div>
+          <div> {appointment.station} </div>
         </AppointmentDataStyled>
         <MoreDetailsStyled>
           <div>Ansprechpartner: </div>
-          <div> {props.contact} </div>
+          <div> {appointment.contact} </div>
           <div>Durchwahl: </div>
-          <div> {props.extension}</div>
+          <div> {appointment.extension}</div>
           <div>Details: </div>
-          <div> {props.message} </div>
+          <div> {appointment.message} </div>
         </MoreDetailsStyled>
 
-        <IconAreaStyled positionIcons={props.acceptedByInterpreter}>
-          {props.acceptedByInterpreter && (
+        <IconAreaStyled positionIcons={appointment.acceptedByInterpreter}>
+          {appointment.acceptedByInterpreter && (
             <SettingsBar
               toggleSettings={() => setShowSettings(!showSettings)}
               declineClick={props.handleDeclineClick}
@@ -72,16 +72,16 @@ export default function AppointmentDetails({ ...props }) {
           />
         </IconAreaStyled>
 
-        {props.acceptedByInterpreter ? (
+        {appointment.acceptedByInterpreter ? (
           <>
-            <ButtonAreaStyled numberOfBtns={props.acceptedByInterpreter}>
+            <ButtonAreaStyled numberOfBtns={appointment.acceptedByInterpreter}>
               <ButtonStyled onClick={event => showFollowUpForm(event)}>
                 Folgetermin mitteilen
               </ButtonStyled>
             </ButtonAreaStyled>
           </>
         ) : (
-          <ButtonAreaStyled numberOfBtns={props.acceptedByInterpreter}>
+          <ButtonAreaStyled numberOfBtns={appointment.acceptedByInterpreter}>
             <SubmitButton
               text='zusagen'
               handleClick={props.handleAcceptClick}></SubmitButton>
@@ -94,13 +94,9 @@ export default function AppointmentDetails({ ...props }) {
 
       {isFollowUpFormVisible && (
         <EditForm
-          language={props.language}
-          aptClinic={props.clinic}
+          appointment={appointment}
           newDate={props.formdate}
-          aptStation={props.station}
           aptDuration={props.formduration}
-          aptContact={props.contact}
-          aptExtension={props.extension}
           languages={props.languages}
           handleEditSubmit={postAppointment}
           handleAbortClick={() => hideFollowUpForm()}
@@ -112,13 +108,9 @@ export default function AppointmentDetails({ ...props }) {
 
       {isEditFormVisible && (
         <EditForm
-          language={props.language}
-          aptClinic={props.clinic}
+          appointment={appointment}
           newDate={props.formdate}
-          aptStation={props.station}
           aptDuration={props.formduration}
-          aptContact={props.contact}
-          aptExtension={props.extension}
           languages={props.languages}
           handleAbortClick={() => hideEditForm()}
           setAptState={props.setAptState}
@@ -182,9 +174,9 @@ const AppointmentDetailsStyled = styled.div`
 
 const AppointmentDataStyled = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1.2fr 0.8fr;
+  grid-template-columns: 0.9fr 1.3fr 0.8fr;
   grid-template-rows: 2;
-  grid-column-gap: 29px;
+  grid-column-gap: 20px;
   margin-top: 40px;
 `
 

@@ -11,7 +11,8 @@ const UserSchema = new mongoose.Schema({
   isSwornIn: { type: Boolean, default: false },
   writtenTranslations: { type: Boolean, default: false },
   languages: [String],
-  isDeleted: { type: Boolean, default: false }
+  isDeleted: { type: Boolean, default: false },
+  gender: { type: String }
 })
 
 UserSchema.methods.generateHash = function(password) {

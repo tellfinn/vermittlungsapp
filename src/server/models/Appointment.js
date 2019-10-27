@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 
 const Appointment = mongoose.model('Appointment', {
   appointmentDate: Date,
-  appLanguage: String,
-  alternativeAppLanguage: String,
+  appointmentLanguage: String,
+  alternativeLanguage: String,
   duration: Number,
   clinic: String,
   station: String,
@@ -16,7 +16,9 @@ const Appointment = mongoose.model('Appointment', {
   writtenTranslation: Boolean,
   acceptedByInterpreter: Boolean,
   showToInterpreter: String,
-  openAppointment: Boolean
+  openAppointment: Boolean,
+  sentBy: String,
+  onlyFemaleInterpreters: Boolean
 })
 
 module.exports = Appointment

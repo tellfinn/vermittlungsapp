@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
-import Page from '../common/Page'
-import LanguageSelector from './LanguageSelector'
-import MyDatepicker from './Datepicker'
 import { postAppointment } from '../appointments/services'
+import { getLanguages } from './services'
 import { useHistory } from 'react-router-dom'
+import Page from '../common/Page'
+import LanguageSelector from './inputFields/LanguageSelector'
+import RadioBtnArea from './inputFields/RadioBtnArea'
+import Checkbox from './inputFields/Checkbox'
+import TextInput from './inputFields/TextInput'
+import MessageField from './inputFields/MessageField'
+import MyDatepicker from './inputFields/Datepicker'
+import NumberInput from './inputFields/NumberInput'
 import SubmitButton from '../common/SubmitButton'
 import NextButton from '../common/NextButton'
-import { getLanguages } from './services'
 
 export default function AppointmentInputForm() {
   let history = useHistory()
@@ -43,8 +48,8 @@ export default function AppointmentInputForm() {
 
     const form = event.target
     const formData = new FormData(form)
-    const appLanguage = selectedLanguage.value
-    const alternativeAppLanguage = selectedAlternativeLanguage.value
+    const appointmentLanguage = selectedLanguage.value
+    const alternativeLanguage = selectedAlternativeLanguage.value
     const toFavorites = favoritesChecked
     const toSwornIn = swornInChecked
     const writtenTranslation = writtenTranslationChecked
@@ -53,11 +58,11 @@ export default function AppointmentInputForm() {
     data = {
       ...data,
       appointmentDate,
-      appLanguage,
+      appointmentLanguage,
       toFavorites,
       writtenTranslation,
       toSwornIn,
-      alternativeAppLanguage,
+      alternativeLanguage,
       acceptedByInterpreter: null,
       showToInterpreter: '',
       openAppointment: true
@@ -96,33 +101,28 @@ export default function AppointmentInputForm() {
             />
           </Wrapper>
           <Wrapper isVisible={showElement === 1}>
-            <label>
-              <input
-                type='checkbox'
-                name='favorites'
-                checked={favoritesChecked}
-                onChange={() => setFavoritesChecked(!favoritesChecked)}
-              />{' '}
-              nur an Favoriten
-            </label>
-            <label>
-              <input
-                type='checkbox'
-                name='writtenTranslation'
-                onChange={() =>
-                  setWrittenTranslationChecked(!writtenTranslationChecked)
-                }></input>{' '}
-              schriftliche Übersetzung
-            </label>
-            <label>
-              <input
-                type='checkbox'
-                name='swornIn'
-                onChange={() =>
-                  setSwornInChecked(!swornInChecked)
-                }></input>{' '}
-              vereidigt
-            </label>
+            <Checkbox
+              name='favorites'
+              checked={favoritesChecked}
+              text=' nur an Favoriten'
+              onChange={() => setFavoritesChecked(!favoritesChecked)}
+            />
+
+            <Checkbox
+              name='writtenTranslation'
+              text=' schriftliche Übersetzung'
+              checked={writtenTranslationChecked}
+              onChange={() =>
+                setWrittenTranslationChecked(!writtenTranslationChecked)
+              }
+            />
+
+            <Checkbox
+              name='swornIn'
+              text=' vereidigt'
+              checked={swornInChecked}
+              onChange={() => setSwornInChecked(!swornInChecked)}
+            />
           </Wrapper>
           <Wrapper isVisible={showElement === 2}>
             <MyDatepicker
@@ -132,66 +132,25 @@ export default function AppointmentInputForm() {
 
             <label>
               voraussichtliche Dauer:{' '}
-              <input
+              <NumberInput
                 name='duration'
-                type='number'
                 min='0.25'
                 step='0.25'
-                lang='nb'
-                placeholder='0.25 Std = 15 Min'></input>
+                placeholder='0.25 Std = 15 Min'
+              />
             </label>
           </Wrapper>
           <Wrapper isVisible={showElement === 3}>
-            <RadioBtnAreaStyled>
-              <label>
-                <input
-                  type='radio'
-                  name='clinic'
-                  value='UKE'
-                  checked={radioBtnValue === 'UKE'}
-                  onChange={handleRadioChange}
-                />
-                UKE
-              </label>
-              <label>
-                <input
-                  type='radio'
-                  name='clinic'
-                  value='AKK'
-                  checked={radioBtnValue === 'AKK'}
-                  onChange={handleRadioChange}
-                />
-                AKK
-              </label>
-              <label>
-                <input
-                  type='radio'
-                  name='clinic'
-                  value='PNZ'
-                  checked={radioBtnValue === 'PNZ'}
-                  onChange={handleRadioChange}
-                />
-                PNZ
-              </label>
-            </RadioBtnAreaStyled>
-            <label>
-              <input
-                type='text'
-                name='station'
-                placeholder='Station, Gebäude'></input>
-            </label>
-            <label>
-              <input
-                type='text'
-                name='contact'
-                placeholder='Ansprechpartner'></input>
-            </label>
-            <label>
-              <input
-                type='number'
-                name='extension'
-                placeholder='Durchwahl'></input>
-            </label>
+            <RadioBtnArea
+              radioBtnValue={radioBtnValue}
+              handleRadioChange={handleRadioChange}
+            />
+
+            <TextInput name='station' placeholder='Station, Gebäude' />
+
+            <TextInput name='contact' placeholder='Ansprechpartner' />
+
+            <NumberInput name='extension' placeholder='Durchwahl' />
           </Wrapper>
           <Wrapper isVisible={showElement === 4}>
             <label>
@@ -201,10 +160,10 @@ export default function AppointmentInputForm() {
                 value={message}
                 onChange={event => setMessage(event.value)}></MessageField>
             </label>
-            <RadioBtnAreaStyled>
+            <SubmitBtnAreaStyled>
               <SubmitButton text='absenden' type='submit' />
               <SubmitButton text='verwerfen' handleClick={handleAbortClick} />
-            </RadioBtnAreaStyled>
+            </SubmitBtnAreaStyled>
           </Wrapper>
         </Placeholder>
         <NextButton
@@ -247,33 +206,12 @@ const Placeholder = styled.div`
 const Wrapper = styled.div`
   position: absolute;
   display: ${props => (props.isVisible ? 'grid' : 'none')};
-  grid-gap: 20px;
+  grid-gap: 10px;
   width: 100%;
-  right: -360px;
-  -webkit-animation: slide 0.5s forwards;
-  -webkit-animation-delay: 0.1s;
-  animation: slide 0.5s forwards;
-  animation-delay: 0.1s;
-
-  @-webkit-keyframes slide {
-    100% {
-      right: 0;
-    }
-  }
-
-  @keyframes slide {
-    100% {
-      right: 0;
-    }
-  }
 `
 
-const RadioBtnAreaStyled = styled.div`
+const SubmitBtnAreaStyled = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`
-
-const MessageField = styled.textarea`
-  min-height: 100px;
 `
