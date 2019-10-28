@@ -55,7 +55,11 @@ export default function EditForm({
         ? appointment.appointmentLanguage.value
         : selectedLanguage.value
     let appointmentDate = new Date(date)
-    const sentBy = isFollowUp ? appointment.sentBy : props.currentUser
+    const sentBy = isFollowUp
+      ? appointment.sentBy
+      : appointment.sentBy.length > 0
+      ? appointment.sentBy
+      : props.currentUser
     const showToInterpreter = isInterpreterAvailable ? props.currentUser : ''
 
     let data = Object.fromEntries(formData)
