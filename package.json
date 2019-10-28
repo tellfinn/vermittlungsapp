@@ -23,6 +23,7 @@
     "react-scripts": "3.1.1",
     "react-select": "^3.0.8",
     "react-swipe-to-dismiss": "^0.3.4",
+    "react-use": "^12.9.1",
     "styled-components": "5.0.0-beta.8"
   },
   "scripts": {
