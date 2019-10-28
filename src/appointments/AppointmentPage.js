@@ -5,6 +5,7 @@ import {
   deleteAppointment,
   getAppointments
 } from './services'
+import filterAppointments from './filterAppointments'
 import Page from '../common/Page'
 import AppointmentList from './AppointmentList'
 import Appointment from './Appointment'
@@ -53,48 +54,15 @@ export default function AppointmentPage({
   )
 
   function sortAppointments() {
-    let sortedAppointments = appointments
-      .filter(
-        appointment =>
-          appointment.acceptedByInterpreter === requestAccepted &&
-          (interpreterLanguages.includes(appointment.appointmentLanguage) ||
-            appointment.sentBy === currentUser)
-      )
-      .filter(
-        appointment =>
-          appointment.showToInterpreter.length === 0 ||
-          appointment.showToInterpreter === currentUser ||
-          appointment.sentBy === currentUser
-      )
-
-    if (activeIndex === 0) {
-      sortedAppointments = sortedAppointments.slice().sort((a, b) => {
-        return new Date(a.appointmentDate) - new Date(b.appointmentDate)
-      })
-    } else if (activeIndex === 1) {
-      sortedAppointments = sortedAppointments.slice().sort((a, b) => {
-        return (
-          new Date(a.appointmentDate).getHours() -
-          new Date(b.appointmentDate).getHours()
-        )
-      })
-    } else if (activeIndex === 2) {
-      sortedAppointments = sortedAppointments.slice().sort((a, b) => {
-        return a.clinic > b.clinic
-      })
-    }
-
-    if (period === 'present') {
-      sortedAppointments = sortedAppointments.filter(
-        appointment => new Date(appointment.appointmentDate) >= currentTimestamp
-      )
-    } else if (period === 'past') {
-      sortedAppointments = sortedAppointments.filter(
-        appointment =>
-          new Date(appointment.appointmentDate) < currentTimestamp &&
-          appointment.acceptedByInterpreter === true
-      )
-    }
+    let sortedAppointments = filterAppointments({
+      appointments,
+      interpreterLanguages,
+      currentUser,
+      requestAccepted,
+      activeIndex,
+      period,
+      currentTimestamp
+    })
 
     if (sortedAppointments.length === 0) {
       return <div>Keine Termine vorhanden</div>
