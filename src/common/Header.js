@@ -35,8 +35,8 @@ export default function Header({ ...props }) {
           menuItemTitles={pageArray}></MyMenu>
       </BtnArea>
       {props.title}
-      <BtnArea onClick={props.handleLogoutClick} isLoggedIn={props.isLoggedIn}>
-        <LogoutIconStyled />
+      <BtnArea onClick={props.handleLogoutClick}>
+        <LogoutIconStyled iconColor={props.iconColor} />
       </BtnArea>
     </HeaderStyled>
   )
@@ -70,5 +70,5 @@ const LogoutIconStyled = styled(LogoutIcon)`
   height: 38px;
   width: 38px;
   margin-top: 1px;
-  fill: #000000;
+  fill: ${props => (props.iconColor ? '#000000' : 'grey')};
 `
