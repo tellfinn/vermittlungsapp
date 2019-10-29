@@ -163,10 +163,6 @@ export default function EditForm({
       </StyleArea>
     </EditFormStyled>
   )
-
-  function handleRadioChange(event) {
-    setRadioBtnValue(event.target.value)
-  }
 }
 
 const EditFormStyled = styled.form`

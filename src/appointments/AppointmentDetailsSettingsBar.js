@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import PropTypes from 'prop-types'
+
 import { ReactComponent as SettingsIcon } from '../icons/gears.svg'
 import { ReactComponent as DeclineIcon } from '../icons/no.svg'
 import { ReactComponent as EditIcon } from '../icons/edit.svg'

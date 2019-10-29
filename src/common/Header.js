@@ -6,12 +6,6 @@ import { ReactComponent as LogoutIcon } from '../icons/exit.svg'
 
 export default function Header({ ...props }) {
   let [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [title, setTitle] = useState('')
-
-  function handleTitleChange(event) {
-    setIsMenuOpen(!isMenuOpen)
-    setTitle(event.target.text)
-  }
 
   const pageArray =
     props.isLoggedIn === true
@@ -30,7 +24,7 @@ export default function Header({ ...props }) {
     <HeaderStyled>
       <BtnArea onClick={() => setIsMenuOpen(!isMenuOpen)} isOpen={isMenuOpen}>
         <MyMenu
-          handleMenuItemClick={handleTitleChange}
+          handleMenuItemClick={() => setIsMenuOpen(!isMenuOpen)}
           isOpen={isMenuOpen}
           menuItemTitles={pageArray}></MyMenu>
       </BtnArea>

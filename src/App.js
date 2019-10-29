@@ -42,7 +42,7 @@ function App() {
       { route: '', title: 'ausloggen' }
     ]
 
-    location.pathname === '/login' || location.pathname === '/signup'
+    location.pathname === '/login' || location.pathname === '/signUp'
       ? setLogoutIconBlack(false)
       : setLogoutIconBlack(true)
 
