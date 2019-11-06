@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Redirect } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom'
+import { useLocation } from 'react-use'
 import { getFromStorage, deleteFromStorage } from './users/utils'
 import { getLanguages } from '../src/appointmentinput/services'
 import GlobalStyles from './GlobalStyles'
@@ -12,6 +17,9 @@ import LogIn from './users/LogInForm'
 import ProtectedRoute from './users/ProtectedRoute'
 
 function App() {
+  let location = useLocation()
+
+  const [title, setTitle] = useState('')
   const [languages, setLanguages] = useState([])
   const [isLoggedIn, setLoggedIn] = useState(false)
   const [token, setToken] = useState('')
@@ -21,6 +29,30 @@ function App() {
   useEffect(() => {
     getLanguages().then(setLanguages)
   }, [])
+
+  useEffect(() => {
+    const titleArray = [
+      { route: '/request', title: 'Terminanfragen' },
+      { route: '/appointments', title: 'Terminübersicht' },
+      { route: '/pastappointments', title: 'vergangene Termine' },
+      { route: '/newAppointment', title: 'neuen Termin erstellen' },
+      { route: '/signUp', title: 'registrieren' },
+      { route: '/login', title: 'einloggen' },
+      { route: '', title: 'ausloggen' }
+    ]
+
+    try {
+      setTitle(
+        titleArray.find(item => {
+          if (item.route === location.pathname) {
+            return item
+          }
+        }).title
+      )
+    } catch {
+      setTitle('')
+    }
+  }, [location])
 
   useEffect(() => {
     const session = getFromStorage('Dolmetschervermittlung')
@@ -49,9 +81,13 @@ function App() {
   return (
     <Router>
       <GlobalStyles></GlobalStyles>
-      <Header handleLogoutClick={logout} isLoggedIn={isLoggedIn} />
+      <Header
+        handleLogoutClick={logout}
+        isLoggedIn={isLoggedIn}
+        title={title}
+      />
       <Switch>
-        {isLoggedIn === true ? (
+        {isLoggedIn ? (
           <Redirect exact from='/' to='/request' />
         ) : (
           <Redirect exact from='/' to='/login' />

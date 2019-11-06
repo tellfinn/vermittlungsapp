@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useHistory } from 'react-router-dom'
 import { postUser } from './services'
 import Page from '../common/Page.js'
 import LanguageSelector from '../appointmentinput/inputFields/LanguageSelector'
 import NextButton from '../common/NextButton'
 
 export default function SignUpForm({ languages }) {
+  let history = useHistory()
   //  const [isLoading, setIsLoading] = useState(true)
   const [selectedLanguages, setSelectedLanguages] = useState([])
   // eslint-disable-next-line
@@ -45,25 +47,27 @@ export default function SignUpForm({ languages }) {
       languages
     }
 
-    postUser(signUpData).then(json => {
-      console.log('json', json)
-      if (json.success) {
-        setSignUpError(json.message)
-        // setIsLoading(false)
-        setSignUpEmail('')
-        setSignUpPassword('')
-        setFirstName('')
-        setLastName('')
-        setPhoneNumber('')
-        setSelectedLanguages([])
-        setSignUpRepeatPassword('')
-        setDoesWrittenTranslations(false)
-        setIsSwornIn(false)
-      } else {
-        setSignUpError(json.message)
-        //      setIsLoading(false)
-      }
-    })
+    postUser(signUpData)
+      .then(json => {
+        console.log('json', json)
+        if (json.success) {
+          setSignUpError(json.message)
+          // setIsLoading(false)
+          setSignUpEmail('')
+          setSignUpPassword('')
+          setFirstName('')
+          setLastName('')
+          setPhoneNumber('')
+          setSelectedLanguages([])
+          setSignUpRepeatPassword('')
+          setDoesWrittenTranslations(false)
+          setIsSwornIn(false)
+        } else {
+          setSignUpError(json.message)
+          //      setIsLoading(false)
+        }
+      })
+      .then(history.push('/login'))
   }
 
   const isRegisterButtonVisible =

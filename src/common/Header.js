@@ -13,7 +13,7 @@ export default function Header({ ...props }) {
     setTitle(event.target.text)
   }
 
-  const titleArray =
+  const pageArray =
     props.isLoggedIn === true
       ? [
           { route: '/request', title: 'Terminanfragen' },
@@ -32,9 +32,9 @@ export default function Header({ ...props }) {
         <MyMenu
           handleMenuItemClick={handleTitleChange}
           isOpen={isMenuOpen}
-          menuItemTitles={titleArray}></MyMenu>
+          menuItemTitles={pageArray}></MyMenu>
       </BtnArea>
-      {title}
+      {props.title}
       <BtnArea onClick={props.handleLogoutClick} isLoggedIn={props.isLoggedIn}>
         <LogoutIconStyled />
       </BtnArea>

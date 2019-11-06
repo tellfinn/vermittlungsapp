@@ -48,7 +48,7 @@ export default function LogInForm({ ...props }) {
   return (
     <Page>
       {props.isLoggedIn ? (
-        <Redirect to='/' />
+        <Redirect to='/request' />
       ) : (
         <StyledLogInForm onSubmit={onLogIn}>
           <LabelStyled>

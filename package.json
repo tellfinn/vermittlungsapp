@@ -23,6 +23,7 @@
     "react-scripts": "3.1.1",
     "react-select": "^3.0.8",
     "react-swipe-to-dismiss": "^0.3.4",
+    "react-use": "^12.9.1",
     "styled-components": "5.0.0-beta.8"
   },
   "scripts": {
@@ -31,6 +32,7 @@
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "cypress": "cypress open",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
@@ -41,7 +43,10 @@
     }
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "plugin:cypress/recommended"
+    ]
   },
   "browserslist": {
     "production": [
@@ -59,7 +64,9 @@
     "@storybook/addon-actions": "5.2.1",
     "@storybook/addon-links": "5.2.1",
     "@storybook/addons": "5.2.1",
-    "@storybook/react": "5.2.1"
+    "@storybook/react": "5.2.1",
+    "cypress": "^3.5.0",
+    "eslint-plugin-cypress": "^2.7.0"
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",

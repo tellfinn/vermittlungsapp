@@ -21,7 +21,9 @@ export default function Settingsbar({ toggleSettings, showContact }) {
             </a>
           </BtnAreaStyled>
           <BtnAreaStyled>
-            <PhoneIconStyled />
+            <a href={'tel:040-123455'}>
+              <PhoneIconStyled />
+            </a>
           </BtnAreaStyled>
         </>
       )}
