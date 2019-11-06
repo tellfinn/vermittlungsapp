@@ -29,7 +29,7 @@ context('create appointment', () => {
     cy.get('input[name=extension]').type('123')
     cy.get('.sc-AykKF').click()
     cy.get('textarea[name=message]').type('Sozialdienst')
-    // cy.get('button[style="background-color: var(--green);"]').click()
+    cy.get('button[style="background-color: var(--green);"]').click()
     cy.get(
       '.Header__HeaderStyled-sc-18vx0c1-0 > :nth-child(2) > #Capa_1'
     ).click()
