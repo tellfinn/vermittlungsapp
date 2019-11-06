@@ -12,6 +12,6 @@ context('open menu', () => {
 
   it('open menu', () => {
     cy.get('.Header__HeaderStyled-sc-18vx0c1-0 > :nth-child(1)').click()
-    cy.get('[href]').should('have.length', 4)
+    cy.get('[href]').should('have.length', 5)
   })
 })

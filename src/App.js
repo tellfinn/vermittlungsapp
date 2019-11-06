@@ -25,6 +25,7 @@ function App() {
   const [token, setToken] = useState('')
   const [currentUser, setCurrentUser] = useState('')
   const [interpreterLanguages, setInterpreterLanguages] = useState([])
+  const [logoutIconBlack, setLogoutIconBlack] = useState(false)
 
   useEffect(() => {
     getLanguages().then(setLanguages)
@@ -40,6 +41,10 @@ function App() {
       { route: '/login', title: 'einloggen' },
       { route: '', title: 'ausloggen' }
     ]
+
+    location.pathname === '/login' || location.pathname === '/signUp'
+      ? setLogoutIconBlack(false)
+      : setLogoutIconBlack(true)
 
     try {
       setTitle(
@@ -85,6 +90,7 @@ function App() {
         handleLogoutClick={logout}
         isLoggedIn={isLoggedIn}
         title={title}
+        iconColor={logoutIconBlack}
       />
       <Switch>
         {isLoggedIn ? (

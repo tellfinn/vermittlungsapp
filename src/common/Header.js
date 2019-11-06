@@ -6,12 +6,6 @@ import { ReactComponent as LogoutIcon } from '../icons/exit.svg'
 
 export default function Header({ ...props }) {
   let [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [title, setTitle] = useState('')
-
-  function handleTitleChange(event) {
-    setIsMenuOpen(!isMenuOpen)
-    setTitle(event.target.text)
-  }
 
   const pageArray =
     props.isLoggedIn === true
@@ -30,13 +24,13 @@ export default function Header({ ...props }) {
     <HeaderStyled>
       <BtnArea onClick={() => setIsMenuOpen(!isMenuOpen)} isOpen={isMenuOpen}>
         <MyMenu
-          handleMenuItemClick={handleTitleChange}
+          handleMenuItemClick={() => setIsMenuOpen(!isMenuOpen)}
           isOpen={isMenuOpen}
           menuItemTitles={pageArray}></MyMenu>
       </BtnArea>
       {props.title}
-      <BtnArea onClick={props.handleLogoutClick} isLoggedIn={props.isLoggedIn}>
-        <LogoutIconStyled />
+      <BtnArea onClick={props.handleLogoutClick}>
+        <LogoutIconStyled iconColor={props.iconColor} />
       </BtnArea>
     </HeaderStyled>
   )
@@ -70,5 +64,5 @@ const LogoutIconStyled = styled(LogoutIcon)`
   height: 38px;
   width: 38px;
   margin-top: 1px;
-  fill: #000000;
+  fill: ${props => (props.iconColor ? '#000000' : 'grey')};
 `
